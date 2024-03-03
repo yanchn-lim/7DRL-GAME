@@ -6,7 +6,7 @@ using Patterns;
 namespace DataStructure
 {
     public class MapGenerator : MonoBehaviour
-    {
+    { 
         #region VARIABLES
         private int depthCount = 5;
         private int minNodePerDepth = 3;
@@ -25,7 +25,6 @@ namespace DataStructure
         public Transform parent;
         public GameObject nodePrefab;
         public GameObject linePrefab;
-        public RandSeedManager randSeed;
 
         //VISUAL
         private int edgeCount = 0;
@@ -71,7 +70,7 @@ namespace DataStructure
          * After all the requirements are met, it will display the graph for the player to interact with.
          */
             graph = new Graph();
-            randSeed.GenerateSeed();    //randomising the seed
+            RandSeedManager.GenerateSeed();    //randomising the seed
 
             GenerateNodes();
             GenerateEdges();

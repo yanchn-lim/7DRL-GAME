@@ -12,7 +12,7 @@ namespace DataStructure
         private Image image;
         private Animator animator;
 
-        private float circleSpeed = 0.1f;
+        //private float circleSpeed = 0.1f;
         private Color disableColor = new Color(0, 0, 0, 0.6f);
         private Color enableColor = new Color(0, 0, 0, 1f);
         private bool activated = false;
@@ -80,10 +80,10 @@ namespace DataStructure
         // sets the appropriate sprite for the encounter
         public void SetSprite()
         {
-            switch (Node.EncounterType)
-            {
+            //switch (Node.EncounterType)
+            //{
 
-            }
+            //}
         }
 
         // animation for circling the node

@@ -17,5 +17,21 @@ namespace DataStructure
             INFESTED,
             ABANDONED
         }
+        public Node()
+        {
+
+        }
+
+        public Node(int id, int depth)
+        {
+            Id = id;
+            Depth = depth;
+        }
+    }
+
+    public enum NodeEncounter
+    {
+        INFESTED,
+        ABANDONED
     }
 }
