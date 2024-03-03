@@ -13,4 +13,10 @@ public class HandleInputs : MonoBehaviour
     {
         return Input.GetAxis("Vertical");
     }
+
+    public bool GetMovementKeyDown()
+    {
+        
+        return Input.GetKeyDown(KeyCode.W);
+    }
 }
