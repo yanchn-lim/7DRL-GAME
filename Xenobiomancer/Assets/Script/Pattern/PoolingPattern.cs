@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Assets.Scripts.pattern
+namespace Patterns
 {
     public class PoolingPattern<T> where T : MonoBehaviour //where it is a game object
     {

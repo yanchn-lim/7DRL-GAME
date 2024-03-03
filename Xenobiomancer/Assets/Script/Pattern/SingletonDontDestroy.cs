@@ -1,7 +1,7 @@
 ﻿﻿using System.Collections;
 using UnityEngine;
 
-namespace Assets.Scripts.pattern
+namespace Patterns
 {
     public abstract class SingletonDontDestroy<T> : MonoBehaviour where T : Component
     {

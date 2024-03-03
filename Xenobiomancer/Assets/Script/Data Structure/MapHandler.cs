@@ -1,40 +1,42 @@
 using UnityEngine;
-using EventManagerYC;
-
-public class MapHandler : MonoBehaviour
+using Patterns;
+namespace DataStructure
 {
-    public MapGenerator mapGenerator;
-    public GameObject map;
-    private EventManager eventManager = EventManager.Instance;
-
-    private void Awake()
+    public class MapHandler : MonoBehaviour
     {
-        //subscribing to the relevant events
-        //eventManager.AddListener(Event.MAP_NODE_CLICKED, ToggleMap);
-        //eventManager.AddListener(Event.RAND_EVENT_END, ToggleMap); 
-    }
+        public MapGenerator mapGenerator;
+        public GameObject map;
+        private EventManager eventManager = EventManager.Instance;
 
-    private void OpenMap()
-    {
-        map.SetActive(true);
-    }
-
-    private void CloseMap()
-    {
-        map.SetActive(false); 
-    }
-
-    //method used by the map button to open and closes the map
-    public void ToggleMap()
-    {
-        if (map.activeInHierarchy)
+        private void Awake()
         {
-            CloseMap();
+            //subscribing to the relevant events
+            //eventManager.AddListener(Event.MAP_NODE_CLICKED, ToggleMap);
+            //eventManager.AddListener(Event.RAND_EVENT_END, ToggleMap); 
         }
-        else if (!map.activeInHierarchy)
-        {
-            OpenMap();
-        }
-    }
 
+        private void OpenMap()
+        {
+            map.SetActive(true);
+        }
+
+        private void CloseMap()
+        {
+            map.SetActive(false);
+        }
+
+        //method used by the map button to open and closes the map
+        public void ToggleMap()
+        {
+            if (map.activeInHierarchy)
+            {
+                CloseMap();
+            }
+            else if (!map.activeInHierarchy)
+            {
+                OpenMap();
+            }
+        }
+
+    }
 }

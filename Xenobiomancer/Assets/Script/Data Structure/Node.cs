@@ -1,38 +1,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//The node class where all the information of the node is declared
-public class Node
+namespace DataStructure
 {
-    public int Id { get; set; }
-    public int Depth { get; set; }
-    public Vector3 Position { get; set; }
-    public Encounter EncounterType { get; set; }
-    //public RandomEvents RandomEvent { get; set; }
-    public bool IsAccesible { get; set; }
 
-    private List<GameObject> enemyList = new();
-    
-    
-    public void AddEnemy(GameObject enemy)
+    //The node class where all the information of the node is declared
+    public class Node
     {
-        enemyList.Add(enemy);
-    }
+        public int Id { get; set; }
+        public int Depth { get; set; }
+        public Vector3 Position { get; set; }
+        public Encounter EncounterType { get; set; }
+        //public RandomEvents RandomEvent { get; set; }
+        public bool IsAccesible { get; set; }
 
-    public enum Encounter
-    {
-        ENEMY,
-        ELITE,
-        REST,
-        EVENT,
-        BOSS
-    }
+        private List<GameObject> enemyList = new();
 
-    public List<GameObject> EnemyList
-    {
-        get
+
+        public void AddEnemy(GameObject enemy)
         {
-            return enemyList;
+            enemyList.Add(enemy);
+        }
+
+        public enum Encounter
+        {
+            ENEMY,
+            ELITE,
+            REST,
+            EVENT,
+            BOSS
+        }
+
+        public List<GameObject> EnemyList
+        {
+            get
+            {
+                return enemyList;
+            }
         }
     }
 }
