@@ -51,5 +51,7 @@ public class Player : MonoBehaviour
         MoveCheck = false;
     }
 
+    
+
 
 }
