@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using Patterns;
 
 namespace DataStructure
@@ -9,7 +8,7 @@ namespace DataStructure
     public class MapGenerator : MonoBehaviour
     {
         #region VARIABLES
-        private int depthCount = 15;
+        private int depthCount = 5;
         private int minNodePerDepth = 3;
         private int maxNodePerDepth = 5;
         private float spacing = 150f;
@@ -21,29 +20,13 @@ namespace DataStructure
         private float screenOffSetX = -200;
         private Color disabledColor = new Color(0, 0, 0, 0.6f);
 
-        //Dictionary of the weighted probability of each encounter, it is to be passed into the SelectWeightedItem() method to get a random encounter
-        private Dictionary<Node.Encounter, float> encounterProbability = new Dictionary<Node.Encounter, float>() {
-        {Node.Encounter.ELITE,1f},
-        {Node.Encounter.ENEMY,3f},
-        {Node.Encounter.EVENT,2f},
-        {Node.Encounter.REST,2f}
-    };
-
-        //
-        //private Dictionary<RandomEvents, float> eventProbability = new Dictionary<RandomEvents, float>() {
-        //    {RandomEvents.SpinTheWheel,1f},
-        //    {RandomEvents.FreeUpgrade,1f},
-        //    {RandomEvents.ReachInDepth,1f}
-        //};
-
         private Graph graph;
 
+        public Transform parent;
         public GameObject nodePrefab;
         public GameObject linePrefab;
         public RandSeedManager randSeed;
-        public GameObject[] EnemyList;
-        public GameObject[] EliteList;
-        public GameObject[] BossList;
+
         //VISUAL
         private int edgeCount = 0;
         //...
@@ -52,8 +35,8 @@ namespace DataStructure
         private void Awake()
         {
             // subscribing to the relevant events
-            //EventManager.Instance.AddListener<Node>(Event.MAP_NODE_CLICKED, DisableNodesInDepth);
-            //EventManager.Instance.AddListener<Node>(Event.MAP_NODE_CLICKED, ConnectedNodeAccessible);
+            EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, DisableNodesInDepth);
+            EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, ConnectedNodeAccessible);
 
             GenerateGraph();
         }
@@ -61,8 +44,8 @@ namespace DataStructure
         private void OnDestroy()
         {
             // unsubscribing when the object is ddestroyed
-            //EventManager.Instance.RemoveListener<Node>(Event.MAP_NODE_CLICKED, DisableNodesInDepth);
-            //EventManager.Instance.RemoveListener<Node>(Event.MAP_NODE_CLICKED, ConnectedNodeAccessible);
+            EventManager.Instance.RemoveListener<Node>(EventName.MAP_NODE_CLICKED, DisableNodesInDepth);
+            EventManager.Instance.RemoveListener<Node>(EventName.MAP_NODE_CLICKED, ConnectedNodeAccessible);
         }
 
         private void GenerateGraph()
@@ -101,9 +84,8 @@ namespace DataStructure
                 PruneGraph();
             }
 
-            if (graph.NodeList.Count < 35)
+            if (graph.NodeList.Count < 1)
             {
-
                 GenerateGraph();
             }
             else
@@ -146,68 +128,7 @@ namespace DataStructure
         {
             // This method assigns a random encounter type to the provided node based on weighted probabilities.
             // The encounter type is determined using the ProbabilityManager's SelectWeightedItem method.
-            if (node.Depth < 7)
-            {
-                // If the node depth is < 7 , it would not assign any elite encounters to ensure the players
-                // have an easier start
-
-                bool isElite = true;
-                while (isElite)
-                {
-                    node.EncounterType = ProbabilityManager.SelectWeightedItem(encounterProbability); // get a random encounter
-
-                    if (node.EncounterType != Node.Encounter.ELITE) // check if the encounter is an elite
-                    {
-                        isElite = false;
-                    }
-                }
-            }
-            else
-            {
-                node.EncounterType = ProbabilityManager.SelectWeightedItem(encounterProbability); // get a random encounter
-            }
-        }
-
-        private void AssignEnemies(Node node)
-        {
-            // This method assign enemies according to whether if its a normal enemy, elite or the boss
-
-            int numOfEnemies = UnityEngine.Random.Range(1, 3); // gets a random number of enemy
-
-            if (node.EncounterType == Node.Encounter.ENEMY)
-            {
-                // loops through according to how many enemies are going to be in this encounter
-                for (int i = 0; i < numOfEnemies; i++)
-                {
-                    int randomIndex = UnityEngine.Random.Range(0, EnemyList.Length); // gets a random enemy out of the list of enemies
-                    node.AddEnemy(EnemyList[randomIndex]); // adds the enemy into the node's list of enemies
-                }
-            }
-            else if (node.EncounterType == Node.Encounter.ELITE)
-            {
-                int randomIndex = UnityEngine.Random.Range(0, EliteList.Length); // gets a random elite out of the list of elites
-                node.AddEnemy(EliteList[randomIndex]);
-
-            }
-            else if (node.EncounterType == Node.Encounter.BOSS)
-            {
-                node.AddEnemy(BossList[0]);
-            }
-        }
-
-        private void AssignRandomEvent(Node node)
-        {
-            // This method assigns a random event to the node that has the event encounter
-
-            //if(node.EncounterType == Node.Encounter.EVENT)
-            //{
-            //    //int enumLength = Enum.GetValues(typeof(RandomEvents)).Length; // get the total length of the enum
-            //    int randIndex = UnityEngine.Random.Range(0, enumLength); // get a random index of the enum
-
-            //    RandomEvents randEvent = (RandomEvents)Enum.GetValues(typeof(RandomEvents)).GetValue(randIndex); // getting the correct type to assign it to the node
-
-            //    node.RandomEvent = randEvent;
-            //}       
+            
         }
 
         private void AddMasterNode()
@@ -229,8 +150,6 @@ namespace DataStructure
             node.Id = nodeId;
             node.Depth = depthCount;
             node.Position = position;
-            node.EncounterType = Node.Encounter.BOSS;
-            AssignEnemies(node);
 
             graph.AddNode(node);
 
@@ -271,25 +190,17 @@ namespace DataStructure
                     node.Depth = depth;
                     node.Position = position;
 
-                    /* This places fixed encounter at depth [0 ,14 , half of the map]
+                    /* This places fixed encounter at certain depths
                      * If the node is not located in any of those depth, it will get a random encounter instead
                      * It also makes the nodes at the starting depth accessible so the players can choose their starting path
                      */
-                    if (node.Depth == 0)
-                    {
-                        node.EncounterType = Node.Encounter.ENEMY;
 
-                    }
-                    else if (node.Depth == 14)
+                    if(node.Depth == 0)
                     {
-                        node.EncounterType = Node.Encounter.REST;
+                        //spawn only enemy
                     }
-                    else
-                    {
-                        GetRandomEncounter(node);
-                    }
-                    AssignEnemies(node);
-                    AssignRandomEvent(node);
+
+
                     graph.AddNode(node);
                 }
             }
@@ -353,7 +264,7 @@ namespace DataStructure
             *  Then, at depth 0 , it makes all the node there accessible for the players to have a starting point
             */
             GameObject nodeGameObject = Instantiate(nodePrefab, node.Position, Quaternion.identity);    //spawn an instance of a node
-            nodeGameObject.transform.SetParent(GameObject.FindGameObjectWithTag("Graph").transform, false); //setting the parent as "Graph"
+            nodeGameObject.transform.SetParent(parent, false); //setting the parent as "Graph"
             nodeGameObject.name = "Node" + node.Id.ToString();
             nodeGameObject.GetComponent<Image>().color = new Color(0, 0, 0, 0.6f);
             NodeObject nodeObject = nodeGameObject.GetComponent<NodeObject>();
@@ -378,7 +289,7 @@ namespace DataStructure
                 GameObject lineObject = Instantiate(linePrefab, linePosition, Quaternion.identity); //spawn an instance of the edge
                 Vector3[] linePath = { source.Position, node.Position };    //start point and end point of the edge
                 lineObject.GetComponent<LineRenderer>().SetPositions(linePath); //setting the start and end
-                lineObject.transform.SetParent(GameObject.FindGameObjectWithTag("Graph").transform, false); //setting the parent as "Graph"
+                lineObject.transform.SetParent(parent, false); //setting the parent as "Graph"
                 lineObject.GetComponent<LineRenderer>().startColor = disabledColor;
                 lineObject.GetComponent<LineRenderer>().endColor = disabledColor;
 
@@ -392,7 +303,6 @@ namespace DataStructure
 
         private void DestroyMap() // not exactly working as intended...
         {
-
             GameObject[] tilesArray = GameObject.FindGameObjectsWithTag("Node"); //get list of objects in the map
             Debug.Log("tilesArray length : " + tilesArray.Length);
             foreach (var item in tilesArray)
@@ -402,6 +312,7 @@ namespace DataStructure
             }
             graph = null;
             Debug.Log("Map destroyed");
+
             //VISUAL
             edgeCount = 0;
             //...
@@ -436,7 +347,7 @@ namespace DataStructure
             foreach (Node node in nodesToRemove)
             {
                 // for visual debugging
-                DisplayRemovedNodes(node, listObject, edgesRemove);
+                //DisplayRemovedNodes(node, listObject, edgesRemove);
                 //
 
                 graph.RemoveNode(node);

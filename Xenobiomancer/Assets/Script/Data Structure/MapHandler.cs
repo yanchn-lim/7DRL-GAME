@@ -1,11 +1,9 @@
 using UnityEngine;
 using Patterns;
+using DataStructure;
 
-namespace DataStructure
-{
     public class MapHandler : MonoBehaviour
     {
-        public MapGenerator mapGenerator;
         public GameObject map;
         private EventManager eventManager = EventManager.Instance;
 
@@ -40,4 +38,3 @@ namespace DataStructure
         }
 
     }
-}

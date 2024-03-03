@@ -14,7 +14,7 @@ namespace Patterns
         {
             int seed = (int)System.DateTime.Now.Ticks; //using system ticks to get a random number to use as seed
             currentSeed = seed.ToString(); // Convert the seed to a string for display.
-            displaySeed(); // Update the UI to show the new seed
+            //displaySeed(); // Update the UI to show the new seed
             Random.InitState(seed); // set the seed for the random number generator
         }
 

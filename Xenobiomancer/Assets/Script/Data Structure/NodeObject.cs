@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Patterns;
 
 namespace DataStructure
 {
@@ -27,10 +26,10 @@ namespace DataStructure
 
         private void OnEnable()
         {
-            if (Node.IsAccesible)
-            {
-                animator.Play("NodeAnimation");
-            }
+            //if (Node.IsAccesible)
+            //{
+            //    //animator.Play("NodeAnimation");
+            //}
         }
 
         /* Triggered when node is clicked
@@ -66,7 +65,7 @@ namespace DataStructure
         public void MakeAccessible()
         {
             Node.IsAccesible = true;
-            animator.Play("NodeAnimation");
+            //animator.Play("NodeAnimation");
             image.color = enableColor;
         }
 
@@ -74,7 +73,7 @@ namespace DataStructure
         public void MakeInAccessible()
         {
             Node.IsAccesible = false;
-            animator.Play("NoAnim");
+            //animator.Play("NoAnim");
             image.color = disableColor;
         }
 
@@ -83,44 +82,24 @@ namespace DataStructure
         {
             switch (Node.EncounterType)
             {
-                case Node.Encounter.ENEMY:
-                    image.sprite = spriteArray[0];
-                    break;
-                case Node.Encounter.ELITE:
-                    image.sprite = spriteArray[1];
-                    break;
-                case Node.Encounter.EVENT:
-                    image.sprite = spriteArray[2];
-                    break;
-                case Node.Encounter.REST:
-                    image.sprite = spriteArray[3];
-                    break; ;
-                case Node.Encounter.BOSS:
-                    image.sprite = spriteArray[5];
-                    break;
+
             }
         }
 
         // animation for circling the node
         // done by having the circle image set to radial and filling it in gradually
-        private IEnumerator CircleNode()
+        private IEnumerator AnimateSelect()
         {
-            Image circle = transform.Find("ink-swirl").GetComponent<Image>();
-
-            for (float i = 0; i < 1; i += circleSpeed)
-            {
-                circle.fillAmount += circleSpeed;
-                yield return new WaitForSeconds(0.02f);
-            }
+            yield return null;
         }
 
         // starts the encounter event after finish setting up the node
         private IEnumerator StartEncounter()
         {
-            animator.Play("NoAnim");
+            //animator.Play("NoAnim");
             activated = true;
             Node.IsAccesible = false;
-            yield return StartCoroutine(CircleNode()); //waits for the circling to be finished
+            yield return StartCoroutine(AnimateSelect()); //waits for the circling to be finished
 
             // this event starts the encounter and
             // makes the other nodes in the same depth to be inaccessible
