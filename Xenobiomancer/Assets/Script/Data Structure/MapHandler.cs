@@ -1,5 +1,6 @@
 using UnityEngine;
 using Patterns;
+
 namespace DataStructure
 {
     public class MapHandler : MonoBehaviour
@@ -11,7 +12,7 @@ namespace DataStructure
         private void Awake()
         {
             //subscribing to the relevant events
-            //eventManager.AddListener(Event.MAP_NODE_CLICKED, ToggleMap);
+            eventManager.AddListener(EventName.MAP_NODE_CLICKED, ToggleMap);
             //eventManager.AddListener(Event.RAND_EVENT_END, ToggleMap); 
         }
 
