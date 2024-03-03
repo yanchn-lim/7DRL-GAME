@@ -20,7 +20,7 @@ namespace Patterns
             }
         }
 
-        private Dictionary<Event, List<Delegate>> eventListeners;
+        private Dictionary<EventName, List<Delegate>> eventListeners;
 
         public EventManager() //constructor to initalize eventListeners dictionary
         {
@@ -34,7 +34,7 @@ namespace Patterns
 
         //uses the Action delegate which does not return a value
         #region ADD/REMOVE/TRIGGER (NO PARAMETERS)
-        public void AddListener(Event eventName, Action listener)
+        public void AddListener(EventName eventName, Action listener)
         {
             // If the event does not exist in the dictionary, add it.
             if (!eventListeners.ContainsKey(eventName))
@@ -46,7 +46,7 @@ namespace Patterns
             eventListeners[eventName].Add(listener);
         }
 
-        public void RemoveListener(Event eventName, Action listener)
+        public void RemoveListener(EventName eventName, Action listener)
         {
             // If the event exists, remove the listener from its list of delegates.
             if (eventListeners.ContainsKey(eventName))
@@ -54,7 +54,7 @@ namespace Patterns
                 eventListeners[eventName].Remove(listener);
             }
         }
-        public void TriggerEvent(Event eventName)
+        public void TriggerEvent(EventName eventName)
         {
             // If the event exists, invoke all listeners associated with it.
             if (eventListeners.ContainsKey(eventName))
@@ -79,7 +79,7 @@ namespace Patterns
         //similar to the above but allows passing of parameters
         #region ADD/REMOVE/TRIGGER (W/ PARAM)
         //takes in 1 parameter
-        public void AddListener<TParam>(Event eventName, Action<TParam> listener)
+        public void AddListener<TParam>(EventName eventName, Action<TParam> listener)
         {
             if (!eventListeners.ContainsKey(eventName))
             {
@@ -89,7 +89,7 @@ namespace Patterns
             eventListeners[eventName].Add(listener);
         }
 
-        public void RemoveListener<TParam>(Event eventName, Action<TParam> listener)
+        public void RemoveListener<TParam>(EventName eventName, Action<TParam> listener)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -97,7 +97,7 @@ namespace Patterns
             }
         }
 
-        public void TriggerEvent<TParam>(Event eventName, TParam param)
+        public void TriggerEvent<TParam>(EventName eventName, TParam param)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -113,7 +113,7 @@ namespace Patterns
         }
 
         //takes in 2 parameters
-        public void AddListener<TParam1, TParam2>(Event eventName, Action<TParam1, TParam2> listener)
+        public void AddListener<TParam1, TParam2>(EventName eventName, Action<TParam1, TParam2> listener)
         {
             if (!eventListeners.ContainsKey(eventName))
             {
@@ -123,7 +123,7 @@ namespace Patterns
             eventListeners[eventName].Add(listener);
         }
 
-        public void RemoveListener<TParam1, TParam2>(Event eventName, Action<TParam1, TParam2> listener)
+        public void RemoveListener<TParam1, TParam2>(EventName eventName, Action<TParam1, TParam2> listener)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -131,7 +131,7 @@ namespace Patterns
             }
         }
 
-        public void TriggerEvent<TParam1, TParam2>(Event eventName, TParam1 param1, TParam2 param2)
+        public void TriggerEvent<TParam1, TParam2>(EventName eventName, TParam1 param1, TParam2 param2)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -148,7 +148,7 @@ namespace Patterns
 
         //uses the Func delegate which returns a value
         #region ADD/REMOVE/TRIGGER (W/ RETURN)
-        public void AddListener<TResult>(Event eventName, Func<TResult> listener)
+        public void AddListener<TResult>(EventName eventName, Func<TResult> listener)
         {
             if (!eventListeners.ContainsKey(eventName))
             {
@@ -158,7 +158,7 @@ namespace Patterns
             eventListeners[eventName].Add(listener);
         }
 
-        public void RemoveListener<TResult>(Event eventName, Func<TResult> listener)
+        public void RemoveListener<TResult>(EventName eventName, Func<TResult> listener)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -166,7 +166,7 @@ namespace Patterns
             }
         }
 
-        public TResult TriggerEvent<TResult>(Event eventName)
+        public TResult TriggerEvent<TResult>(EventName eventName)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -188,7 +188,7 @@ namespace Patterns
 
         //similar to the above but allows passing of parameters w/ return of a value
         #region ADD/REMOVE/TRIGGER (W/ RETURN + PARAM)
-        public void AddListener<TParam, TResult>(Event eventName, Func<TParam, TResult> listener)
+        public void AddListener<TParam, TResult>(EventName eventName, Func<TParam, TResult> listener)
         {
             if (!eventListeners.ContainsKey(eventName))
             {
@@ -198,7 +198,7 @@ namespace Patterns
             eventListeners[eventName].Add(listener);
         }
 
-        public void RemoveListener<TParam, TResult>(Event eventName, Func<TParam, TResult> listener)
+        public void RemoveListener<TParam, TResult>(EventName eventName, Func<TParam, TResult> listener)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -206,7 +206,7 @@ namespace Patterns
             }
         }
 
-        public TResult TriggerEvent<TParam, TResult>(Event eventName, TParam param)
+        public TResult TriggerEvent<TParam, TResult>(EventName eventName, TParam param)
         {
             if (eventListeners.ContainsKey(eventName))
             {
@@ -228,9 +228,9 @@ namespace Patterns
     }
 
     //list of possible events
-    public enum Event
+    public enum EventName
     {
-
+        MAP_NODE_CLICKED,
     }
 }
 

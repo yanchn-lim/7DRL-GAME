@@ -16,7 +16,6 @@ namespace DataStructure
 
         private List<GameObject> enemyList = new();
 
-
         public void AddEnemy(GameObject enemy)
         {
             enemyList.Add(enemy);
