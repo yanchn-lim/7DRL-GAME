@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Stats
+public abstract class Stats: MonoBehaviour
 {
     public float Health;
     public float MaxHealth;

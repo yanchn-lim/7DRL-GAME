@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Player : MonoBehaviour
+public class Player : Stats
 {
 
     [HideInInspector]
@@ -51,7 +51,17 @@ public class Player : MonoBehaviour
         MoveCheck = false;
     }
 
-    
+
+    public override void DecreaseValue()
+    {
+        
+    }
+
+    public override void IncreaseValue()
+    {
+        
+    }
+
 
 
 }
