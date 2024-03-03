@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,8 @@ namespace Patterns
     {
         private GameObject prefab;
         private Queue<T> queue;
+        //the output of it does not really matter
+        private Func<T, T> initCommand;
 
         public PoolingPattern(GameObject prefab)
         {
@@ -31,20 +34,48 @@ namespace Patterns
                 Add(parent);
             }
         }
+        public void InitWithParent(int numberOfItems, Transform parent , Func<T, T> initCommand)
+        {
+            this.initCommand = initCommand;
+            for (int i = 0; i < numberOfItems; i++)
+            {
+                Add(parent);
+            }
+        }
+
+        public void Init(int numberOfItems, Func<T, T> initCommand)
+        {
+            this.initCommand = initCommand;
+            for (int i = 0; i < numberOfItems; i++)
+            {
+                Add();
+            }
+        }
 
         public void Add()
         {
             GameObject initObject = GameObject.Instantiate(prefab);
             initObject.SetActive(false);
-            queue.Enqueue(initObject.GetComponent<T>());
+            T component = initObject.GetComponent<T>();
+            TryAddInitCommand(component);
+            queue.Enqueue(component);
         }
 
         public void Add(Transform parent)
         {
             GameObject initObject = GameObject.Instantiate(prefab, parent);
             initObject.SetActive(false);
-            queue.Enqueue(initObject.GetComponent<T>());
+            T component = initObject.GetComponent<T>();
+            TryAddInitCommand(component);
+            queue.Enqueue(component);
+        }
 
+        private void TryAddInitCommand(T component)
+        {
+            if(initCommand != null)
+            {
+                initCommand(component);
+            }
         }
 
         public T Get()
