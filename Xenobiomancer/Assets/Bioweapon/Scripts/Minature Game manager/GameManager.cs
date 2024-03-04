@@ -75,20 +75,22 @@ namespace Bioweapon
             Debug.Log("Start turn");
 
             //do have something here
-            EventManager.Instance.TriggerEvent(EventName.TURN_START);
             elapseTime = 0;
         }
 
 
         public override void Update()
         {
+            Debug.Log("start turn state");
             if(elapseTime < GameManager.Instance.SetUpData.TimePassPerTurn)
             {
-                Debug.Log("running");
+                EventManager.Instance.TriggerEvent(EventName.TURN_START);
+
                 elapseTime += Time.deltaTime;
             }
             else
             {
+                Debug.Log("turn complete! moving to end state");
                 EventManager.Instance.TriggerEvent(EventName.TURN_COMPLETE);
                 mFsm.SetCurrentState((int)GameEvent.End);
             }
@@ -106,8 +108,12 @@ namespace Bioweapon
 
         public override void Enter()
         {
-            Debug.Log("end turn phase");
             EventManager.Instance.AddListener(EventName.TURN_END, (Action)StartNewTurn);            
+        }
+
+        public override void Update()
+        {
+            Debug.Log("End turn state");
         }
 
         public override void Exit()

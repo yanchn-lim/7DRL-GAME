@@ -27,7 +27,7 @@ namespace Bioweapon
             if (firingPosition == null) Debug.LogError("No firing position indicated");
             if (data == null) Debug.LogError("No Data indicated");
             SetUpBullet();
-
+            EventManager.Instance.AddListener(EventName.TURN_COMPLETE, (Action)StopFiringBulletOnTurnComplete);
         }
 
         private void Update()
@@ -73,11 +73,32 @@ namespace Bioweapon
 
         private void FireBullet()
         {
+            EventManager.Instance.TriggerEvent(EventName.TURN_END);//completed their turn
+            StartCoroutine(FireBulletCoroutine());
+        }
+
+        private IEnumerator FireBulletCoroutine()
+        {
+            for(int i = 0; i < data.BulletFiredPerTurn; i++)
+            {
+                SpawnBullet();
+                yield return new WaitForSeconds(data.BulletSpawnInterval);
+            }
+        }
+
+
+        //make sure to stop the coroutine after the turn is completed
+        private void StopFiringBulletOnTurnComplete()
+        {
+            StopAllCoroutines();
+        }
+
+        private void SpawnBullet()
+        {
             var bullet = poolOfBullet.Get();
             bullet.transform.position = firingPosition.position;
             bullet.transform.rotation = gun.rotation;
             bullet.FireBullet();
-            EventManager.Instance.TriggerEvent(EventName.TURN_END);//completed their turn
         }
 
         public void ReturnBullet(Bullet bullet)

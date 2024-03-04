@@ -236,5 +236,8 @@ namespace Patterns
         TURN_COMPLETE, //when every thing is done it will call this event to have a mini time pause for the player.
         TURN_END,//When player ends their turn
     }
+
+    //how the turn trigger
+    //Turn_start --> Turn_Complete --> TurnEnd -->repeat again
 }
 

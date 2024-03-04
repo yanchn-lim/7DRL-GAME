@@ -1,6 +1,7 @@
 ﻿using Patterns;
 using System;
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Bioweapon
@@ -12,7 +13,7 @@ namespace Bioweapon
         private BioweaponBehaviour bioweapon;
 
         private bool canMoveBullet;
-        private bool firstShot; //write comment here
+        //private bool firstShot; //write comment here
         private int countDownBeforeDestory;
 
         private void Start()
@@ -23,15 +24,11 @@ namespace Bioweapon
 
         private void Update()
         {
-            if(canMoveBullet || firstShot)
+            if(canMoveBullet )
             {//add accleration later on
-                //do raycasting here as well
-
+             //do raycasting here as well
+                RaycastToHit();
                 MoveBullet();
-            }
-            else
-            {
-                //slow down the bullet
             }
         }
 
@@ -44,9 +41,24 @@ namespace Bioweapon
         
         public void FireBullet()
         {
+
+            TryRandomiseBullet();
+            //add the event to listen if it can move or not
             EventManager.Instance.AddListener(EventName.TURN_START, (Action)TriggerMoveBullet);
             EventManager.Instance.AddListener(EventName.TURN_COMPLETE, (Action)TriggerStopBullet);
-            firstShot = true;
+        }
+
+        private void TryRandomiseBullet()
+        {
+            //var generator = new Random();
+            float randValue = UnityEngine.Random.value;
+            if(randValue > data.Accuracy)
+            {//then do randomly displace the bullet
+                float angleOfDisplacement = UnityEngine.Random.Range(-data.AngleOfOffset, data.AngleOfOffset);
+                var eularAngle = new Vector3(0, 0, angleOfDisplacement);
+                transform.Rotate(eularAngle);
+            }
+
         }
 
         private void RevertEvent()
@@ -56,32 +68,61 @@ namespace Bioweapon
 
         }
 
+        #region basic function to hit the bullet
+        //simple function to move the bullet
         private void MoveBullet()
         {
             transform.Translate(transform.right * 
                 data.BulletSpeedPerTurn * 
                 Time.deltaTime, Space.World);
         }
-
-        private void TriggerStopBullet()
+        private void RaycastToHit()
         {
-            firstShot = false;
-            canMoveBullet = false;
-            countDownBeforeDestory++;
-            if(countDownBeforeDestory >= data.BulletKillTimer) 
-            {
-                //if more than stop
-                countDownBeforeDestory = 0;
-                RevertEvent();
+            var hit = Physics2D.CircleCastAll(transform.position,
+                data.BulletHitBoxRadius,
+                Vector2.zero,
+                0f);
 
-                bioweapon.ReturnBullet(this);
+            if(hit.Length > 0)
+            {
+                print("hit object");
+                ReturnBullet();
             }
         }
+        #endregion
 
+        #region event base function
+        private void TriggerStopBullet()
+        {
+            canMoveBullet = false;
+            countDownBeforeDestory++;
+            if(countDownBeforeDestory >= data.BulletKillTimer)
+            {
+                //if more than stop
+                ReturnBullet();
+            }
+        }
         private void TriggerMoveBullet()
         {
-            print("move bullet");
             canMoveBullet = true;
+        }
+        #endregion
+
+        private void ReturnBullet()
+        {
+            countDownBeforeDestory = 0;
+            RevertEvent();
+
+            bioweapon.ReturnBullet(this);
+        }
+
+
+
+        //to show the circle raycast
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, data.BulletHitBoxRadius);
         }
     }
 }

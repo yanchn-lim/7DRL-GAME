@@ -10,6 +10,8 @@ namespace Patterns
     {
         private GameObject prefab;
         private Queue<T> queue;
+
+        private Transform parentCache;
         //the output of it does not really matter
         private Func<T, T> initCommand;
 
@@ -29,6 +31,7 @@ namespace Patterns
 
         public void InitWithParent(int numberOfItems, Transform parent)
         {
+            parentCache = parent;
             for (int i = 0; i < numberOfItems; i++)
             {
                 Add(parent);
@@ -37,6 +40,8 @@ namespace Patterns
         public void InitWithParent(int numberOfItems, Transform parent , Func<T, T> initCommand)
         {
             this.initCommand = initCommand;
+            parentCache = parent;
+
             for (int i = 0; i < numberOfItems; i++)
             {
                 Add(parent);
@@ -82,7 +87,14 @@ namespace Patterns
         {
             if (queue.Count == 0)
             {
-                Add();
+                if(parentCache != null)
+                {
+                    Add(parentCache);
+                }
+                else
+                {
+                    Add();  
+                }
             }
             var initObject = queue.Dequeue();
             initObject.gameObject.SetActive(true);

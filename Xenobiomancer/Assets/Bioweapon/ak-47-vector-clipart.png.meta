@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ak-47-vector-clipart_0: -4872516676497805973
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
