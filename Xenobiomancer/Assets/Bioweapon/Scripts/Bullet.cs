@@ -9,27 +9,18 @@ namespace Bioweapon
     public class Bullet : MonoBehaviour
     {
         [SerializeField] private SpriteRenderer spriteRender;
+        [SerializeField] private TrailRenderer trailRenderer;
+        [SerializeField] private ParticleSystem particleForHit;
         private BioweaponScriptableObject data;
         private BioweaponBehaviour bioweapon;
 
-        private bool canMoveBullet;
         //private bool firstShot; //write comment here
         private int countDownBeforeDestory;
 
-        private void Start()
-        {
-            canMoveBullet = false;
-
-        }
-
         private void Update()
         {
-            if(canMoveBullet )
-            {//add accleration later on
-             //do raycasting here as well
-                RaycastToHit();
-                MoveBullet();
-            }
+            RaycastToHit();
+            MoveBullet();
         }
 
         public void Init(BioweaponScriptableObject data, BioweaponBehaviour bioweapon)
@@ -41,11 +32,10 @@ namespace Bioweapon
         
         public void FireBullet()
         {
-
+            trailRenderer.enabled = true;
+            spriteRender.enabled = true;
             TryRandomiseBullet();
-            //add the event to listen if it can move or not
-            EventManager.Instance.AddListener(EventName.TURN_START, (Action)TriggerMoveBullet);
-            EventManager.Instance.AddListener(EventName.TURN_COMPLETE, (Action)TriggerStopBullet);
+
         }
 
         private void TryRandomiseBullet()
@@ -61,12 +51,6 @@ namespace Bioweapon
 
         }
 
-        private void RevertEvent()
-        {
-            EventManager.Instance.RemoveListener(EventName.TURN_START, (Action)TriggerMoveBullet);
-            EventManager.Instance.RemoveListener(EventName.TURN_COMPLETE, (Action)TriggerStopBullet);
-
-        }
 
         #region basic function to hit the bullet
         //simple function to move the bullet
@@ -85,38 +69,38 @@ namespace Bioweapon
 
             if(hit.Length > 0)
             {
-                print("hit object");
-                ReturnBullet();
+                //print("hit object");
+                //ReturnBullet();
+                StartCoroutine(CollisionCoroutine());
             }
         }
-        #endregion
 
-        #region event base function
-        private void TriggerStopBullet()
+        private IEnumerator CollisionCoroutine()
         {
-            canMoveBullet = false;
-            countDownBeforeDestory++;
-            if(countDownBeforeDestory >= data.BulletKillTimer)
+            particleForHit.Play();
+            spriteRender.enabled = false;
+            while(true)
             {
-                //if more than stop
-                ReturnBullet();
+                if(particleForHit.isPlaying)
+                {
+                    yield return null;
+                }
+                else
+                {
+                    break;
+                }
             }
+            ReturnBullet();
         }
-        private void TriggerMoveBullet()
-        {
-            canMoveBullet = true;
-        }
+
         #endregion
 
         private void ReturnBullet()
         {
+            trailRenderer.enabled = false;
             countDownBeforeDestory = 0;
-            RevertEvent();
-
             bioweapon.ReturnBullet(this);
         }
-
-
 
         //to show the circle raycast
         private void OnDrawGizmos()

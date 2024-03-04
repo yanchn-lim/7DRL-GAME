@@ -31,7 +31,7 @@ namespace Bioweapon
         {
             gameStateMachine = new FSM();
             gameStateMachine.Add((int)GameEvent.Start, new StartTurnState(gameStateMachine, (int)GameEvent.Start));
-            gameStateMachine.Add((int)GameEvent.End, new EndTurnState(gameStateMachine, (int)GameEvent.Start));
+            gameStateMachine.Add((int)GameEvent.End, new WaitingForEndTurnState(gameStateMachine, (int)GameEvent.Start));
             gameStateMachine.SetCurrentState((int)GameEvent.Start); 
         }
 
@@ -100,24 +100,25 @@ namespace Bioweapon
     /// <summary>
     /// End turn state is where player plans to end their turn 
     /// </summary>
-    public class EndTurnState : TurnState
+    public class WaitingForEndTurnState : TurnState
     {
-        public EndTurnState(FSM fsm, int id) : base(fsm, id)
+        public WaitingForEndTurnState(FSM fsm, int id) : base(fsm, id)
         {
         }
 
         public override void Enter()
         {
+            Time.timeScale = 0;
             EventManager.Instance.AddListener(EventName.TURN_END, (Action)StartNewTurn);            
         }
 
         public override void Update()
         {
-            Debug.Log("End turn state");
         }
 
         public override void Exit()
         {
+            Time.timeScale = 1f;
             EventManager.Instance.RemoveListener(EventName.TURN_END, (Action)StartNewTurn);
         }
 
