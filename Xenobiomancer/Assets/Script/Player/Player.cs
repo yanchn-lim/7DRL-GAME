@@ -1,6 +1,8 @@
+using Bioweapon;
 using Patterns;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Hierarchy;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +11,11 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Player : Stats, IDamageable
 {
+
+    [SerializeField] private BioweaponBehaviour weapon;
+    public BioweaponBehaviour Weapon { get => weapon; }
+    //text to help the player
+    [SerializeField] private TextMeshProUGUI informationText;
 
     [HideInInspector]
     public FSM fsm = new FSM();
@@ -23,11 +30,8 @@ public class Player : Stats, IDamageable
 
     [SerializeField]
     private LayerMask wallLayer;
-   
-    
 
 
-    // Start is called before the first frame update
     void Start()
     {
         fsm.Add(new PlayerState_IDLE(this));
@@ -36,21 +40,15 @@ public class Player : Stats, IDamageable
         fsm.SetCurrentState((int)PlayerStateType.IDLE);
     }
 
-    // Update is called once per frame
     void Update()
     {
         fsm.Update();
     }
 
-    
-
-
     public void MoveInputCheck()
     {
         PlayerMovement.MovementCheck();
         MoveCheck = PlayerMovement.MoveCheck;
-
-        
     }
 
     public void Moving()
@@ -66,6 +64,9 @@ public class Player : Stats, IDamageable
             PlayerMovement.Move(targetPos);
             ResetMoveCheck();
             LineRenderHandler.DisableLineRenderer();
+
+            //End the player turn
+            EventManager.Instance.TriggerEvent(EventName.TURN_END);
         }
 
     }
@@ -98,13 +99,10 @@ public class Player : Stats, IDamageable
         return targetPos;
     }
 
-    
-
     public void ResetMoveCheck()
     {
         MoveCheck = false;
     }
-
 
     public override void DecreaseValue()
     {
@@ -121,6 +119,20 @@ public class Player : Stats, IDamageable
         Health -= damage;
     }
 
+    public void ChangeToAttackInformation()
+    {
+        informationText.text = "Press W to swap to Move \n" +
+            "Press spacebar to shoot";
+    }
 
+    public void ChangeToIdleInformation()
+    {
+        informationText.text = "Waiting...";
+    }
+
+    public void ChangeToMoveInformation()
+    {
+        informationText.text = "Press W to swap to attack";
+    }
 
 }

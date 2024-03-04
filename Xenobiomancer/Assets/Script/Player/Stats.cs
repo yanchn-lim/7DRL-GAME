@@ -9,7 +9,6 @@ public abstract class Stats: MonoBehaviour
 
     public float Currency;
 
-
     public abstract void IncreaseValue();
     public abstract void DecreaseValue();
     

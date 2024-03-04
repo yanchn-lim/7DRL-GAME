@@ -4,6 +4,7 @@ using UnityEngine;
 using Patterns;
 using System.Security.Cryptography;
 using Mono.Cecil;
+using Bioweapon;
 
 public enum PlayerStateType
 {
@@ -48,29 +49,33 @@ public class PlayerState_IDLE : PlayerState
         mId = (int)(PlayerStateType.IDLE);
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-        Debug.Log("IDLING MIMIMIMIMI");
-    }
-
     public override void Update()
     {
-        base.Update();
 
-        mPlayer.MoveInputCheck();
-        if (mPlayer.MoveCheck)
+        //mPlayer.MoveInputCheck();
+        //if (mPlayer.MoveCheck && !GameManager.Instance.IsStillInStartState)
+        //{
+        //    //that means that the player has completed their action that is decided and the game manager is waiting 
+        //    //the players next movement
+        //    mPlayer.fsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
+        //}
+
+        if (!GameManager.Instance.IsStillInStartState)
         {
-            mPlayer.fsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
+            //Set the tutorial text here!
+            if(PreviousState == null)
+            {
+                mPlayer.fsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
+            }
+            else
+            {
+                mPlayer.fsm.SetCurrentState(this.PreviousState);
+            }
+
         }
-
-
+        //if it is still running then continue to wait until it is over
     }
 
-    public override void FixedUpdate()
-    {
-        base.FixedUpdate();
-    }
 }
 
 public class PlayerState_MOVEMENT : PlayerState
@@ -83,27 +88,34 @@ public class PlayerState_MOVEMENT : PlayerState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("ITS MOVING TIME");
         mPlayer.LineRenderHandler.EnableLineRenderer();
+        mPlayer.ChangeToMoveInformation();
+        EventManager.Instance.AddListener(EventName.TURN_END , PlayerDecidedMovement);
     }
 
     public override void Update()
     {
-        base.Update();
-
-        mPlayer.Moving();
-
-        if (!mPlayer.MoveCheck)
+        if(Input.GetKeyUp(KeyCode.W))
         {
-            mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
+            mFsm.SetCurrentState((int)PlayerStateType.ATTACK);
         }
-        
+        else
+        {
+            mPlayer.Moving();
+        }
     }
 
-    public override void FixedUpdate()
+    public override void Exit()
     {
-        base.FixedUpdate();
+        mPlayer.LineRenderHandler.DisableLineRenderer();
+        EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
     }
+
+    private void PlayerDecidedMovement()
+    {
+        mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
+    }
+    
 }
 
 public class PlayerState_ATTACK : PlayerState
@@ -115,20 +127,32 @@ public class PlayerState_ATTACK : PlayerState
 
     public override void Enter()
     {
-        base.Enter();
+        EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
+        mPlayer.ChangeToAttackInformation();
     }
 
     public override void Update()
     {
-        base.Update();
-
-
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
+        }
+        else
+        {
+            mPlayer.Weapon.UpdateFunction();
+        }
     }
 
-    public override void FixedUpdate()
+    public override void Exit()
     {
-        base.FixedUpdate();
+        EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
     }
+
+    private void PlayerDecidedMovement()
+    {
+        mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
+    }
+
 }
 
 

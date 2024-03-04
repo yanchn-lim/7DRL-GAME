@@ -11,7 +11,10 @@ namespace Bioweapon
         [SerializeField] private GameManagerScriptableObject setUpData;
 
         public GameManagerScriptableObject SetUpData { get => setUpData;}
-        public FSM gameStateMachine;
+
+        public bool IsStillInStartState { get; private set; }
+
+        private FSM gameStateMachine;
 
         //you can ignore this awake as because yan chun FSM dont allow empty events
         private void Awake()
@@ -48,6 +51,11 @@ namespace Bioweapon
             }
         }
 
+        public void SetBoolForStartState(bool value)
+        {
+            IsStillInStartState = value;
+        }
+
     }
 
     public class TurnState : FSMState
@@ -72,10 +80,10 @@ namespace Bioweapon
 
         public override void Enter()
         {
-            Debug.Log("Start turn");
-
             //do have something here
             elapseTime = 0;
+            //make sure it is false
+            GameManager.Instance.SetBoolForStartState(true);
         }
 
 
@@ -84,14 +92,14 @@ namespace Bioweapon
             Debug.Log("start turn state");
             if(elapseTime < GameManager.Instance.SetUpData.TimePassPerTurn)
             {
-                EventManager.Instance.TriggerEvent(EventName.TURN_START);
-
                 elapseTime += Time.deltaTime;
             }
             else
             {
                 Debug.Log("turn complete! moving to end state");
                 EventManager.Instance.TriggerEvent(EventName.TURN_COMPLETE);
+
+                GameManager.Instance.SetBoolForStartState(false);
                 mFsm.SetCurrentState((int)GameEvent.End);
             }
         }

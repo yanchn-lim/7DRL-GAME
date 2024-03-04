@@ -16,7 +16,6 @@ public class InputHandler : MonoBehaviour
 
     public bool GetMovementKeyDown()
     {
-        
         return Input.GetKeyDown(KeyCode.W);
     }
 }
