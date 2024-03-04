@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Behaviour : MonoBehaviour
+public class Enemy_Behaviour : Enemy_Base
 {
-    public Enemy_Stats enemy_Stats;
+/*    public Enemy_Stats enemy_Stats;
     public Behaviours currentBehavior;
     public GameObject Player;
-    public bool isDamageTaken =false;
+    public bool isDamageTaken = false;
     public bool SightLine = false;
     public float currentHealth;
-    public float currentProtectLevel;
+    public float currentProtectLevel;*/
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +23,7 @@ public class Enemy_Behaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         switch (currentBehavior)
         {
             case Behaviours.Patrolling:
@@ -55,13 +56,13 @@ public class Enemy_Behaviour : MonoBehaviour
 
             case Behaviours.Death:
                 ResetStats();
-                Destroy(gameObject);
+                UnityEngine.Object.Destroy(gameObject);
                 Debug.Log("Removed enemy");
                 break;
         }
     }
 
-    public void DamageonHealth()
+    /*public void DamageonHealth()
     {
         if (isDamageTaken)
         {
@@ -162,7 +163,7 @@ public class Enemy_Behaviour : MonoBehaviour
     {
         enemy_Stats.current_Health = enemy_Stats.max_Health;
         enemy_Stats.protectionLevel = enemy_Stats.max_Protection;
-    }
+    }*/
 
 
 }
