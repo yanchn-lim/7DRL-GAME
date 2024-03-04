@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandleInputs : MonoBehaviour
+public class InputHandler : MonoBehaviour
 {
     public float GetHorizontalInput()
     {
@@ -12,5 +12,11 @@ public class HandleInputs : MonoBehaviour
     public float GetVerticalInput()
     {
         return Input.GetAxis("Vertical");
+    }
+
+    public bool GetMovementKeyDown()
+    {
+        
+        return Input.GetKeyDown(KeyCode.W);
     }
 }
