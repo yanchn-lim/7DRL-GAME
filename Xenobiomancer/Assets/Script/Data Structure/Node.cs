@@ -8,24 +8,25 @@ namespace DataStructure
     {
         public int Id { get; set; }
         public int Depth { get; set; }
+        public int IndexInDepth { get; set; }
         public Vector3 Position { get; set; }
-        public Encounter EncounterType { get; set; }
+        public NodeEncounter EncounterType { get; set; }
         public bool IsAccesible { get; set; }
-
-        public enum Encounter
-        {
-            INFESTED,
-            ABANDONED
-        }
+        public List<Node> AdjacencyList { get; set; }
+        public List<Node> ConnectedNodesPrevDepth { get; set; }
         public Node()
         {
-
+            AdjacencyList = new();
+            ConnectedNodesPrevDepth = new();
         }
 
         public Node(int id, int depth)
         {
             Id = id;
             Depth = depth;
+            AdjacencyList = new();
+            ConnectedNodesPrevDepth = new();
+
         }
     }
 

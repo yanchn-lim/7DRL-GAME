@@ -3,11 +3,13 @@ namespace DataStructure
 {
     public class Graph
     {
+        //node id, node connected
         public Dictionary<int, List<Node>> AdjacencyList;
+        //list of all nodes
         public List<Node> NodeList = new List<Node>();
 
         public int NodeCount = 0;
-
+        public int EdgeCount = 0;
         //VISUAL
         public Dictionary<int, List<int>> EdgeList;
         public List<Edge> edgeList = new();
@@ -40,6 +42,15 @@ namespace DataStructure
                 AdjacencyList[sourceId].Add(target);
                 EdgeList[edgeCount] = new List<int>();
                 edgeList.Add(edge);
+            }
+        }
+
+        public void AddEdge(int sourceId, Node target)
+        {
+            if (AdjacencyList.ContainsKey(sourceId) && AdjacencyList.ContainsKey(target.Id)) //check if the adjacency list contains the source and the target
+            {
+                AdjacencyList[sourceId].Add(target);
+                EdgeCount++;
             }
         }
 

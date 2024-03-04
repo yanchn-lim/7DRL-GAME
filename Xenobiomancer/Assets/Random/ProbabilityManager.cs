@@ -36,7 +36,7 @@ namespace Patterns
                 foreach (var item in weightedItems)
                 {
                     // Generate a random value within the total weight range.
-                    float randomValue = Random.Range(0f, totalWeight);
+                    float randomValue = Random.Range(0, totalWeight);
                     float currentWeight = item.Value;
 
                     // Check if the random value falls within the current item's weight range.
@@ -44,7 +44,6 @@ namespace Patterns
                     {
                         return item.Key;
                     }
-
                 }
             }
 
