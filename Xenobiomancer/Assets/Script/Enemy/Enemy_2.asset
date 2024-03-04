@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a5eb0d8af2e9104d805f08a7102fb26, type: 3}
-  m_Name: Enemy_1
+  m_Name: Enemy_2
   m_EditorClassIdentifier: 
-  enemyName: Slay
-  max_Health: 100
-  min_Health: -1
-  current_Health: 93
+  enemyName: Trop
+  max_Health: 110
+  min_Health: 0
+  current_Health: 110
   spawnPoints: []
-  damageToPlayer: 0
-  protectionLevel: 10
-  RangeofSight: 5
-  MovementSpeed: 2
+  damageToPlayer: 15
+  protectionLevel: 100
+  RangeofSight: 7
+  MovementSpeed: 4
   max_Protection: 100

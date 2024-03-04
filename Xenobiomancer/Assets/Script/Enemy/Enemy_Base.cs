@@ -2,67 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Behaviour : Enemy_Base
+public class Enemy_Base : MonoBehaviour
 {
-/*    public Enemy_Stats enemy_Stats;
+    public Enemy_Stats enemy_Stats;
     public Behaviours currentBehavior;
     public GameObject Player;
     public bool isDamageTaken = false;
     public bool SightLine = false;
     public float currentHealth;
-    public float currentProtectLevel;*/
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        Player = GameObject.Find("Player");
-        currentBehavior = Behaviours.Patrolling;
-    }
+    public float currentProtectLevel;
 
 
-    // Update is called once per frame
-    void Update()
-    {
-
-        switch (currentBehavior)
-        {
-            case Behaviours.Patrolling:
-                Debug.Log("Patrolling start");
-                // Update animations
-                FindPlayer();
-                break;
-
-            case Behaviours.Attacking:
-                Debug.Log("Attacking start");
-                StartledAndMove();
-                StillInSight();
-                break;
-
-            case Behaviours.TakingDamage:
-                Debug.Log("Taking Damage");
-                StartledAndMove();
-                if (enemy_Stats.protectionLevel <= 0)
-                {
-                    DamageonHealth();
-                    Debug.Log("Enemy no more armor");
-                }
-                else
-                {
-                    protectionDown();
-                    Debug.Log("Armor hits");
-                }
-               
-                break;
-
-            case Behaviours.Death:
-                ResetStats();
-                UnityEngine.Object.Destroy(gameObject);
-                Debug.Log("Removed enemy");
-                break;
-        }
-    }
-
-    /*public void DamageonHealth()
+    public void DamageonHealth()
     {
         if (isDamageTaken)
         {
@@ -118,13 +69,13 @@ public class Enemy_Behaviour : Enemy_Base
             Vector3 direction = (Player.transform.position - transform.position).normalized;
             transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
         }
-        
+
     }
 
     public void MoveToPlayer()
     {
-            Vector3 direction = (Player.transform.position - transform.position).normalized;
-            transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
+        Vector3 direction = (Player.transform.position - transform.position).normalized;
+        transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
     }
 
     public void StillInSight()
@@ -163,15 +114,5 @@ public class Enemy_Behaviour : Enemy_Base
     {
         enemy_Stats.current_Health = enemy_Stats.max_Health;
         enemy_Stats.protectionLevel = enemy_Stats.max_Protection;
-    }*/
-
-
-}
-
-public enum Behaviours
-{
-    Patrolling,
-    Attacking,
-    TakingDamage,
-    Death
+    }
 }
