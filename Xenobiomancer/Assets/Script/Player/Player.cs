@@ -1,19 +1,25 @@
 using Patterns;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Hierarchy;
 using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class Player : Stats
+public class Player : Stats, IDamageable
 {
 
     [HideInInspector]
     public FSM fsm = new FSM();
     public PlayerMovement PlayerMovement;
+    public LineRenderHandler LineRenderHandler;
+    public Camera Main;
     
 
     public bool MoveCheck;
+
+    public float ClampRadius;
+   
     
 
 
@@ -32,10 +38,7 @@ public class Player : Stats
         fsm.Update();
     }
 
-    public void MovePlayer()
-    {
-        PlayerMovement.Move();
-    }
+    
 
 
     public void MoveInputCheck()
@@ -44,6 +47,42 @@ public class Player : Stats
         MoveCheck = PlayerMovement.MoveCheck;
 
         
+    }
+
+    public void Moving()
+    {
+        //get the position that the player will move towards
+        Vector2 targetPos = CalculateClampedPosition();
+
+        LineRenderHandler.MovementLine(targetPos);
+
+        //if left click then move the player
+        if (Input.GetMouseButtonDown(0))
+        {
+            PlayerMovement.Move(targetPos);
+            ResetMoveCheck();
+            LineRenderHandler.DisableLineRenderer();
+        }
+
+    }
+
+    private Vector2 CalculateClampedPosition()
+    {
+        //get mouse position on the screen
+        Vector2 mouseWorldPos = Main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 playerPos = transform.position;
+
+        // Calculate the direction from player to mouse
+        Vector2 direction = mouseWorldPos - playerPos;
+
+        // Clamp the distance to the ClampRadius
+        float clampedDistance = Mathf.Clamp(direction.magnitude, 0, ClampRadius);
+
+        // Set the clamped position within the radius
+        Vector2 clampedDirection = direction.normalized * clampedDistance;
+        Vector2 targetPos = playerPos + clampedDirection;
+
+        return targetPos;
     }
 
     public void ResetMoveCheck()
@@ -60,6 +99,11 @@ public class Player : Stats
     public override void IncreaseValue()
     {
         
+    }
+
+    public void Damage(float damage)
+    {
+        Health -= damage;
     }
 
 

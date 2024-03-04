@@ -84,20 +84,14 @@ public class PlayerState_MOVEMENT : PlayerState
     {
         base.Enter();
         Debug.Log("ITS MOVING TIME");
+        mPlayer.LineRenderHandler.EnableLineRenderer();
     }
 
     public override void Update()
     {
         base.Update();
 
-        
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            mPlayer.MovePlayer();
-
-            mPlayer.ResetMoveCheck();
-        }
+        mPlayer.Moving();
 
         if (!mPlayer.MoveCheck)
         {
