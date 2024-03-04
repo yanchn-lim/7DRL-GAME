@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Hierarchy;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class Player : Stats, IDamageable
@@ -14,11 +15,14 @@ public class Player : Stats, IDamageable
     public PlayerMovement PlayerMovement;
     public LineRenderHandler LineRenderHandler;
     public Camera Main;
-    
+
 
     public bool MoveCheck;
 
     public float ClampRadius;
+
+    [SerializeField]
+    private LayerMask wallLayer;
    
     
 
@@ -82,8 +86,19 @@ public class Player : Stats, IDamageable
         Vector2 clampedDirection = direction.normalized * clampedDistance;
         Vector2 targetPos = playerPos + clampedDirection;
 
+
+        //check if there is a wall in the path
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, clampedDistance, wallLayer);
+
+        if (hit.collider != null)
+        {
+            targetPos = hit.point;
+        }
+
         return targetPos;
     }
+
+    
 
     public void ResetMoveCheck()
     {
