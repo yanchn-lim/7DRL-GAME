@@ -40,7 +40,6 @@ public class Enemy_Behaviour : MonoBehaviour
 
             case Behaviours.TakingDamage:
                 Debug.Log("Taking Damage");
-                MoveToPlayer();
                 StartledAndMove();
                 if (enemy_Stats.protectionLevel <= 0)
                 {
@@ -88,7 +87,8 @@ public class Enemy_Behaviour : MonoBehaviour
             Debug.Log("Trigger entered");
             currentBehavior = Behaviours.TakingDamage;
             DamageonHealth();
-            isDamageTaken = true;// Call this immediately upon getting hit
+            isDamageTaken = true;
+            currentBehavior = Behaviours.Attacking;// Call this immediately upon getting hit
         }
     }
 
@@ -123,7 +123,7 @@ public class Enemy_Behaviour : MonoBehaviour
 
     public void MoveToPlayer()
     {
-                    Vector3 direction = (Player.transform.position - transform.position).normalized;
+            Vector3 direction = (Player.transform.position - transform.position).normalized;
             transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
     }
 
