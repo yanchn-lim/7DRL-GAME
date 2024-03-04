@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 246456578}
   - component: {fileID: 246456579}
   - component: {fileID: 246456581}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: Enemy_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -223,6 +223,10 @@ MonoBehaviour:
   enemy_Stats: {fileID: 11400000, guid: 802225732748abf438967094b6658fae, type: 2}
   currentBehavior: 0
   Player: {fileID: 1971141961}
+  isDamageTaken: 0
+  SightLine: 0
+  currentHealth: 0
+  currentProtectLevel: 0
 --- !u!58 &246456579
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -937,7 +941,7 @@ GameObject:
   - component: {fileID: 1971141966}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

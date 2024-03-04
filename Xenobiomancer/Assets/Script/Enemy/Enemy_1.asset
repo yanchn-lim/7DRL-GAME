@@ -15,9 +15,10 @@ MonoBehaviour:
   enemyName: Slay
   max_Health: 100
   min_Health: -1
-  current_Health: 0
+  current_Health: 93
   spawnPoints: []
   damageToPlayer: 0
   protectionLevel: 10
-  RangeofSight: 5
-  MovementSpeed: 2
+  RangeofSight: 7
+  MovementSpeed: 5
+  max_Protection: 100
