@@ -22,6 +22,8 @@ public class Player : Stats, IDamageable
     public PlayerMovement PlayerMovement;
     public LineRenderHandler LineRenderHandler;
     public Camera Main;
+    [SerializeField]
+    private PlayerData playerData;
 
 
     public bool MoveCheck;
@@ -38,12 +40,19 @@ public class Player : Stats, IDamageable
         fsm.Add(new PlayerState_MOVEMENT(this));
         fsm.Add(new PlayerState_ATTACK(this));
         fsm.SetCurrentState((int)PlayerStateType.IDLE);
+
+
+        InitializeStats(playerData.health, playerData.health, playerData.currency);
     }
 
     void Update()
     {
         fsm.Update();
     }
+
+
+
+    #region Movement
 
     public void MoveInputCheck()
     {
@@ -104,19 +113,50 @@ public class Player : Stats, IDamageable
         MoveCheck = false;
     }
 
-    public override void DecreaseValue()
+
+
+
+    #endregion
+
+
+
+
+    public override void IncreaseHealth(float amount)
     {
-        
+        base.IncreaseHealth(amount);
     }
 
-    public override void IncreaseValue()
+    public override void DecreaseHealth(float amount)
     {
-        
+        base.DecreaseHealth(amount);
     }
+
+    public override void IncreaseCurrency(float amount)
+    {
+        base.IncreaseCurrency(amount);
+    }
+
+    public override void DecreaseCurrency(float amount)
+    {
+        base.DecreaseCurrency(amount); 
+    }
+
+    public override void InitializeStats(float initialHealth, float maxHealth, float initialCurrency)
+    {
+        base.InitializeStats(initialHealth, maxHealth, initialCurrency);
+    }
+
+
+
+
+
+
 
     public void Damage(float damage)
     {
-        Health -= damage;
+        DecreaseHealth(damage);
+
+        Debug.Log(Health);
     }
 
     public void ChangeToAttackInformation()

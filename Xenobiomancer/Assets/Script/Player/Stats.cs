@@ -4,12 +4,58 @@ using UnityEngine;
 
 public abstract class Stats: MonoBehaviour
 {
-    public float Health;
-    public float MaxHealth;
+    private float health;
+    private float maxHealth;
+    private float currency;
 
-    public float Currency;
+    #region Getters and Setters
+    public float Health
+    {
+        get { return health; }
+        set { health = value; }
+    }
 
-    public abstract void IncreaseValue();
-    public abstract void DecreaseValue();
-    
+    public float MaxHealth
+    {
+        get { return maxHealth; }
+        set { maxHealth = value; }
+    }
+
+    public float Currency
+    {
+        get { return currency; }
+        set { currency = value; }
+    }
+    #endregion
+
+    public virtual void InitializeStats(float initialHealth, float maxHealth, float initialCurrency)
+    {
+        Health = initialHealth;
+        MaxHealth = maxHealth;
+        Currency = initialCurrency;
+    }
+
+    public virtual void IncreaseHealth(float amount)
+    {
+        Health += amount;
+        Health = Mathf.Clamp(Health, 0f, MaxHealth);
+    }
+
+    public virtual void DecreaseHealth(float amount)
+    {
+        Health -= amount;
+        Health = Mathf.Clamp(Health, 0f, MaxHealth);
+    }
+
+    public virtual void IncreaseCurrency(float amount)
+    {
+        Currency += amount;
+    }
+
+    public virtual void DecreaseCurrency(float amount)
+    {
+        Currency -= amount;
+        Currency = Mathf.Max(0f, Currency);
+    }
+
 }
