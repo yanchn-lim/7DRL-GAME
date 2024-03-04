@@ -49,6 +49,11 @@ public class PlayerState_IDLE : PlayerState
         mId = (int)(PlayerStateType.IDLE);
     }
 
+    public override void Enter()
+    {
+        mPlayer.ChangeToIdleInformation();
+    }
+
     public override void Update()
     {
 

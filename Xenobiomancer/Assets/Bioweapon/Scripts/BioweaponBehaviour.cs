@@ -30,16 +30,7 @@ namespace Bioweapon
             EventManager.Instance.AddListener(EventName.TURN_COMPLETE, (Action)StopFiringBulletOnTurnComplete);
         }
 
-        //this was meant for testing
-        //private void Update()
-        //{
-        //    RotateGunBasedOnMousePosition();
-        //    if (Input.GetKeyUp(KeyCode.Space))
-        //    {
-        //        FireBullet();
-        //    }
-        //}
-
+        //this will be called in the attack state of the player
         public void UpdateFunction()
         {
             RotateGunBasedOnMousePosition();
