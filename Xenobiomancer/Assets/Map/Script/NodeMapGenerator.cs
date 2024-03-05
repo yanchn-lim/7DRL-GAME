@@ -15,9 +15,13 @@ public class NodeMapGenerator : MonoBehaviour
     GameObject masterNodePrefab,nodePrefab,linePrefab;
 
     MapGraph graph;
+    Dictionary<NodeEncounter, float> encounterProbability;
 
     private void Start()
     {
+        encounterProbability = new();
+        encounterProbability.Add(NodeEncounter.INFESTED, 2);
+        encounterProbability.Add(NodeEncounter.ABANDONED, 1);
         EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, DisableNodesInDepth);
         EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, ConnectedNodeAccessible);
         InitializeMap();
@@ -64,13 +68,21 @@ public class NodeMapGenerator : MonoBehaviour
                 node.Depth = depth;
                 node.IndexInDepth = i;
                 node.Position = new(x, y);
-                node.EncounterType = NodeEncounter.INFESTED;
+                node.EncounterType = GetRandomEncounter();
                 graph.AddNode(node);
                 
                 //loading flag
 
             }
         }
+    }
+
+    /// <summary>
+    /// Get a random encounter using the weighted probability manager
+    /// </summary>
+    NodeEncounter GetRandomEncounter()
+    {
+        return ProbabilityManager.SelectWeightedItem(encounterProbability);
     }
 
     ///<summary>
@@ -161,6 +173,10 @@ public class NodeMapGenerator : MonoBehaviour
         WalkConnections(selectedNode);
     }
 
+    /// <summary>
+    /// Check if the map is a connected graph. If not, it will
+    /// do some action to make it a connected graph.
+    /// </summary>
     void CheckIfMapConnected()
     {
         if (graph.IsConnectedGraph())
@@ -168,6 +184,8 @@ public class NodeMapGenerator : MonoBehaviour
             return;
         }
 
+        //finish up this part
+        //incomplete
         List<MapNode> startingRooms = GetStartingRooms();
         int minCount = 999999999;
         Node detachedPathStartNode;
@@ -187,6 +205,10 @@ public class NodeMapGenerator : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Check the entire node list and removes node / edges that
+    /// does not satisfy conditions that we set
+    /// </summary>
     void PruneMap()
     {
         Node[] nodeList = new Node[graph.NodeList.Count];
@@ -205,6 +227,7 @@ public class NodeMapGenerator : MonoBehaviour
         }
     }
 
+    #region DISPLAYING MAP
     void DisplayMap()
     {
         foreach (MapNode node in graph.NodeList)
@@ -233,31 +256,36 @@ public class NodeMapGenerator : MonoBehaviour
         go.localScale = new(1, 1, 1);        
         go.GetComponent<NodeObject>().Node = node;
         node.Object = go.GetComponent<NodeObject>();
-        if (node.Depth == 0)
-            node.Object.MakeAccessible();
-    }
-    void DisplayMasterNode(MapNode node)
-    {
-        var go = Instantiate(masterNodePrefab, boxTransform).GetComponent<RectTransform>();
-        go.gameObject.name = $"Node-{node.Depth}-D-{node.IndexInDepth}";
-        go.localPosition = node.Position;
-        go.localScale = new(1, 1, 1);
-        go.GetComponent<NodeObject>().Node = node;
-        node.Object = go.GetComponent<NodeObject>();
+        node.Object.SetSprite();
         if (node.Depth == 0)
             node.Object.MakeAccessible();
     }
 
+    void DisplayMasterNode(MapNode node)
+    {
+        //spawn a master node from a prefab
+        var go = Instantiate(masterNodePrefab, boxTransform).GetComponent<RectTransform>();
+        go.gameObject.name = $"MasterNode";
+        go.localPosition = node.Position;
+        go.localScale = new(1, 1, 1);
+        go.GetComponent<NodeObject>().Node = node;
+        node.Object = go.GetComponent<NodeObject>();
+    }
+
     void DisplayPath(MapNode node, MapNode target)
     {
-        //for display
+        //spawn a line
         var line = Instantiate(linePrefab, boxTransform).GetComponent<LineRenderer>();
         line.GetComponent<RectTransform>().localPosition = new(0, 0);
         line.useWorldSpace = false;
         line.SetPosition(0, node.Position + Vector3.back);
         line.SetPosition(1, target.Position + Vector3.back);
     }
+    #endregion
 
+    /// <summary>
+    /// Disable nodes in the same depth as the node provided
+    /// </summary>
     void DisableNodesInDepth(Node node)
     {
         List<MapNode> nodesInDepth = graph.GetNodesInDepth(node.Depth);
@@ -271,6 +299,9 @@ public class NodeMapGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Makes the connected node in the next depth accessible
+    /// </summary>
     void ConnectedNodeAccessible(Node node)
     {
         List<MapNode> nodesConnected = graph.GetConnectedNextDepth(node.Id);

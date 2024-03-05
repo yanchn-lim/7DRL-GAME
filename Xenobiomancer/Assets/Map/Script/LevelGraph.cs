@@ -4,5 +4,6 @@ using UnityEngine;
 using DataStructure;
 public class LevelGraph : Graph
 {
-    
+    [SerializeField]
+    int maxDepth;
 }
