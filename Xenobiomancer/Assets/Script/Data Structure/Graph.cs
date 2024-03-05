@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using UnityEngine;
 namespace DataStructure
 {
-    public class Graph
+    public abstract class Graph
     {
         //node id, node connected
         public Dictionary<int, List<Node>> AdjacencyList;
@@ -9,19 +10,10 @@ namespace DataStructure
         public List<Node> NodeList = new List<Node>();
 
         public int NodeCount = 0;
-        public int EdgeCount = 0;
-        //VISUAL
-        public Dictionary<int, List<int>> EdgeList;
-        public List<Edge> edgeList = new();
-        //...
 
         public Graph()
         {
             AdjacencyList = new Dictionary<int, List<Node>>();
-
-            //VISUAL
-            EdgeList = new Dictionary<int, List<int>>();
-            //...
         }
 
         public void AddNode(Node node)
@@ -30,19 +22,8 @@ namespace DataStructure
 
             NodeList.Add(node);
             AdjacencyList[node.Id] = new List<Node>();
-            EdgeList[node.Id] = new List<int>();
             NodeCount++;
 
-        }
-
-        public void AddEdge(int sourceId, Node target,int edgeCount,Edge edge)
-        {
-            if (AdjacencyList.ContainsKey(sourceId) && AdjacencyList.ContainsKey(target.Id)) //check if the adjacency list contains the source and the target
-            {
-                AdjacencyList[sourceId].Add(target);
-                EdgeList[edgeCount] = new List<int>();
-                edgeList.Add(edge);
-            }
         }
 
         public void AddEdge(int sourceId, Node target)
@@ -50,17 +31,23 @@ namespace DataStructure
             if (AdjacencyList.ContainsKey(sourceId) && AdjacencyList.ContainsKey(target.Id)) //check if the adjacency list contains the source and the target
             {
                 AdjacencyList[sourceId].Add(target);
-                EdgeCount++;
+                AdjacencyList[target.Id].Add(GetNode(sourceId));
+
             }
         }
 
-        //VISUAL
-        public void AddToEdgeList(int edgeid, Node target)
+        public Node GetNode(int id)
         {
-            EdgeList[edgeid].Add(target.Id);
+            foreach (var node in NodeList)
+            {
+                if(node.Id == id)
+                {
+                    return node;
+                }
+            }
 
+            return null;
         }
-        //...
 
         public void RemoveNode(Node node)
         {
@@ -91,17 +78,23 @@ namespace DataStructure
             return new List<Node>();
         }
 
-        //VISUAL
-        public List<int> GetNodeEdges(int id)
+        public List<Node> GetConnectedNextDepth(int id)
         {
-            if (EdgeList.ContainsKey(id))
+            List<Node> nextDepth = new();
+            if (AdjacencyList.ContainsKey(id))//searches the list and returns a list of nodes connected
             {
-                return EdgeList[id];
+                foreach (var node in AdjacencyList[id])
+                {
+                    if(node.Depth == GetNode(id).Depth + 1)
+                    {
+                        nextDepth.Add(node);
+                    }
+                }
+                return nextDepth;
             }
 
-            return new List<int>();
+            return null;
         }
-        //...
 
         public List<Node> GetNodesInDepth(int depth)
         {
@@ -118,7 +111,36 @@ namespace DataStructure
             return NodesInDepth;
         }
 
-    
+        public bool IsConnectedGraph()
+        {
+            System.Diagnostics.Stopwatch time = new();
+            time.Start();
+            List<Node> visited = new();
+            
+            List<Node> nodeFirstDepth = GetNodesInDepth(0);
+            int randIndex = Random.Range(0, nodeFirstDepth.Count);
+            Search(nodeFirstDepth[randIndex], visited);
+
+            Debug.Log($"VISITED : {visited.Count} \nADJACENTLIST : {AdjacencyList.Count}");
+            Debug.Log($"TIME ELAPSED : {time.ElapsedMilliseconds}");
+            return visited.Count == AdjacencyList.Count;
+        }
+
+        public void Search(Node node, List<Node> visited)
+        {
+            if (!visited.Contains(node))
+            {
+                visited.Add(node);
+
+                if(AdjacencyList.TryGetValue(node.Id,out List<Node> neighbour))
+                {
+                    foreach (var n in neighbour)
+                    {
+                        Search(n, visited);
+                    }
+                }
+            }
+        }
     }
 
 }

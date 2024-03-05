@@ -6,39 +6,42 @@ using Patterns;
 public class NodeMapGenerator : MonoBehaviour
 {
     [SerializeField]
-    int MaxDepth,MinNodesPerDepth, MaxNodesPerDepth, MinStartRooms, MaxStartRooms;
+    int maxDepth, maxNodesPerDepth, maxStartRooms;
     [SerializeField]
-    int GridSize;
+    float offX, offY, spacingY, spacingX;
     [SerializeField]
     RectTransform boxTransform;
-
-    Rect box;
-    Graph graph;
     [SerializeField]
     GameObject nodePrefab,linePrefab;
+
+    MapGraph graph;
+
     private void Start()
     {
+        EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, DisableNodesInDepth);
+        EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, ConnectedNodeAccessible);
         InitializeMap();
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.RemoveListener<Node>(EventName.MAP_NODE_CLICKED, DisableNodesInDepth);
+        EventManager.Instance.RemoveListener<Node>(EventName.MAP_NODE_CLICKED, ConnectedNodeAccessible);
     }
 
     void InitializeMap()
     {
         graph = new();
-        box = boxTransform.rect;
 
         //move to start of game
         RandSeedManager.GenerateSeed();
 
         //GENERATE NODES
-        //GenerateNodes();
         GenerateNodeGrid();
         GeneratePath();
-
-        //GENERATE THE EDGES
-        //GenerateEdges();
-
-
-        //DISPLAY THE NODE + EDGES
+        PruneMap();
+        DisplayMap();
+        CheckIfMapConnected();
 
         //debugging
         Debugging();
@@ -52,85 +55,64 @@ public class NodeMapGenerator : MonoBehaviour
         //}
     }
 
-    void GenerateGrid()
-    {
-        int xNum = Mathf.FloorToInt(box.width/GridSize);
-        int yNum = Mathf.FloorToInt(box.height/GridSize);
-        float halfSize = GridSize / 2;
-
-        for (int x = 0; x < xNum; x++)
-        {
-            for (int y = 0; y < yNum; y++)
-            {
-                float xPos = x * GridSize;
-                float yPos = -y * GridSize;
-
-                RectTransform cellRect = new GameObject($"Cell_{x}_{y}").AddComponent<RectTransform>();
-                cellRect.SetParent(boxTransform);
-                cellRect.anchorMin = new Vector2(0, 1);
-                cellRect.anchorMax = new Vector2(0, 1);
-                cellRect.pivot = new Vector2(0, 1);
-                cellRect.anchoredPosition = new Vector2(xPos, yPos);
-                cellRect.localScale = new(1, 1, 1);
-                cellRect.localRotation = Quaternion.Euler(0,0,0) ;
-
-            }
-        }
-    }
-
+    ///<summary>
+    ///Generate a grid of nodes without paths
+    ///</summary>
     void GenerateNodeGrid()
     {
-        for (int depth = 0; depth < MaxDepth; depth++)
+        for (int depth = 0; depth < maxDepth; depth++)
         {
-            for (int i = 0; i < MaxNodesPerDepth; i++)
+            for (int i = 0; i < maxNodesPerDepth; i++)
             {
                 float y = offY + depth * spacingY;
                 float x = offX + i * spacingX;
 
                 //generate nodes here
-                Node node = new();
+                MapNode node = new();
                 node.Id = graph.NodeCount;
                 node.Depth = depth;
                 node.IndexInDepth = i;
-                node.Position = new(x, y);
-
-                var go = Instantiate(nodePrefab, boxTransform).GetComponent<RectTransform>();
-                go.gameObject.name = $"Node-{depth}-D-{i}";
-                go.localPosition = node.Position;
-                go.localScale = new(1, 1, 1);
-
+                node.Position = new(x, y);               
                 graph.AddNode(node);
+
                 //loading flag
+
             }
         }
     }
 
-    List<Node> GetStartingRooms()
+    ///<summary>
+    ///Randomly get starting nodes from the starting depth of 0
+    ///</summary>
+    List<MapNode> GetStartingRooms()
     {
-        Debug.Log("getting starting rooms");
-        List<Node> nodesAtStart = graph.GetNodesInDepth(0);
-        List<Node> startingNodes = new();
-        //int numRooms = Random.Range(MinStartRooms, MaxStartRooms + 1);
+        List<MapNode> nodesAtStart = graph.GetNodesInDepth(0);
+        List<MapNode> startingNodes = new();
 
-        for (int i = 0; i < MaxStartRooms; i++)
+        for (int i = 0; i < maxStartRooms; i++)
         {
             int randIndex = Random.Range(0, nodesAtStart.Count);
-            Node selectedNode = nodesAtStart[randIndex];
+            MapNode selectedNode = nodesAtStart[randIndex];
             if (!startingNodes.Contains(selectedNode))
             {
                 startingNodes.Add(selectedNode);
-                Debug.Log("adding node");
             }
         }
+
+        //flag loading
 
         return startingNodes;
     }
 
+    ///<summary>
+    ///For each of the starting nodes, it will walk a path
+    ///towards the end depth
+    ///</summary>
     void GeneratePath()
     {
-        Debug.Log("generating paths");
-        List<Node> startingNodes = GetStartingRooms();
-        Debug.Log(startingNodes.Count);
+        List<MapNode> startingNodes = GetStartingRooms();
+
+        //walk the path from the starting node to the final depth
         foreach (var node in startingNodes)
         {
             int index = node.IndexInDepth;
@@ -138,27 +120,30 @@ public class NodeMapGenerator : MonoBehaviour
         }
     }
 
-    void WalkConnections(Node node)
+    ///<summary>
+    ///For each of the starting nodes, it will walk a path
+    ///towards the end depth
+    ///</summary>
+    void WalkConnections(MapNode node)
     {
-        Debug.Log($"walking : node_{node.Id}");
-        if(node.Depth == MaxDepth - 1)
+        if(node.Depth == maxDepth - 1)
         {
             //connect to master node here?
             return;
         }
 
-        List<Node> nextDepth = graph.GetNodesInDepth(node.Depth + 1);
-        int indexL = node.IndexInDepth - 1;
-        int indexM = node.IndexInDepth;
-        int indexR = node.IndexInDepth + 1;
+        List<MapNode> nextDepth = graph.GetNodesInDepth(node.Depth + 1);
 
-        if (indexL < 0)
-            indexL = 0;
-        if (indexR > MaxNodesPerDepth - 1)
-            indexR = MaxNodesPerDepth - 1;
+        //possible connections
+        int indexL = Mathf.Clamp(node.IndexInDepth - 1,0,maxNodesPerDepth-1);
+        int indexM = node.IndexInDepth;
+        int indexR = Mathf.Clamp(node.IndexInDepth + 1, 0, maxNodesPerDepth - 1);
 
         int index = Random.Range(0, 3);
-        Node selectedNode;
+        MapNode selectedNode;
+
+        //get the selected node from the random index
+        //by default it would be the left node
         switch (index)
         {
             case 0:
@@ -174,96 +159,115 @@ public class NodeMapGenerator : MonoBehaviour
                 selectedNode = nextDepth[indexL];
                 break;
         }
+
+        //add it to this node's adjacency list
         node.AdjacencyList.Add(selectedNode);
         selectedNode.ConnectedNodesPrevDepth.Add(node);
+        graph.AddEdge(node.Id,selectedNode);
 
-        var line = Instantiate(linePrefab, boxTransform).GetComponent<LineRenderer>();
-        line.GetComponent<RectTransform>().localPosition = new(0,0);
-        line.useWorldSpace = false;
-        line.SetPosition(0, node.Position+Vector3.back);
-        line.SetPosition(1, selectedNode.Position+Vector3.back);
+        //continue walking from the selected node
         WalkConnections(selectedNode);
     }
 
-    [SerializeField]
-    float offX, offY,spacingY,spacingX;
-
-    void GenerateNodes()
+    void CheckIfMapConnected()
     {
-        for (int depth = 0; depth < MaxDepth; depth++)
+        if (graph.IsConnectedGraph())
         {
-            int numNodes = Random.Range(MinNodesPerDepth, MaxNodesPerDepth + 1);
+            return;
+        }
 
-            for (int j = 0; j < numNodes; j++)
+        List<MapNode> startingRooms = GetStartingRooms();
+        int minCount = 999999999;
+        Node detachedPathStartNode;
+
+        foreach (var node in startingRooms)
+        {
+            List<Node> path = new();
+            graph.Search(node, path);
+
+            if(path.Count < minCount)
             {
-                float y = offY + depth * spacingY;
-                float x = offX + j * spacingX;
+                minCount = path.Count;
+                detachedPathStartNode = node;
+            }
+        }
 
-                //generate nodes here
-                Node node = new();
-                node.Id = graph.NodeCount;
-                node.Depth = depth;
-                node.Position = new(x, y);
+        
+    }
 
-                var go = new GameObject($"Node-{node.Id}-D-{depth}").AddComponent<RectTransform>();
-                go.gameObject.AddComponent<SpriteRenderer>();
-                go.SetParent(boxTransform);
-                go.localPosition = node.Position;
-                go.localScale = new(1,1,1);
+    void PruneMap()
+    {
+        Node[] nodeList = new Node[graph.NodeList.Count];
+        graph.NodeList.CopyTo(nodeList);
 
-                if (depth == 0)
+        foreach (var node in nodeList)
+        {
+            if(node.AdjacencyList.Count == 0)
+            {
+                if(node.Depth == maxDepth - 1 && node.ConnectedNodesPrevDepth.Count != 0)
                 {
-                    node.EncounterType = NodeEncounter.INFESTED;
-                    node.IsAccesible = true;
+                    continue;
                 }
-                else
-                {
-                    //randomly select node encounter here
-                    node.EncounterType = NodeEncounter.INFESTED;
-                    node.IsAccesible = false;
-                }
-
-                graph.AddNode(node);
-
-                //add a flag for loading screen here
-                //
+                graph.RemoveNode(node);
             }
         }
     }
 
-    void GenerateEdges()
+    void DisplayMap()
     {
-        for (int depth = 0; depth < MaxDepth; depth++)
+        foreach (MapNode node in graph.NodeList)
         {
-            List<Node> nodesInDepth = graph.GetNodesInDepth(depth);
-            List<Node> nodesInNextDepth = null;
-            if (depth < MaxDepth - 1)
+            DisplayNode(node);
+
+            foreach (MapNode target in node.AdjacencyList)
             {
-                nodesInNextDepth = graph.GetNodesInDepth(depth + 1);
-            }
-
-            int count = nodesInDepth.Count;
-            int countND = nodesInNextDepth.Count;
-
-            for (int i = 0; i < count; i++)
-            {
-                Node currNode = nodesInDepth[i];
-                if (nodesInNextDepth == null)
-                {
-                    //connect to master node
-
-                    continue;
-                }
-
-                Dictionary<int, float> weightedConnection = new();
-
-
-
-                //add flag for loading
-
+                DisplayPath(node, target);
             }
         }
+    }
 
+    void DisplayNode(MapNode node)
+    {
+        var go = Instantiate(nodePrefab, boxTransform).GetComponent<RectTransform>();
+        go.gameObject.name = $"Node-{node.Depth}-D-{node.IndexInDepth}";
+        go.localPosition = node.Position;
+        go.localScale = new(1, 1, 1);        
+        go.GetComponent<NodeObject>().Node = node;
+        node.Object = go.GetComponent<NodeObject>();
+        if (node.Depth == 0)
+            node.Object.MakeAccessible();
+    }
+
+    void DisplayPath(MapNode node, MapNode target)
+    {
+        //for display
+        var line = Instantiate(linePrefab, boxTransform).GetComponent<LineRenderer>();
+        line.GetComponent<RectTransform>().localPosition = new(0, 0);
+        line.useWorldSpace = false;
+        line.SetPosition(0, node.Position + Vector3.back);
+        line.SetPosition(1, target.Position + Vector3.back);
+    }
+
+    void DisableNodesInDepth(Node node)
+    {
+        List<MapNode> nodesInDepth = graph.GetNodesInDepth(node.Depth);
+        foreach (MapNode nodeInDepth in nodesInDepth)
+        {
+            if (nodeInDepth.Id == node.Id)
+            {
+                continue;
+            }
+            nodeInDepth.Object.MakeInAccessible();
+        }
+    }
+
+    void ConnectedNodeAccessible(Node node)
+    {
+        List<MapNode> nodesConnected = graph.GetConnectedNextDepth(node.Id);
+        foreach (MapNode nodeConnected in nodesConnected)
+        {
+            nodeConnected.Object.MakeAccessible();
+        }
     }
 
 }

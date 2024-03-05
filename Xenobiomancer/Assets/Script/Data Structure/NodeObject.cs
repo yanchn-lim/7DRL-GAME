@@ -2,20 +2,20 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
+using Patterns;
 namespace DataStructure
 {
     public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        public Node Node { get; set; }
+        public MapNode Node { get; set; }
         public Sprite[] spriteArray;
-        private Image image;
-        private Animator animator;
+        Image image;
+        Animator animator;
 
         //private float circleSpeed = 0.1f;
-        private Color disableColor = new Color(0, 0, 0, 0.6f);
-        private Color enableColor = new Color(0, 0, 0, 1f);
-        private bool activated = false;
+        Color disableColor = new Color(0, 0, 0, 0.6f);
+        Color enableColor = new Color(0, 0, 0, 1f);
+        bool activated = false;
 
         private void Awake()
         {
@@ -41,6 +41,7 @@ namespace DataStructure
             if (Node != null && Node.IsAccesible)
             {
                 Debug.Log("ID : " + Node.Id + " Encounter : " + Node.EncounterType + " DEPTH : " + Node.Depth);
+
                 StartCoroutine(StartEncounter());
             }
         }
@@ -48,7 +49,10 @@ namespace DataStructure
         //sets the colour to the highlighted colour
         public void OnPointerEnter(PointerEventData eventData)
         {
-            image.color = enableColor;
+            if (!Node.IsAccesible && !activated)
+            {
+                image.color = enableColor;
+            }
         }
 
         //sets the colour to the unhighlighted colour
@@ -66,7 +70,7 @@ namespace DataStructure
         {
             Node.IsAccesible = true;
             //animator.Play("NodeAnimation");
-            image.color = enableColor;
+            image.color = Color.red;
         }
 
         // sets the status of the node to inaccessible and display it accordingly
@@ -99,12 +103,13 @@ namespace DataStructure
             //animator.Play("NoAnim");
             activated = true;
             Node.IsAccesible = false;
+            
             yield return StartCoroutine(AnimateSelect()); //waits for the circling to be finished
 
             // this event starts the encounter and
             // makes the other nodes in the same depth to be inaccessible
             // and also make the next depth's node that is connected to this node be accessible
-            //EventManager.Instance.TriggerEvent<Node>(Event.MAP_NODE_CLICKED, Node);
+            EventManager.Instance.TriggerEvent<Node>(EventName.MAP_NODE_CLICKED, Node);
         }
 
 
