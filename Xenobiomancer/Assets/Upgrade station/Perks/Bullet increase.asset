@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1642b5125fd13a54b84da6ebdc25c8c5, type: 3}
   m_Name: Bullet increase
   m_EditorClassIdentifier: 
-  nameOfThePerk: Accuracy increase
-  shortDescription: increase your bullet accuracy
-  bulletIncrease: 0
+  nameOfThePerk: bullet increase
+  shortDescription: Increase the amount of bullet shot
+  bulletIncrease: 3
   bulletSpeedIncrease: 0
-  increaseAccuracy: 0.151
-  angleOfOffsetReduction: 20
+  increaseAccuracy: 0
+  angleOfOffsetReduction: 0
   increaseKillTimer: 0
