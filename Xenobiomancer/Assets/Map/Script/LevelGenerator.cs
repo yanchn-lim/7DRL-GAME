@@ -4,6 +4,9 @@ using UnityEngine;
 using DataStructure;
 public class LevelGenerator : MonoBehaviour
 {
+    [SerializeField]
+    int maxDepth;
+
     Graph graph;
 
     void Initialize()
