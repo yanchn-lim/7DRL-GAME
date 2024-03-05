@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Hierarchy;
 using UnityEngine;
 
 public abstract class Stats: MonoBehaviour
@@ -7,6 +8,7 @@ public abstract class Stats: MonoBehaviour
     private float health;
     private float maxHealth;
     private float currency;
+    private float travelDistance;
 
     #region Getters and Setters
     public float Health
