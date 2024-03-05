@@ -12,7 +12,7 @@ public class NodeMapGenerator : MonoBehaviour
     [SerializeField]
     RectTransform boxTransform;
     [SerializeField]
-    GameObject nodePrefab,linePrefab;
+    GameObject masterNodePrefab,nodePrefab,linePrefab;
 
     MapGraph graph;
 
@@ -40,19 +40,10 @@ public class NodeMapGenerator : MonoBehaviour
         GenerateNodeGrid();
         GeneratePath();
         PruneMap();
+        AddMasterNode();
         DisplayMap();
         CheckIfMapConnected();
 
-        //debugging
-        Debugging();
-    }
-
-    void Debugging()
-    {
-        //for (int i = 0; i < graph.NodeCount; i++)
-        //{
-        //    Debug.Log(graph.NodeList[i].Id + ", " + graph.NodeList[i].Depth);
-        //}
     }
 
     ///<summary>
@@ -72,9 +63,10 @@ public class NodeMapGenerator : MonoBehaviour
                 node.Id = graph.NodeCount;
                 node.Depth = depth;
                 node.IndexInDepth = i;
-                node.Position = new(x, y);               
+                node.Position = new(x, y);
+                node.EncounterType = NodeEncounter.INFESTED;
                 graph.AddNode(node);
-
+                
                 //loading flag
 
             }
@@ -180,7 +172,7 @@ public class NodeMapGenerator : MonoBehaviour
         int minCount = 999999999;
         Node detachedPathStartNode;
 
-        foreach (var node in startingRooms)
+        foreach (MapNode node in startingRooms)
         {
             List<Node> path = new();
             graph.Search(node, path);
@@ -217,7 +209,14 @@ public class NodeMapGenerator : MonoBehaviour
     {
         foreach (MapNode node in graph.NodeList)
         {
-            DisplayNode(node);
+            if(node.EncounterType == NodeEncounter.BOSS)
+            {
+                DisplayMasterNode(node);
+            }
+            else
+            {
+                DisplayNode(node);
+            }
 
             foreach (MapNode target in node.AdjacencyList)
             {
@@ -232,6 +231,17 @@ public class NodeMapGenerator : MonoBehaviour
         go.gameObject.name = $"Node-{node.Depth}-D-{node.IndexInDepth}";
         go.localPosition = node.Position;
         go.localScale = new(1, 1, 1);        
+        go.GetComponent<NodeObject>().Node = node;
+        node.Object = go.GetComponent<NodeObject>();
+        if (node.Depth == 0)
+            node.Object.MakeAccessible();
+    }
+    void DisplayMasterNode(MapNode node)
+    {
+        var go = Instantiate(masterNodePrefab, boxTransform).GetComponent<RectTransform>();
+        go.gameObject.name = $"Node-{node.Depth}-D-{node.IndexInDepth}";
+        go.localPosition = node.Position;
+        go.localScale = new(1, 1, 1);
         go.GetComponent<NodeObject>().Node = node;
         node.Object = go.GetComponent<NodeObject>();
         if (node.Depth == 0)
@@ -270,4 +280,28 @@ public class NodeMapGenerator : MonoBehaviour
         }
     }
 
+    void AddMasterNode()
+    {
+        int depth = maxDepth;
+        float x = -200;
+        float y = offY - 150 + depth * spacingY;
+
+        MapNode node = new();
+        node.Id = graph.NodeCount;
+        node.Depth = depth;
+        node.IndexInDepth = 0;
+        node.Position = new(x, y);
+        node.EncounterType = NodeEncounter.BOSS;
+        graph.AddNode(node);
+
+        //connect master node to end depth
+        List<MapNode> nodeAtEndDepth = graph.GetNodesInDepth(maxDepth - 1);
+
+        foreach (var nodeEnd in nodeAtEndDepth)
+        {
+            nodeEnd.AdjacencyList.Add(node);
+            node.ConnectedNodesPrevDepth.Add(nodeEnd);
+            graph.AddEdge(nodeEnd.Id, node);
+        }
+    }
 }

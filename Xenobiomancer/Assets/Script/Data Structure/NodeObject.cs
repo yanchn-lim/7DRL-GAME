@@ -13,6 +13,7 @@ namespace DataStructure
         Animator animator;
 
         //private float circleSpeed = 0.1f;
+        Color originalColor;
         Color disableColor = new Color(0, 0, 0, 0.6f);
         Color enableColor = new Color(0, 0, 0, 1f);
         bool activated = false;
@@ -20,8 +21,10 @@ namespace DataStructure
         private void Awake()
         {
             //getting the components
+
             animator = gameObject.GetComponent<Animator>();
             image = gameObject.GetComponent<Image>();
+            originalColor = image.color;
         }
 
         private void OnEnable()
@@ -61,7 +64,7 @@ namespace DataStructure
             //only set if it is inaccessible and not activated
             if (!Node.IsAccesible && !activated)
             {
-                image.color = disableColor;
+                image.color = originalColor;
             }
         }
 

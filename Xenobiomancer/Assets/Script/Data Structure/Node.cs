@@ -32,7 +32,7 @@ namespace DataStructure
         public Vector3 Position { get; set; }
         public bool IsAccesible { get; set; }
         public NodeObject Object { get; set; }
-
+        
     }
 
 
@@ -44,7 +44,8 @@ namespace DataStructure
     public enum NodeEncounter
     {
         INFESTED,
-        ABANDONED
+        ABANDONED,
+        BOSS
     }
 
     public enum LevelRoom 

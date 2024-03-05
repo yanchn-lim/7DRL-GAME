@@ -37,4 +37,37 @@ public class MapGraph : Graph
 
         return null;
     }
+    public new bool IsConnectedGraph()
+    {
+        System.Diagnostics.Stopwatch time = new();
+        time.Start();
+        List<MapNode> visited = new();
+
+        List<MapNode> nodeFirstDepth = GetNodesInDepth(0);
+        int randIndex = Random.Range(0, nodeFirstDepth.Count);
+        Search(nodeFirstDepth[randIndex], visited);
+
+        Debug.Log($"VISITED : {visited.Count} \nADJACENTLIST : {AdjacencyList.Count -1}");
+        Debug.Log($"TIME ELAPSED : {time.ElapsedMilliseconds}");
+        return visited.Count == AdjacencyList.Count - 1;
+    }
+    
+    public void Search(MapNode node, List<MapNode> visited)
+    {
+        if(node.EncounterType == NodeEncounter.BOSS)
+            return;
+
+        if (!visited.Contains(node))
+        {
+            visited.Add(node);
+
+            if (AdjacencyList.TryGetValue(node.Id, out List<Node> neighbour))
+            {
+                foreach (var n in neighbour)
+                {
+                    Search((MapNode)n, visited);
+                }
+            }
+        }
+    }
 }

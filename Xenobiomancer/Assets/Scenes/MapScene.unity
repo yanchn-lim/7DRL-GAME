@@ -400,6 +400,7 @@ MonoBehaviour:
   spacingY: -150
   spacingX: -150
   boxTransform: {fileID: 635020444}
+  masterNodePrefab: {fileID: 7137177473508204041, guid: ed076a40639c5e04b97f0bef09ca737e, type: 3}
   nodePrefab: {fileID: 3566879293235807049, guid: fbec51ef724fe8b4a82f757475b23c71, type: 3}
   linePrefab: {fileID: 1827592288013038661, guid: a37e07e865ebe854781c67c74ef3cfc3, type: 3}
 --- !u!1 &635020443

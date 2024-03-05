@@ -10,7 +10,7 @@ namespace DataStructure
         public List<Node> NodeList = new List<Node>();
 
         public int NodeCount = 0;
-
+        public int MaxDepth;
         public Graph()
         {
             AdjacencyList = new Dictionary<int, List<Node>>();
@@ -32,7 +32,6 @@ namespace DataStructure
             {
                 AdjacencyList[sourceId].Add(target);
                 AdjacencyList[target.Id].Add(GetNode(sourceId));
-
             }
         }
 
