@@ -90,6 +90,7 @@ namespace Bioweapon
         /// how the gun would fire the bullet
         /// </summary>
         protected abstract void MethodToFireBullet();
+
         public virtual void Reload()
         {
             reloadCounter++;
@@ -103,8 +104,8 @@ namespace Bioweapon
                 }
                 else
                 {//less than the amount to substract than just make the ammo 0
-                    ammoSize = 0;
                     currentMagSize += ammoSize;
+                    ammoSize = 0;
                 }
                 reloadCounter = 0;
                 HaveReloaded = true;
@@ -116,6 +117,7 @@ namespace Bioweapon
         {
             HaveReloaded = false;
         }
+
         protected virtual void FireBullet()
         {
             if (currentMagSize > 0)
@@ -125,5 +127,8 @@ namespace Bioweapon
                 currentMagSize--;
             }
         }
+
+        public abstract void ShowTrajectory();
+        public abstract void HideTrajectory();
     }
 }

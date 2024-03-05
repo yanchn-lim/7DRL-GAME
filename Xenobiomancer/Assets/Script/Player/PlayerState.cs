@@ -135,6 +135,7 @@ public class PlayerState_ATTACK : PlayerState
     {
         EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
         mPlayer.ChangeToAttackInformation();
+        mPlayer.PlayerWeapon.ShowTrajectory();
     }
 
     public override void Update()
@@ -143,12 +144,12 @@ public class PlayerState_ATTACK : PlayerState
         {
             mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
         }
-        else if (Input.GetKeyUp(KeyCode.R))
-        {
+        else if (Input.GetKeyUp(KeyCode.R) )
+        {//if player wants to reload
             mFsm.SetCurrentState((int)PlayerStateType.RELOAD);
         }
         else if (!mPlayer.PlayerWeapon.CanShoot)
-        {
+        {//if cant shoot
             mFsm.SetCurrentState((int)PlayerStateType.RELOAD);
         }
         else
@@ -160,6 +161,8 @@ public class PlayerState_ATTACK : PlayerState
 
     public override void Exit()
     {
+        mPlayer.PlayerWeapon.HideTrajectory();
+
         EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
     }
 

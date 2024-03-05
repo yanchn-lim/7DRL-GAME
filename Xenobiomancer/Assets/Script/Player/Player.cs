@@ -160,11 +160,6 @@ public class Player : Stats, IDamageable
     }
 
 
-
-
-
-
-
     public void Damage(float damage)
     {
         DecreaseHealth(damage);
