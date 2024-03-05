@@ -28,13 +28,21 @@ public abstract class Stats: MonoBehaviour
         get { return currency; }
         set { currency = value; }
     }
+
+    public float TravelDistance
+    {
+        get { return travelDistance; }
+        set { travelDistance = value;  }
+
+    }
     #endregion
 
-    public virtual void InitializeStats(float initialHealth, float maxHealth, float initialCurrency)
+    public virtual void InitializeStats(float initialHealth, float maxHealth, float initialCurrency, float intialTravelDistance)
     {
         Health = initialHealth;
         MaxHealth = maxHealth;
         Currency = initialCurrency;
+        TravelDistance = intialTravelDistance;
     }
 
     public virtual void IncreaseHealth(float amount)
@@ -58,6 +66,17 @@ public abstract class Stats: MonoBehaviour
     {
         Currency -= amount;
         Currency = Mathf.Max(0f, Currency);
+    }
+
+    public virtual void IncreaseTravelDistance(float amount)
+    {
+        TravelDistance += amount;
+    }
+
+    public virtual void DecreaseTravelDistance(float amount)
+    {
+        TravelDistance -= amount;
+        
     }
 
 }

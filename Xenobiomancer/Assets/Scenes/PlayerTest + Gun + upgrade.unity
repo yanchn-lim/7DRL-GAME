@@ -884,16 +884,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4221f3f82d8b4ae428f7fa74ceb27ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 0
-  MaxHealth: 0
-  Currency: 0
   weapon: {fileID: 589677170}
   informationText: {fileID: 633031239}
   PlayerMovement: {fileID: 589677162}
   LineRenderHandler: {fileID: 589677167}
   Main: {fileID: 258819118}
+  playerData: {fileID: 11400000, guid: 4d77836a42b9e86458dd3f63749748a5, type: 2}
   MoveCheck: 0
-  ClampRadius: 3
   wallLayer:
     serializedVersion: 2
     m_Bits: 8

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Hierarchy;
 using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
@@ -28,8 +29,6 @@ public class Player : Stats, IDamageable
 
     public bool MoveCheck;
 
-    public float ClampRadius;
-
     [SerializeField]
     private LayerMask wallLayer;
 
@@ -42,7 +41,7 @@ public class Player : Stats, IDamageable
         fsm.SetCurrentState((int)PlayerStateType.IDLE);
 
 
-        InitializeStats(playerData.health, playerData.health, playerData.currency);
+        InitializeStats(playerData.health, playerData.health, playerData.currency, playerData.travelDistance);
     }
 
     void Update()
@@ -90,7 +89,7 @@ public class Player : Stats, IDamageable
         Vector2 direction = mouseWorldPos - playerPos;
 
         // Clamp the distance to the ClampRadius
-        float clampedDistance = Mathf.Clamp(direction.magnitude, 0, ClampRadius);
+        float clampedDistance = Mathf.Clamp(direction.magnitude, 0, TravelDistance);
 
         // Set the clamped position within the radius
         Vector2 clampedDirection = direction.normalized * clampedDistance;
@@ -141,9 +140,22 @@ public class Player : Stats, IDamageable
         base.DecreaseCurrency(amount); 
     }
 
-    public override void InitializeStats(float initialHealth, float maxHealth, float initialCurrency)
+
+    public override void IncreaseTravelDistance(float amount)
     {
-        base.InitializeStats(initialHealth, maxHealth, initialCurrency);
+        base.IncreaseTravelDistance(amount);
+    }
+
+    public override void DecreaseTravelDistance(float amount)
+    {
+        base.DecreaseTravelDistance(amount);
+    }
+
+    
+
+    public override void InitializeStats(float initialHealth, float maxHealth, float initialCurrency, float intialTravelDistance)
+    {
+        base.InitializeStats(initialHealth, maxHealth, initialCurrency, intialTravelDistance);
     }
 
 

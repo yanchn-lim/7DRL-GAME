@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   currency: 500
+  armour: 0
+  travelDistance: 1.5
