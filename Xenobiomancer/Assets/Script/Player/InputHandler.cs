@@ -18,4 +18,6 @@ public class InputHandler : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.W);
     }
+
+    
 }

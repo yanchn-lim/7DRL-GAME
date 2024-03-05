@@ -12,6 +12,10 @@ namespace Bioweapon
 
         public GameManagerScriptableObject SetUpData { get => setUpData;}
 
+        /// <summary>
+        /// How long a turn will last in each turn
+        /// </summary>
+        public float TurnTime { get { return setUpData.TimePassPerTurn; } }
         public bool IsStillInStartState { get; private set; }
 
         private FSM gameStateMachine;

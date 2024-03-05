@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UpgradeStation;
 
 namespace Bioweapon
 {
@@ -67,5 +68,20 @@ namespace Bioweapon
         /// </summary>
         public float AngleOfOffset { get => angleOfOffset; set => angleOfOffset = value; }
         #endregion
+
+
+        public void AddPerk(Perk perk)
+        {
+            bulletFiredPerTurn += perk.BulletIncrease;
+            //calculate how fast the bullet should fire to show all the bullet
+
+            bulletShowInterval = GameManager.Instance.TurnTime / bulletFiredPerTurn;
+
+            angleOfOffset -= perk.AngleOfOffsetReduction;
+            bulletSpeedPerTurn += perk.BulletSpeedIncrease;
+
+            bulletKillTimer += perk.IncreaseKillTimer;
+            accuracy += perk.IncreaseAccuracy;
+        }
     }
 }
