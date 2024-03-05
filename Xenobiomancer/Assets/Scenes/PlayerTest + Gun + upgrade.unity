@@ -359,8 +359,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.62, y: 0, z: 0}
-  m_LocalScale: {x: 0.058714, y: 0.058714, z: 0.058714}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.87, y: 0.16, z: 0.058714}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 401331197}
   m_Father: {fileID: 1962136463}
@@ -408,8 +408,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -4872516676497805973, guid: ffc4bc20e53a4fb4b928f37f43aa6b96, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 54c06a960391c5b45b9f299d41bfd305, type: 3}
+  m_Color: {r: 0.7992885, g: 0.5110359, b: 0.98490566, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -657,7 +657,7 @@ Transform:
   m_GameObject: {fileID: 401331196}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.9, y: 1.8, z: 0}
+  m_LocalPosition: {x: 0.615, y: -0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -779,7 +779,6 @@ GameObject:
   - component: {fileID: 589677167}
   - component: {fileID: 589677168}
   - component: {fileID: 589677169}
-  - component: {fileID: 589677170}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -884,7 +883,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4221f3f82d8b4ae428f7fa74ceb27ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 589677170}
+  weapon: {fileID: 1962136464}
   informationText: {fileID: 633031239}
   PlayerMovement: {fileID: 589677162}
   LineRenderHandler: {fileID: 589677167}
@@ -1088,23 +1087,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.31, y: 0.46}
   m_Direction: 0
---- !u!114 &589677170
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589677159}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 272dd7a5acd9bfc479bdcdc464b56359, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 891d664ce80bef54d81b658f9ff763cb, type: 2}
-  gun: {fileID: 1962136463}
-  firingPosition: {fileID: 401331197}
-  poolContainer: {fileID: 1034956969}
-  bulletPrefab: {fileID: 7878861875213835486, guid: e2c624a6671bbd741bb5aa49ff5be77f, type: 3}
 --- !u!1 &625321497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1892,10 +1874,10 @@ RectTransform:
   - {fileID: 1688111207}
   m_Father: {fileID: 1599832640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 660, y: -250}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &752997939
 MonoBehaviour:
@@ -2656,7 +2638,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1257310449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2774,10 +2756,10 @@ RectTransform:
   - {fileID: 672231742}
   m_Father: {fileID: 1599832640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 207.5, y: -250}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1326906885
 MonoBehaviour:
@@ -2895,10 +2877,10 @@ RectTransform:
   - {fileID: 323155671}
   m_Father: {fileID: 1599832640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1112.5, y: -250}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1362545352
 MonoBehaviour:
@@ -2999,7 +2981,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1460980170
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3486,8 +3468,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1962136463}
+  - component: {fileID: 1962136464}
   m_Layer: 0
-  m_Name: Gun
+  m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3509,6 +3492,38 @@ Transform:
   - {fileID: 277923166}
   m_Father: {fileID: 589677161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 49.55}
+--- !u!114 &1962136464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962136462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06ac111ff8e60ca4b9e5547ceab65e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gun: {fileID: 1962136463}
+  firingPosition: {fileID: 401331197}
+  gunType: 0
+  nameOfTheWeapon: Space pistol
+  cost: 10
+  maxMagSize: 10
+  currentMagSize: 10
+  ammoSize: 30
+  reloadCounter: 0
+  reloadTurn: 1
+  bullet: {fileID: 843731734371475411, guid: 18f6b7eecb3829c4084d69e5bdcad1fe, type: 3}
+  bulletHitBoxRadius: 0.11
+  bulletKillTimer: 3
+  accuracy: 0.701
+  angleOfOffset: 13.9
+  bulletFiredPerTurn: 1
+  bulletShowInterval: 1
+  bulletSpeedPerTurn: 3
+  poolContainer: {fileID: 1034956969}
+  bulletPrefab: {fileID: 7878861875213835486, guid: e2c624a6671bbd741bb5aa49ff5be77f, type: 3}
 --- !u!1 &2108262331
 GameObject:
   m_ObjectHideFlags: 0

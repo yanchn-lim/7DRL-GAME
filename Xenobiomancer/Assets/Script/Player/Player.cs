@@ -13,8 +13,8 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 public class Player : Stats, IDamageable
 {
 
-    [SerializeField] private BioweaponBehaviour weapon;
-    public BioweaponBehaviour Weapon { get => weapon; }
+    [SerializeField] private Weapon weapon;
+    public Weapon PlayerWeapon { get => weapon; }
     //text to help the player
     [SerializeField] private TextMeshProUGUI informationText;
 
@@ -38,6 +38,7 @@ public class Player : Stats, IDamageable
         fsm.Add(new PlayerState_IDLE(this));
         fsm.Add(new PlayerState_MOVEMENT(this));
         fsm.Add(new PlayerState_ATTACK(this));
+        fsm.Add(new PlayerState_RELOAD(this));
         fsm.SetCurrentState((int)PlayerStateType.IDLE);
 
 
@@ -185,6 +186,19 @@ public class Player : Stats, IDamageable
     public void ChangeToMoveInformation()
     {
         informationText.text = "Press W to swap to attack";
+    }
+
+    public void ChangeToReloadingInformation()
+    {
+        informationText.text = $"Press R to reload. You have reloaded " +
+            $"{PlayerWeapon.ReloadCounter}/{PlayerWeapon.ReloadTurn} \n" +
+            $"Press W to swap to Move";
+    }
+
+    public void ChangeToCantReload()
+    {
+        informationText.text = $"No more ammo. \n" +
+            $"Press W to swap to Move";
     }
 
 }

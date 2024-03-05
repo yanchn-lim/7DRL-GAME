@@ -11,10 +11,9 @@ namespace Bioweapon
         [SerializeField] private SpriteRenderer spriteRender;
         [SerializeField] private TrailRenderer trailRenderer;
         [SerializeField] private ParticleSystem particleForHit;
-        private BioweaponScriptableObject data;
-        private BioweaponBehaviour bioweapon;
 
-        //private bool firstShot; //write comment here
+        private GunWeapon data;
+
         private int countDownBeforeDestory;
 
         private void Update()
@@ -23,19 +22,18 @@ namespace Bioweapon
             MoveBullet();
         }
 
-        public void Init(BioweaponScriptableObject data, BioweaponBehaviour bioweapon)
+        public void Init(GunWeapon data)
         {
             spriteRender.sprite = data.BulletSprite;
             this.data = data;
-            this.bioweapon = bioweapon;
         }
         
         public void FireBullet()
         {
             trailRenderer.enabled = true;
             spriteRender.enabled = true;
+            EventManager.Instance.AddListener(EventName.TURN_COMPLETE, (Action)AddCount);
             TryRandomiseBullet();
-
         }
 
         private void TryRandomiseBullet()
@@ -51,6 +49,14 @@ namespace Bioweapon
 
         }
 
+        private void AddCount()
+        {
+            countDownBeforeDestory++;
+            if(countDownBeforeDestory == data.BulletKillTimer)
+            {
+                ReturnBullet();
+            }
+        }
 
         #region basic function to hit the bullet
         //simple function to move the bullet
@@ -99,7 +105,8 @@ namespace Bioweapon
         {
             trailRenderer.enabled = false;
             countDownBeforeDestory = 0;
-            bioweapon.ReturnBullet(this);
+            EventManager.Instance.RemoveListener(EventName.TURN_COMPLETE, (Action)AddCount);
+            data.ReturnBullet(this);
         }
 
         //to show the circle raycast
