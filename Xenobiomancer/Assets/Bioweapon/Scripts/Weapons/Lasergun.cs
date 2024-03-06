@@ -20,6 +20,9 @@ namespace Bioweapon
         [Range(0, 1)]
         [Tooltip("a percentage of it to retract back after shooting(count in amount of sec in a turn)")]
         [SerializeField] private float recoverytimeForBeam;
+
+
+
         public override void HideTrajectory()
         {
             trajectory.gameObject.SetActive(false);

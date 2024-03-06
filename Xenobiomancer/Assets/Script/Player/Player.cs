@@ -12,9 +12,18 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Player : Stats, IDamageable
 {
+    [Header("Gun")]
+    [SerializeField] private GunType currentGunType;
+    [SerializeField] private Weapon pistol;
+    [SerializeField] private Weapon shotgun;
+    [SerializeField] private Weapon rifle;
+    [SerializeField] private Weapon Sniper;
+    [SerializeField] private Weapon Lasergun;
 
-    [SerializeField] private Weapon weapon;
-    public Weapon PlayerWeapon { get => weapon; }
+    [Header("current weapon")]
+    [SerializeField] private Weapon currentWeapon;
+    public Weapon PlayerWeapon { get => currentWeapon; }
+    [Header("HUD")]
     //text to help the player
     [SerializeField] private TextMeshProUGUI informationText;
 
@@ -35,16 +44,23 @@ public class Player : Stats, IDamageable
     [SerializeField]
     private LayerMask wallLayer;
 
-
     void Start()
     {
 
-        //setting up the states
+        //change this as the starting gun is a pistol
+        currentGunType = GunType.Pistol;
+
+
+
         fsm.Add(new PlayerState_IDLE(this));
         fsm.Add(new PlayerState_MOVEMENT(this));
         fsm.Add(new PlayerState_ATTACK(this));
         fsm.Add(new PlayerState_RELOAD(this));
+
         fsm.Add(new PlayerState_Death(this));
+
+        fsm.Add(new PlayerState_INTERACTing(this));
+
         fsm.SetCurrentState((int)PlayerStateType.IDLE);
 
         //Intializing the initial stats of the player
@@ -58,8 +74,8 @@ public class Player : Stats, IDamageable
         fsm.Update();
     }
 
-
     //handles the movement related code
+
     #region Movement
 
     public void MoveInputCheck()
@@ -127,8 +143,10 @@ public class Player : Stats, IDamageable
     #endregion
 
 
+
     //handles the Stats related code
     #region Stats
+
     public override void IncreaseHealth(float amount)
     {
         base.IncreaseHealth(amount);
@@ -153,7 +171,6 @@ public class Player : Stats, IDamageable
         DisplayUI.UpdateCurrencyUI(amount);
     }
 
-
     public override void IncreaseTravelDistance(float amount)
     {
         base.IncreaseTravelDistance(amount);
@@ -164,15 +181,21 @@ public class Player : Stats, IDamageable
         base.DecreaseTravelDistance(amount);
     }
 
-    
-
     public override void InitializeStats(float initialHealth, float maxHealth, float initialCurrency, float intialTravelDistance)
     {
         base.InitializeStats(initialHealth, maxHealth, initialCurrency, intialTravelDistance);
     }
 
 
+
     #endregion
+
+
+    public void Damage(float damage)
+    {
+        DecreaseHealth(damage);
+        Debug.Log(Health);
+    }
 
 
     //handles the Information related code
@@ -204,6 +227,14 @@ public class Player : Stats, IDamageable
     {
         informationText.text = $"No more ammo. \n" +
             $"Press W to swap to Move";
+    }
+    
+    public void SwitchWeapon(Weapon weapon)
+    {
+        currentWeapon.gameObject.SetActive(false);
+        currentWeapon = weapon;
+        currentGunType = weapon.GunType;
+        weapon.gameObject.SetActive(true);
     }
 
     #endregion

@@ -7,6 +7,7 @@ namespace Bioweapon
     {
         [Header("Rifle variable")]
         [SerializeField] private GameObject trajectory;
+
         public override void HideTrajectory()
         {
             trajectory.SetActive(false);
@@ -35,6 +36,16 @@ namespace Bioweapon
                 bullet.FireBullet();
                 yield return new WaitForSeconds(intervalTime);
             }
+        }
+
+        public void Upgrade(RiflePerk perk)
+        {
+            bulletFiredPerTurn += perk.ShotsIncrease;
+            accuracy += perk.AccuracyIncrease;
+            angleOfOffset -= perk.ReduceBulletSpread;
+            bulletSpeedPerTurn += perk.BulletSpeedIncrease;
+            bulletKillTimer += perk.BulletLifeTimeIncrease;
+            maxMagSize += perk.IncreaseMaxAmmo;
         }
 
     }

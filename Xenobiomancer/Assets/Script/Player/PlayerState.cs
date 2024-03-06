@@ -5,7 +5,11 @@ using Patterns;
 using System.Security.Cryptography;
 using Mono.Cecil;
 using Bioweapon;
+
 using System.Xml.Serialization;
+
+using System;
+
 
 public enum PlayerStateType
 {
@@ -13,7 +17,9 @@ public enum PlayerStateType
     MOVEMENT,
     ATTACK,
     RELOAD,
-    DEATH
+    DEATH,
+    INTERACT
+
 }
 
 public class PlayerState : FSMState
@@ -29,20 +35,26 @@ public class PlayerState : FSMState
 
     public override void Enter()
     {
-        base.Enter();
+        EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
+        EventManager.Instance.AddListener(EventName.UseUpgradeStation, PlayerInteractWithUpgradeStation);
     }
+
     public override void Exit()
     {
-        base.Exit();
+        EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
+        EventManager.Instance.RemoveListener(EventName.UseUpgradeStation, PlayerInteractWithUpgradeStation);
     }
-    public override void Update()
+
+    private void PlayerDecidedMovement()
     {
-        base.Update();
+        mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
     }
-    public override void FixedUpdate()
+
+    private void PlayerInteractWithUpgradeStation()
     {
-        base.FixedUpdate();
+        mFsm.SetCurrentState((int)PlayerStateType.INTERACT);
     }
+
 
     public void DeathCheck()
     {
@@ -52,6 +64,7 @@ public class PlayerState : FSMState
             
         }
     }
+
 }
 
 public class PlayerState_IDLE : PlayerState
@@ -69,13 +82,6 @@ public class PlayerState_IDLE : PlayerState
     public override void Update()
     {
 
-        //mPlayer.MoveInputCheck();
-        //if (mPlayer.MoveCheck && !GameManager.Instance.IsStillInStartState)
-        //{
-        //    //that means that the player has completed their action that is decided and the game manager is waiting 
-        //    //the players next movement
-        //    mPlayer.fsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
-        //}
 
         if (!GameManager.Instance.IsStillInStartState)
         {
@@ -109,7 +115,7 @@ public class PlayerState_MOVEMENT : PlayerState
         base.Enter();
         mPlayer.LineRenderHandler.EnableLineRenderer();
         mPlayer.ChangeToMoveInformation();
-        EventManager.Instance.AddListener(EventName.TURN_END , PlayerDecidedMovement);
+        
     }
 
     public override void Update()
@@ -129,13 +135,11 @@ public class PlayerState_MOVEMENT : PlayerState
     public override void Exit()
     {
         mPlayer.LineRenderHandler.DisableLineRenderer();
-        EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
+        base.Exit();
+
     }
 
-    private void PlayerDecidedMovement()
-    {
-        mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
-    }
+  
     
 }
 
@@ -148,8 +152,7 @@ public class PlayerState_ATTACK : PlayerState
 
     public override void Enter()
     {
-        EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
-       
+        base.Enter();       
         mPlayer.ChangeToAttackInformation();
         if (mPlayer.PlayerWeapon.CanShoot)
         {
@@ -184,14 +187,9 @@ public class PlayerState_ATTACK : PlayerState
     public override void Exit()
     {
         mPlayer.PlayerWeapon.HideTrajectory();
-
-        EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
+        base.Exit();
     }
 
-    private void PlayerDecidedMovement()
-    {
-        mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
-    }
 
 }
 
@@ -204,8 +202,7 @@ public class PlayerState_RELOAD : PlayerState
 
     public override void Enter()
     {
-        EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
-
+        base.Enter();
         if (mPlayer.PlayerWeapon.HaveReloaded)
         {
             mPlayer.PlayerWeapon.ReloadCheckCompleted();
@@ -237,16 +234,8 @@ public class PlayerState_RELOAD : PlayerState
         }
     }
 
-    public override void Exit()
-    {
-        EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
-    }
 
-    private void PlayerDecidedMovement()
-    {
-        mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
-        
-    }
+
 
 
 }
@@ -275,4 +264,28 @@ public class PlayerState_Death : PlayerState
         mPlayer.DisplayUI.DisableDeathScreen();
     }
 
+}
+
+public class PlayerState_INTERACTing : PlayerState
+{
+    public PlayerState_INTERACTing(Player player) : base(player)
+    {
+        mId = (int)(PlayerStateType.INTERACT);
+    }
+
+    public override void Enter()
+    {
+        EventManager.Instance.AddListener(EventName.LeaveUpgradeStation, (Action)SwitchToMovementState);
+    }
+
+    public override void Exit()
+    {
+        EventManager.Instance.RemoveListener(EventName.LeaveUpgradeStation, (Action)SwitchToMovementState);
+
+    }
+
+    private void SwitchToMovementState()
+    {
+        mFsm.SetCurrentState((int)(PlayerStateType.MOVEMENT));
+    }
 }

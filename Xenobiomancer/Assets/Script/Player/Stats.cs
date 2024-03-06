@@ -5,10 +5,10 @@ using UnityEngine;
 
 public abstract class Stats: MonoBehaviour
 {
-    private float health;
-    private float maxHealth;
-    private float currency;
-    private float travelDistance;
+    protected float health;
+    protected float maxHealth;
+    protected float currency;
+    protected float travelDistance;
 
     #region Getters and Setters
     public float Health
@@ -76,7 +76,6 @@ public abstract class Stats: MonoBehaviour
     public virtual void DecreaseTravelDistance(float amount)
     {
         TravelDistance -= amount;
-        
     }
 
 }

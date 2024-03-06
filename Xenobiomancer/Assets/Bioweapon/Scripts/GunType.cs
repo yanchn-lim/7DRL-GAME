@@ -2,7 +2,7 @@
 {
     public enum GunType
     {
-        Pistol,
+        Pistol, 
         ShotGun,
         Rifle,
         Sniper,
