@@ -22,6 +22,16 @@ public class LevelGenerator : MonoBehaviour
         Initialize();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            ProbabilityManager.TestProbability();
+        }
+    }
+
+    
+
     void Initialize()
     {
         graph = new();
@@ -227,4 +237,6 @@ public class LevelGenerator : MonoBehaviour
         line.SetPosition(0, node.DebugPos + Vector3.back);
         line.SetPosition(1, target.DebugPos + Vector3.back);
     }
+
+
 }

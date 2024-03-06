@@ -51,5 +51,49 @@ namespace Patterns
             return default;// Return the default value (null for reference types).
         }
 
+        public static void TestProbability()
+        {
+            int c1 = 0;
+            int c2 = 0;
+            int c3 = 0;
+            int c4 = 0;
+            int c5 = 0;
+            int def = 0;
+
+            Dictionary<int, float> test = new();
+            test.Add(0, 3);
+            test.Add(1, 4);
+            test.Add(2, 5);
+            test.Add(3, 2);
+            test.Add(4, 1);
+
+            for (int i = 0; i < 1000; i++)
+            {
+                int num = SelectWeightedItem(test);
+                if (num == 0)
+                {
+                    c1++;
+                }
+                else if (num == 1)
+                {
+                    c2++;
+                }
+                else if (num == 2)
+                {
+                    c3++;
+                }
+                else if (num == 3)
+                {
+                    c4++;
+                }
+                else if (num == 4)
+                {
+                    c5++;
+                }
+            }
+            Debug.Log($"[{c1 / 1000f * 100}% / {3f / 15 * 100}%] , [{c2 / 1000f * 100}% / {4f / 15 * 100}%] , [{c3 / 1000f * 100}% / {5f / 15 * 100}%] , [{c4 / 1000f * 100}% / {2f / 15 * 100}%] , [{c5 / 1000f * 100}% / {1f / 15 * 100}%] , [{def / 1000f * 100}%]");
+        
+        }
+
     }
 }
