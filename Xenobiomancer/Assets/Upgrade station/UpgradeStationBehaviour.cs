@@ -29,7 +29,7 @@ namespace UpgradeStation
 
             if (playerIsNearby && Input.GetKeyUp(KeyCode.E))
             {
-
+                //trigger the upgrade canvas
             }
         }
 

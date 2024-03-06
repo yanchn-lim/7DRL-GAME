@@ -10,7 +10,8 @@ public enum PlayerStateType
 {
     IDLE = 0,
     MOVEMENT,
-    ATTACK
+    ATTACK,
+    RELOAD
 }
 
 public class PlayerState : FSMState
@@ -100,7 +101,7 @@ public class PlayerState_MOVEMENT : PlayerState
 
     public override void Update()
     {
-        if(Input.GetKeyUp(KeyCode.W))
+        if(Input.GetKeyDown(KeyCode.W))
         {
             mFsm.SetCurrentState((int)PlayerStateType.ATTACK);
         }
@@ -133,18 +134,89 @@ public class PlayerState_ATTACK : PlayerState
     public override void Enter()
     {
         EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
+       
         mPlayer.ChangeToAttackInformation();
+        if (mPlayer.PlayerWeapon.CanShoot)
+        {
+            mPlayer.PlayerWeapon.ShowTrajectory();
+
+        }
     }
 
     public override void Update()
     {
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
             mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
         }
+        else if (Input.GetKeyUp(KeyCode.R) )
+        {//if player wants to reload
+            mFsm.SetCurrentState((int)PlayerStateType.RELOAD);
+        }
+        else if (!mPlayer.PlayerWeapon.CanShoot)
+        {//if cant shoot
+            mFsm.SetCurrentState((int)PlayerStateType.RELOAD);
+        }
         else
         {
-            mPlayer.Weapon.UpdateFunction();
+            //do the weapon update loop
+            mPlayer.PlayerWeapon.UpdateFunction();
+        }
+    }
+
+    public override void Exit()
+    {
+        mPlayer.PlayerWeapon.HideTrajectory();
+
+        EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
+    }
+
+    private void PlayerDecidedMovement()
+    {
+        mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
+    }
+
+}
+
+public class PlayerState_RELOAD : PlayerState
+{
+    public PlayerState_RELOAD(Player player) : base(player)
+    {
+        mId = (int)(PlayerStateType.RELOAD);
+    }
+
+    public override void Enter()
+    {
+        EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
+
+        if (mPlayer.PlayerWeapon.HaveReloaded)
+        {
+            mPlayer.PlayerWeapon.ReloadCheckCompleted();
+            mFsm.SetCurrentState((int)PlayerStateType.ATTACK);
+
+        }
+        else
+        {
+            if (mPlayer.PlayerWeapon.CanReload)
+            {//show that it can reload
+                mPlayer.ChangeToReloadingInformation();
+            }
+            else
+            {
+                mPlayer.ChangeToCantReload();
+            }
+        }
+    }
+
+    public override void Update()
+    {
+        if (mPlayer.PlayerWeapon.CanReload && Input.GetKeyDown(KeyCode.R))
+        {//show that it can reload
+            mPlayer.PlayerWeapon.Reload();
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            mFsm.SetCurrentState((int)PlayerStateType.MOVEMENT);
         }
     }
 
@@ -156,9 +228,7 @@ public class PlayerState_ATTACK : PlayerState
     private void PlayerDecidedMovement()
     {
         mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
+        
     }
 
 }
-
-
-

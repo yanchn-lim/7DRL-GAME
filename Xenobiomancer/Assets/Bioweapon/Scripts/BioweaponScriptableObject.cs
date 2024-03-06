@@ -8,16 +8,43 @@ namespace Bioweapon
     [CreateAssetMenu(fileName = "BioWeapnData", menuName = "ScriptableObjects/BioWeapnData", order = 1)]
     public class BioweaponScriptableObject : ScriptableObject
     {
-        //for the gun
-        [Header("Gun information")]
+        [Tooltip("what should be the name of the weapon")]
+        [SerializeField] private string nameOfTheWeapon;
+        [Tooltip("what is the gun type")]
+        [SerializeField] private GunType gunType;
+        [Tooltip("cost of the weapon")]
+        [SerializeField] private int cost;
+        [Tooltip("mag size before reload")]
+        [SerializeField] private int magSize;
+
+        #region public getter for generic detail
+        /// <summary>
+        /// Name of the weapon
+        /// </summary>
+        public string NameOfTheWeapon { get => nameOfTheWeapon; }
+        /// <summary>
+        /// Gun type of the bio weapon
+        /// </summary>
+        public GunType GunType { get => gunType; }
+        /// <summary>
+        /// Cost of the weapon
+        /// </summary>
+        public int Cost { get => cost; }
+        /// <summary>
+        /// mag size of weapon
+        /// </summary>
+        public int MagSize { get => magSize; }
+        #endregion
+
+        #region gun related
+        [Header("MachineGun")]
         [Tooltip("How many bullet should be fired in one turn (make sure it is within the expiry of the start turn)")]
         [SerializeField] private int bulletFiredPerTurn;
         [Tooltip("Time taken to show each bullet if there is multiple bullet")]
         [SerializeField] private float bulletShowInterval;
         [Tooltip("How fast the bullet should move within that one turn")]
         [SerializeField] private float bulletSpeedPerTurn;
-
-        #region public getter for gun information
+        #region public getter for machine gun
         /// <summary>
         /// The time it takes to show each bullet when fired
         /// </summary>
@@ -30,6 +57,9 @@ namespace Bioweapon
         /// how fast the bullet should move in one turn
         /// </summary>
         public float BulletSpeedPerTurn { get => bulletSpeedPerTurn; }
+        #endregion
+
+
         #endregion
 
         [Header("Bullet information")]
@@ -66,9 +96,9 @@ namespace Bioweapon
         /// <summary>
         /// how the bullet will offset if the bullet is not accurate.
         /// </summary>
-        public float AngleOfOffset { get => angleOfOffset; set => angleOfOffset = value; }
-        #endregion
+        public float AngleOfOffset { get => angleOfOffset; }
 
+        #endregion
 
         public void AddPerk(Perk perk)
         {
