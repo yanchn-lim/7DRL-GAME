@@ -5,11 +5,18 @@ using Unity.Hierarchy;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayStats : MonoBehaviour
+public class DisplayUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI currencyText;
+    [SerializeField] private GameObject DeathScreen;
     [SerializeField] private Image healthBar;
+
+
+    private void Start()
+    {
+        DisableDeathScreen();
+    }
 
     public void UpdateHealthUI(float health, float maxHealth)
     {
@@ -28,5 +35,15 @@ public class DisplayStats : MonoBehaviour
         healthText.text = $"{health}/{maxHealth}";
         healthBar.fillAmount = health / maxHealth;
         currencyText.text = $"{currency}";
+    }
+
+    public void EnableDeathScreen()
+    {
+        DeathScreen.SetActive(true);
+    }
+
+    public void DisableDeathScreen()
+    {
+        DeathScreen.SetActive(false);
     }
 }

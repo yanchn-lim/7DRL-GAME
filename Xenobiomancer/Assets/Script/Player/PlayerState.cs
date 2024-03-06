@@ -5,13 +5,15 @@ using Patterns;
 using System.Security.Cryptography;
 using Mono.Cecil;
 using Bioweapon;
+using System.Xml.Serialization;
 
 public enum PlayerStateType
 {
     IDLE = 0,
     MOVEMENT,
     ATTACK,
-    RELOAD
+    RELOAD,
+    DEATH
 }
 
 public class PlayerState : FSMState
@@ -40,6 +42,15 @@ public class PlayerState : FSMState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+    }
+
+    public void DeathCheck()
+    {
+        if (mPlayer.CheckPlayerHealth())
+        {
+            mFsm.SetCurrentState((int)PlayerStateType.DEATH);
+            
+        }
     }
 }
 
@@ -79,6 +90,8 @@ public class PlayerState_IDLE : PlayerState
             }
 
         }
+
+        DeathCheck();
         //if it is still running then continue to wait until it is over
     }
 
@@ -109,6 +122,8 @@ public class PlayerState_MOVEMENT : PlayerState
         {
             mPlayer.Moving();
         }
+
+        DeathCheck();
     }
 
     public override void Exit()
@@ -162,6 +177,8 @@ public class PlayerState_ATTACK : PlayerState
             //do the weapon update loop
             mPlayer.PlayerWeapon.UpdateFunction();
         }
+
+        DeathCheck();
     }
 
     public override void Exit()
@@ -229,6 +246,33 @@ public class PlayerState_RELOAD : PlayerState
     {
         mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
         
+    }
+
+
+}
+
+
+public class PlayerState_Death : PlayerState
+{
+    public PlayerState_Death(Player player) : base(player)
+    {
+        mId = (int)(PlayerStateType.DEATH);
+    }
+
+    public override void Enter()
+    {
+        mPlayer.DisplayUI.EnableDeathScreen();
+        Debug.Log("YOU DIED");
+    }
+
+    public override void Update()
+    {
+
+    }
+
+    public override void Exit()
+    {
+        mPlayer.DisplayUI.DisableDeathScreen();
     }
 
 }

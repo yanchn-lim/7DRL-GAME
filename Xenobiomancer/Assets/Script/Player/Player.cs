@@ -19,7 +19,7 @@ public class Player : Stats, IDamageable
     [SerializeField] private TextMeshProUGUI informationText;
 
     //Display the stats of the player
-    [SerializeField] private DisplayStats displayStats;
+    public DisplayUI DisplayUI;
 
     [HideInInspector]
     public FSM fsm = new FSM();
@@ -38,15 +38,19 @@ public class Player : Stats, IDamageable
 
     void Start()
     {
+
+        //setting up the states
         fsm.Add(new PlayerState_IDLE(this));
         fsm.Add(new PlayerState_MOVEMENT(this));
         fsm.Add(new PlayerState_ATTACK(this));
         fsm.Add(new PlayerState_RELOAD(this));
+        fsm.Add(new PlayerState_Death(this));
         fsm.SetCurrentState((int)PlayerStateType.IDLE);
 
-
+        //Intializing the initial stats of the player
         InitializeStats(playerData.health, playerData.health, playerData.currency, playerData.travelDistance);
-        displayStats.SetUI(Health, MaxHealth, Currency);
+        //Setting the UI to show the health and currency
+        DisplayUI.SetUI(Health, MaxHealth, Currency);
     }
 
     void Update()
@@ -55,7 +59,7 @@ public class Player : Stats, IDamageable
     }
 
 
-
+    //handles the movement related code
     #region Movement
 
     public void MoveInputCheck()
@@ -123,30 +127,30 @@ public class Player : Stats, IDamageable
     #endregion
 
 
-
-
+    //handles the Stats related code
+    #region Stats
     public override void IncreaseHealth(float amount)
     {
         base.IncreaseHealth(amount);
-        displayStats.UpdateHealthUI(Health, MaxHealth);
+        DisplayUI.UpdateHealthUI(Health, MaxHealth);
     }
 
     public override void DecreaseHealth(float amount)
     {
         base.DecreaseHealth(amount);
-        displayStats.UpdateHealthUI(Health, MaxHealth);
+        DisplayUI.UpdateHealthUI(Health, MaxHealth);
     }
 
     public override void IncreaseCurrency(float amount)
     {
         base.IncreaseCurrency(amount);
-        displayStats.UpdateCurrencyUI(amount);
+        DisplayUI.UpdateCurrencyUI(amount);
     }
 
     public override void DecreaseCurrency(float amount)
     {
         base.DecreaseCurrency(amount);
-        displayStats.UpdateCurrencyUI(amount);
+        DisplayUI.UpdateCurrencyUI(amount);
     }
 
 
@@ -168,14 +172,11 @@ public class Player : Stats, IDamageable
     }
 
 
-    public void Damage(float damage)
-    {
-        DecreaseHealth(damage);
-        
+    #endregion
 
-        Debug.Log(Health);
-    }
 
+    //handles the Information related code
+    #region INFO
     public void ChangeToAttackInformation()
     {
         informationText.text = "Press W to swap to Move \n" +
@@ -203,6 +204,23 @@ public class Player : Stats, IDamageable
     {
         informationText.text = $"No more ammo. \n" +
             $"Press W to swap to Move";
+    }
+
+    #endregion
+
+
+    public bool CheckPlayerHealth()
+    {
+        return Health <= 0;
+    }
+
+
+    public void Damage(float damage)
+    {
+        DecreaseHealth(damage);
+
+
+        Debug.Log(Health);
     }
 
 }
