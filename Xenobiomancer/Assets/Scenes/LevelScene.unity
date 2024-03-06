@@ -285,13 +285,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dba4b4244ea28b46b78bad3043f6d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDepth: 3
-  maxDepth: 8
+  minDepth: 4
+  maxDepth: 4
   maxHorizontalDepth: 3
   spawnPrefab: {fileID: 3889312645404553712, guid: 3156f5969dac12c4b814b5f4d674432f, type: 3}
   rootPrefab: {fileID: 2538131209329690139, guid: 39b55f20fce895844913af2fa2e5cbb4, type: 3}
   nodePrefab: {fileID: 7452883735577756736, guid: d8be590a297aee441ae3183e84311728, type: 3}
   linePrefab: {fileID: 6026538896086070210, guid: 8baa9624ce327ca4ca8cd56816acd545, type: 3}
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.08728999
+      value: 0.892228
+      inSlope: -1.8868208
+      outSlope: -1.8868208
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  k: 0.25
 --- !u!4 &558312614
 Transform:
   m_ObjectHideFlags: 0

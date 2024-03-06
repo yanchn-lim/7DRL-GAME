@@ -24,6 +24,9 @@ namespace DataStructure
             AdjacencyList[node.Id] = new List<T>();
             NodeCount++;
 
+            if (node.Depth > MaxDepth)
+                MaxDepth = node.Depth;
+
         }
 
         public void AddEdge(int sourceId, T target)

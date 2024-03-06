@@ -8,7 +8,8 @@ public class LevelGenerator : MonoBehaviour
     int minDepth,maxDepth,maxHorizontalDepth;
     [SerializeField]
     GameObject spawnPrefab, rootPrefab, nodePrefab, linePrefab;
-
+    [SerializeField]
+    AnimationCurve curve;
     int currMaxDepth;
 
     LevelGraph graph;
@@ -74,25 +75,56 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 1; i < currMaxDepth + 1; i++)
         {
             LevelNode currNode = CreateNode(i,0);
+            currNode.Type = LevelNodeType.NORMAL;
             graph.AddEdge(prevNode, currNode);
             prevNode = currNode;
         }
     }
-
+    public float k = 0.1f;
     void CreateBranch()
     {
         int halfDepth = Mathf.FloorToInt(currMaxDepth/2);
 
-        foreach (var node in graph.NodeList)
+        //set graph
+        int maxWeight = Mathf.Abs(graph.MaxDepth - halfDepth);
+        curve.MoveKey(0,new(0,maxWeight));
+        curve.AddKey(maxHorizontalDepth, 0);
+        
+        foreach (var node in graph.GetSpine())
         {
             if (node.Depth == -1)
                 continue;
 
-            uint weight = (uint)node.Depth - (uint)halfDepth;
-            Debug.Log(weight);
-            
+            float weight = Mathf.Abs(node.Depth - halfDepth);
+            Dictionary<int, float> numRoomWeight = new();
+
+            float totalW = 0;
+            for (int i = 0; i < maxHorizontalDepth + 1; i++)
+            {
+                float w = GetWeight(weight,i,k);
+                totalW += w;
+                //Debug.Log($"Depth : {node.Depth}\nHoriDepth : {i}\nWeight : {w}");
+                //numRoomWeight.Add(i, 1 / (weight*i));
+            }
+
+
+
+            for (int i = 0; i < maxHorizontalDepth + 1; i++)
+            {
+                float w = GetWeight(weight, i, k);
+                //totalW += w;
+                Debug.Log($"Weight : {weight} HoriDepth : {i} Percentage : {w / totalW * 100}%  W = {w}");
+                //numRoomWeight.Add(i, 1 / (weight*i));
+            }
+
         }
         
+    }
+
+    float GetWeight(float weight,float i, float k)
+    {
+        float w = curve.Evaluate(weight * (i + 0.1f * k));
+        return w;
     }
 
     void Debugging()
@@ -137,7 +169,6 @@ public class LevelGenerator : MonoBehaviour
                     Debug.Log("node type defaulted");
                     break;
             }
-            //DisplayNode(node, nodePrefab);
 
             foreach (LevelNode target in node.AdjacencyList)
             {
