@@ -1,11 +1,10 @@
-﻿using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Bioweapon
 {
-    public class Pistol : GunWeapon
+    public class Sniper : GunWeapon
     {
-        [Header("Pistol variable")]
+        [Header("Sniper variable")]
         [SerializeField] private GameObject trajectory;
         public override void HideTrajectory()
         {
@@ -16,7 +15,7 @@ namespace Bioweapon
         {
             trajectory.SetActive(true);
         }
-        
+
 
         protected override void MethodToFireBullet()
         {
@@ -27,4 +26,5 @@ namespace Bioweapon
         }
 
     }
+
 }

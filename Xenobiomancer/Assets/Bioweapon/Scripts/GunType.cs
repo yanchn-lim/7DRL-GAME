@@ -4,7 +4,7 @@
     {
         Pistol,
         ShotGun,
-        MachineGun,
+        Rifle,
         Sniper,
         Laser,
     }

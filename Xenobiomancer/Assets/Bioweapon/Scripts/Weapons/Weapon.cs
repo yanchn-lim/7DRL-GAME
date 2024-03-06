@@ -80,7 +80,6 @@ namespace Bioweapon
             }
             else
             {
-                print("hello");
                 eulerZAngle = -(eulerZAngle - 180);
                 gun.rotation = Quaternion.Euler(0, 180, eulerZAngle);
             }

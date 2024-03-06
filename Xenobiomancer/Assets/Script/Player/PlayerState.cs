@@ -134,8 +134,13 @@ public class PlayerState_ATTACK : PlayerState
     public override void Enter()
     {
         EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
+       
         mPlayer.ChangeToAttackInformation();
-        mPlayer.PlayerWeapon.ShowTrajectory();
+        if (mPlayer.PlayerWeapon.CanShoot)
+        {
+            mPlayer.PlayerWeapon.ShowTrajectory();
+
+        }
     }
 
     public override void Update()
