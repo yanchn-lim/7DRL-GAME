@@ -1,3 +1,4 @@
+using Patterns;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -29,7 +30,7 @@ namespace UpgradeStation
 
             if (playerIsNearby && Input.GetKeyUp(KeyCode.E))
             {
-                //trigger the upgrade canvas
+                EventManager.Instance.TriggerEvent(EventName.UseUpgradeStation);
             }
         }
 

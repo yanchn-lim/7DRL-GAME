@@ -35,6 +35,9 @@ namespace Bioweapon
         public bool HaveReloaded { get; private set; }
         public int ReloadCounter { get => reloadCounter; }
         public int ReloadTurn { get => reloadTurn; }
+        public string NameOfTheWeapon { get => nameOfTheWeapon; }
+        public int Cost { get => cost; }
+        public GunType GunType { get => gunType; }
 
         #endregion
 

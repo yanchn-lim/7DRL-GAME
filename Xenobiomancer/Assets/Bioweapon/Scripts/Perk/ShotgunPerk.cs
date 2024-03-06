@@ -20,7 +20,7 @@ namespace Bioweapon
         public override void Upgrade(Shotgun weapon)
         {
             weapon.AddPerk(this);
-
+            
 
         }
     }
