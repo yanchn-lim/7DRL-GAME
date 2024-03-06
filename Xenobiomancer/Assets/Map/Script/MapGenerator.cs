@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataStructure;
 using Patterns;
-public class NodeMapGenerator : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
     [SerializeField]
     int maxDepth, maxNodesPerDepth, maxStartRooms;
@@ -192,7 +192,7 @@ public class NodeMapGenerator : MonoBehaviour
 
         foreach (MapNode node in startingRooms)
         {
-            List<Node> path = new();
+            List<MapNode> path = new();
             graph.Search(node, path);
 
             if(path.Count < minCount)
@@ -211,7 +211,7 @@ public class NodeMapGenerator : MonoBehaviour
     /// </summary>
     void PruneMap()
     {
-        Node[] nodeList = new Node[graph.NodeList.Count];
+        MapNode[] nodeList = new MapNode[graph.NodeList.Count];
         graph.NodeList.CopyTo(nodeList);
 
         foreach (var node in nodeList)

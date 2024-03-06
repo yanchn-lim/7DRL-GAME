@@ -38,7 +38,17 @@ namespace DataStructure
 
     public class LevelNode : Node
     {
+        public LevelNodeType Type { get; set; }
+        public int HorizontalDepth { get; set; }
+        public Vector3 DebugPos { get; set; }
 
+    }
+
+    public enum LevelNodeType
+    {
+        ROOT,
+        SPAWN,
+        NORMAL
     }
 
     public enum NodeEncounter
@@ -46,15 +56,5 @@ namespace DataStructure
         INFESTED,
         ABANDONED,
         BOSS
-    }
-
-    public enum LevelRoom 
-    {
-        SPAWN,
-        ROOM_1,
-        ROOM_2,
-        ROOM_3,
-        ROOM_4,
-        ROOM_5
     }
 }

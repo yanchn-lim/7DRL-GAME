@@ -2,40 +2,51 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace DataStructure
 {
-    public abstract class Graph
+    public abstract class Graph<T> where T : Node
     {
         //node id, node connected
-        public Dictionary<int, List<Node>> AdjacencyList;
+        public Dictionary<int, List<T>> AdjacencyList;
         //list of all nodes
-        public List<Node> NodeList = new List<Node>();
+        public List<T> NodeList = new List<T>();
 
         public int NodeCount = 0;
         public int MaxDepth;
         public Graph()
         {
-            AdjacencyList = new Dictionary<int, List<Node>>();
+            AdjacencyList = new Dictionary<int, List<T>>();
         }
 
-        public void AddNode(Node node)
+        public void AddNode(T node)
         {
             // this method adds the node to the node list, adjacency list and edge list;
 
             NodeList.Add(node);
-            AdjacencyList[node.Id] = new List<Node>();
+            AdjacencyList[node.Id] = new List<T>();
             NodeCount++;
 
         }
 
-        public void AddEdge(int sourceId, Node target)
+        public void AddEdge(int sourceId, T target)
         {
             if (AdjacencyList.ContainsKey(sourceId) && AdjacencyList.ContainsKey(target.Id)) //check if the adjacency list contains the source and the target
             {
                 AdjacencyList[sourceId].Add(target);
                 AdjacencyList[target.Id].Add(GetNode(sourceId));
+                GetNode(sourceId).AdjacencyList.Add(target);
             }
         }
 
-        public Node GetNode(int id)
+        public void AddEdge(T source, T target)
+        {
+            if (AdjacencyList.ContainsKey(source.Id) && AdjacencyList.ContainsKey(target.Id)) //check if the adjacency list contains the source and the target
+            {
+                AdjacencyList[source.Id].Add(target);
+                AdjacencyList[target.Id].Add(GetNode(source.Id));
+                source.AdjacencyList.Add(target);
+            }
+        }
+
+        public T GetNode(int id)
         {
             foreach (var node in NodeList)
             {
@@ -48,12 +59,12 @@ namespace DataStructure
             return null;
         }
 
-        public void RemoveNode(Node node)
+        public void RemoveNode(T node)
         {
             //removing instances of the removed node from the edge list
             foreach (var item in AdjacencyList)
             {
-                List<Node> connectedNodes = item.Value;
+                List<T> connectedNodes = item.Value;
                 if (connectedNodes.Contains(node))
                 {
                     connectedNodes.Remove(node);
@@ -67,19 +78,19 @@ namespace DataStructure
 
         }
 
-        public List<Node> GetConnected(int id)
+        public List<T> GetConnected(int id)
         {
             if (AdjacencyList.ContainsKey(id))//searches the list and returns a list of nodes connected
             {
                 return AdjacencyList[id];
             }
 
-            return new List<Node>();
+            return new List<T>();
         }
 
-        public List<Node> GetConnectedNextDepth(int id)
+        public List<T> GetConnectedNextDepth(int id)
         {
-            List<Node> nextDepth = new();
+            List<T> nextDepth = new();
             if (AdjacencyList.ContainsKey(id))//searches the list and returns a list of nodes connected
             {
                 foreach (var node in AdjacencyList[id])
@@ -95,11 +106,11 @@ namespace DataStructure
             return null;
         }
 
-        public List<Node> GetNodesInDepth(int depth)
+        public List<T> GetNodesInDepth(int depth)
         {
-            List<Node> NodesInDepth = new List<Node>();
+            List<T> NodesInDepth = new List<T>();
 
-            foreach (Node node in NodeList) //looping the list of nodes
+            foreach (var node in NodeList) //looping the list of nodes
             {
                 if (node.Depth == depth)//checking depth
                 {
@@ -114,9 +125,9 @@ namespace DataStructure
         {
             System.Diagnostics.Stopwatch time = new();
             time.Start();
-            List<Node> visited = new();
+            List<T> visited = new();
             
-            List<Node> nodeFirstDepth = GetNodesInDepth(0);
+            List<T> nodeFirstDepth = GetNodesInDepth(0);
             int randIndex = Random.Range(0, nodeFirstDepth.Count);
             Search(nodeFirstDepth[randIndex], visited);
 
@@ -125,13 +136,13 @@ namespace DataStructure
             return visited.Count == AdjacencyList.Count;
         }
 
-        public void Search(Node node, List<Node> visited)
+        public void Search(T node, List<T> visited)
         {
             if (!visited.Contains(node))
             {
                 visited.Add(node);
 
-                if(AdjacencyList.TryGetValue(node.Id,out List<Node> neighbour))
+                if(AdjacencyList.TryGetValue(node.Id,out List<T> neighbour))
                 {
                     foreach (var n in neighbour)
                     {
@@ -139,6 +150,7 @@ namespace DataStructure
                     }
                 }
             }
+            
         }
     }
 
