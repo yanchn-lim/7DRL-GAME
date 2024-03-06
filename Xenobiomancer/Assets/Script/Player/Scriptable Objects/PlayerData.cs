@@ -11,4 +11,6 @@ public class PlayerData : ScriptableObject
     public float armour;
     public float travelDistance;
 
+    
+
 }

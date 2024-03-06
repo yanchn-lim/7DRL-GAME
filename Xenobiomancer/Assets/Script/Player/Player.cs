@@ -18,6 +18,9 @@ public class Player : Stats, IDamageable
     //text to help the player
     [SerializeField] private TextMeshProUGUI informationText;
 
+    //Display the stats of the player
+    [SerializeField] private DisplayStats displayStats;
+
     [HideInInspector]
     public FSM fsm = new FSM();
     public PlayerMovement PlayerMovement;
@@ -42,6 +45,7 @@ public class Player : Stats, IDamageable
 
 
         InitializeStats(playerData.health, playerData.health, playerData.currency, playerData.travelDistance);
+        displayStats.SetUI(Health, MaxHealth, Currency);
     }
 
     void Update()
@@ -123,21 +127,25 @@ public class Player : Stats, IDamageable
     public override void IncreaseHealth(float amount)
     {
         base.IncreaseHealth(amount);
+        displayStats.UpdateHealthUI(Health, MaxHealth);
     }
 
     public override void DecreaseHealth(float amount)
     {
         base.DecreaseHealth(amount);
+        displayStats.UpdateHealthUI(Health, MaxHealth);
     }
 
     public override void IncreaseCurrency(float amount)
     {
         base.IncreaseCurrency(amount);
+        displayStats.UpdateCurrencyUI(amount);
     }
 
     public override void DecreaseCurrency(float amount)
     {
-        base.DecreaseCurrency(amount); 
+        base.DecreaseCurrency(amount);
+        displayStats.UpdateCurrencyUI(amount);
     }
 
 
@@ -167,6 +175,7 @@ public class Player : Stats, IDamageable
     public void Damage(float damage)
     {
         DecreaseHealth(damage);
+        
 
         Debug.Log(Health);
     }
