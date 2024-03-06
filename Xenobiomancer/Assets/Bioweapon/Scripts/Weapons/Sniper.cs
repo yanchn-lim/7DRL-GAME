@@ -6,6 +6,9 @@ namespace Bioweapon
     {
         [Header("Sniper variable")]
         [SerializeField] private GameObject trajectory;
+
+
+
         public override void HideTrajectory()
         {
             trajectory.SetActive(false);

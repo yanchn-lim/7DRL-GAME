@@ -33,8 +33,6 @@ namespace UpgradeStation
             }
         }
 
-
-
         private void SensePlayer()
         {
             float distance = Vector2.Distance(player.transform.position, transform.position);

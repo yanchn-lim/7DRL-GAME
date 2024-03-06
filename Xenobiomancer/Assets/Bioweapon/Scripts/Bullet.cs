@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Bioweapon
 {
-    public class Bullet : MonoBehaviour
+    public class Bullet : MonoBehaviour 
     {
         [SerializeField] private SpriteRenderer spriteRender;
         [SerializeField] private TrailRenderer trailRenderer;
@@ -27,7 +27,7 @@ namespace Bioweapon
             spriteRender.sprite = data.BulletSprite;
             this.data = data;
         }
-        
+
         public void FireBullet()
         {
             trailRenderer.enabled = true;

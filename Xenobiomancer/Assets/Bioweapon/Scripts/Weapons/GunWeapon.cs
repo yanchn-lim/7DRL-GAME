@@ -1,5 +1,6 @@
 ﻿using Patterns;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Bioweapon

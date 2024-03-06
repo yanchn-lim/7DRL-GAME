@@ -1,10 +1,11 @@
 ﻿using Patterns;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Bioweapon
 {
-    public abstract class Weapon : MonoBehaviour
+    public abstract class Weapon : MonoBehaviour  
     {
         //bullet related
         [SerializeField] protected Transform gun; //the gun the play is using
@@ -13,22 +14,22 @@ namespace Bioweapon
         #region generic gun function
 
         [Tooltip("what is the gun type")]
-        [SerializeField] private GunType gunType;
+        [SerializeField] protected GunType gunType;
         [Tooltip("what should be the name of the weapon")]
-        [SerializeField] private string nameOfTheWeapon;
+        [SerializeField] protected string nameOfTheWeapon;
         [Tooltip("cost of the weapon")]
-        [SerializeField] private int cost;
+        [SerializeField] protected int cost;
         [Tooltip("max mag size")]
-        [SerializeField] private int maxMagSize;
+        [SerializeField] protected int maxMagSize;
         [Tooltip("current mag size")]
-        [SerializeField] private int currentMagSize;
+        [SerializeField] protected int currentMagSize;
         [Tooltip("Current Ammo")]
-        [SerializeField] private int ammoSize;
+        [SerializeField] protected int ammoSize;
 
         [Tooltip("The counter to count how many turn it took to reload the gun")]
-        [SerializeField] private int reloadCounter;
+        [SerializeField] protected int reloadCounter;
         [Tooltip("How many turn should the reload take?")]
-        [SerializeField] private int reloadTurn;
+        [SerializeField] protected int reloadTurn;
         public bool CanShoot { get { return currentMagSize > 0; } }
         public bool CanReload { get { return ammoSize > 0; } }
         public bool HaveReloaded { get; private set; }
@@ -37,11 +38,14 @@ namespace Bioweapon
 
         #endregion
 
+        protected List<PerkBase> perkGunGain;
+
         protected virtual void Start()
         {
             //this is to prevent any missing variable that the you might miss
             if (gun == null) Debug.LogError("No gun attact!");
             if (firingPosition == null) Debug.LogError("No firing position indicated");
+            perkGunGain = new List<PerkBase>();
         }
 
 
@@ -129,5 +133,13 @@ namespace Bioweapon
 
         public abstract void ShowTrajectory();
         public abstract void HideTrajectory();
+
+        public  void AddPerk (PerkBase perk)
+        {
+            perkGunGain.Add(perk);
+        }
     }
+
+    
+
 }

@@ -49,5 +49,6 @@ namespace Bioweapon
         {
             shootingTrajectory.gameObject.SetActive(false);
         }
+
     }
 }
