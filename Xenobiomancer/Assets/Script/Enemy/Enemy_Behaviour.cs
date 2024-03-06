@@ -2,176 +2,199 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Behaviour : Enemy_Base
+namespace Patterns
 {
-/*    public Enemy_Stats enemy_Stats;
-    public Behaviours currentBehavior;
-    public GameObject Player;
-    public bool isDamageTaken = false;
-    public bool SightLine = false;
-    public float currentHealth;
-    public float currentProtectLevel;*/
-
-    // Start is called before the first frame update
-    void Start()
+    public class Enemy_Behaviour : Enemy
     {
-        Player = GameObject.Find("Player");
-        currentBehavior = Behaviours.Patrolling;
+        public FSM zfsm;
+        public Enemy enemy;
+        public GameObject Bullet_enemy;
+        private float retaliationTimer = 0f;
+        public float retaliationInterval = 0.1f;
+
+        private void Start()
+        {
+            Bullet_enemy = Resources.Load<GameObject>("enemy_Bullet");
+            enemy = GameObject.Find("Enemy_1").GetComponent<Enemy>();
+            zfsm = new FSM();
+            zfsm.Add((int)EnemyStates.PATROL, new Enemy2Patrol(zfsm, (int)(EnemyStates2.PATROL), this));
+            zfsm.Add((int)EnemyStates.ATTACKING, new Enemy2Attack(zfsm, (int)(EnemyStates2.ATTACKING), this));
+            zfsm.Add((int)EnemyStates.DYING, new Enemy2Dying(zfsm, (int)(EnemyStates2.DYING), this));
+            zfsm.SetCurrentState((int)EnemyStates.PATROL);
+        }
+
+        private void Update()
+        {
+            zfsm.Update();
+        }
+
+        public void Retaliation()
+        {
+            /*            Vector3 directionToPlayer = Player.transform.position - transform.position;
+
+
+                        float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+
+                        // Instantiate a bullet in the direction the player is facing
+                        GameObject bullet = Instantiate(Bullet_enemy, transform.position, Quaternion.Euler(0, 0, angle));
+
+                        // Set the velocity of the bullet
+                        bullet.GetComponent<Rigidbody2D>().velocity = directionToPlayer.normalized * 4f;*/
+
+            /*            Vector3 directionToPlayer = Player.transform.position - transform.position;
+                        directionToPlayer.Normalize(); // Normalize to get a unit vector
+
+                        // Calculate the angle between the forward direction of the enemy and the direction to the player
+                        float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
+
+                        // Instantiate the bullet prefab at the enemy's position
+                        GameObject bullet = Instantiate(Bullet_enemy, transform.position, Quaternion.Euler(0, 0, angle));
+
+                        // Set the bullet's velocity based on the direction
+                        bullet.GetComponent<Rigidbody2D>().velocity = directionToPlayer * 2f;*/
+
+            if (enemy.SightLine)
+            {
+                retaliationTimer += Time.deltaTime;
+                if (retaliationTimer >= retaliationInterval)
+                {
+                    // Reset the timer
+                    retaliationTimer = 0f;
+
+                    Vector3 directionToPlayer = (Player.transform.position - transform.position).normalized;
+
+
+                    // Instantiate the bullet prefab at the enemy's position
+                    GameObject bullet = Instantiate(Bullet_enemy, transform.position, Quaternion.identity);
+
+                    // Get the Rigidbody2D component from the bullet
+                    Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
+
+                    // Set the velocity of the bullet to move in the calculated direction
+                    bulletRb.velocity = directionToPlayer * 3f;
+
+                    Bullet_Enemy bulletScript = bullet.AddComponent<Bullet_Enemy>();
+                    bulletScript.Initialize(this);
+
+                }
+
+            }
+        }
+
+    }
+    public class EnemyState2 : FSMState
+    {
+        protected Enemy enemy;
+        public EnemyState2(FSM fsm, int id, Enemy enemy) : base(fsm, id)
+        {
+            this.enemy = enemy;
+        }
+    }
+    public class Enemy2Patrol : EnemyState
+    { 
+
+        public Enemy2Patrol(FSM fsm, int id, Enemy enemy) : base(fsm, id, enemy)
+        {
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+        }
+
+        public override void Update()
+        {
+            enemy.FindPlayer();
+            Debug.Log("Finding Player");
+            if (enemy.distanceToPlayer <= enemy.enemy_Stats.RangeofSight)
+            {
+                mFsm.SetCurrentState((int)EnemyStates.ATTACKING);
+                Debug.Log("Starting Chase");
+            }
+            
+        }
+        public override void Exit()
+        {
+            base.Exit();
+        }
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+        }
     }
 
-
-    // Update is called once per frame
-    void Update()
+    public class Enemy2Attack : EnemyState
     {
-
-        switch (currentBehavior)
+        public Enemy_Behaviour enemyBehaviour;
+        public Enemy2Attack(FSM fsm, int id, Enemy enemy) : base(fsm, id, enemy)
         {
-            case Behaviours.Patrolling:
-                Debug.Log("Patrolling start");
-                // Update animations
-                FindPlayer();
-                break;
+            enemyBehaviour = enemy as Enemy_Behaviour;
+        }
 
-            case Behaviours.Attacking:
-                Debug.Log("Attacking start");
-                StartledAndMove();
-                StillInSight();
-                break;
+        public override void Enter()
+        {
+            base.Enter();
+        }
+        public override void Update()
+        {
+            enemy.StillInSight();
+            enemyBehaviour.Retaliation();
+            if (enemy.amrorDown)
+            {
+                enemy.currentHealth = enemy.enemy_Stats.current_Health - 1;
+                Debug.Log($"Current Health Level: {enemy.currentHealth}");
 
-            case Behaviours.TakingDamage:
-                Debug.Log("Taking Damage");
-                StartledAndMove();
-                if (enemy_Stats.protectionLevel <= 0)
+                if (enemy.currentHealth <= enemy.enemy_Stats.min_Health)
                 {
-                    DamageonHealth();
-                    Debug.Log("Enemy no more armor");
+                    mFsm.SetCurrentState((int)EnemyStates.DYING);
                 }
                 else
                 {
-                    protectionDown();
-                    Debug.Log("Armor hits");
+                    enemy.enemy_Stats.current_Health = enemy.currentHealth;
                 }
-               
-                break;
 
-            case Behaviours.Death:
-                ResetStats();
-                UnityEngine.Object.Destroy(gameObject);
-                Debug.Log("Removed enemy");
-                break;
-        }
-    }
-
-    /*public void DamageonHealth()
-    {
-        if (isDamageTaken)
-        {
-            currentHealth = enemy_Stats.current_Health - 1;
-            Debug.Log($"Current Health Level: {currentHealth}");
-
-            if (currentHealth <= enemy_Stats.min_Health)
-            {
-                currentBehavior = Behaviours.Death;
-            }
-            else
-            {
-                enemy_Stats.current_Health = currentHealth;
             }
         }
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Bullet"))
+        public override void Exit()
         {
-            Debug.Log("Trigger entered");
-            currentBehavior = Behaviours.TakingDamage;
-            DamageonHealth();
-            isDamageTaken = true;
-            currentBehavior = Behaviours.Attacking;// Call this immediately upon getting hit
+            base.Exit();
+        }
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
         }
     }
-
-    void OnTriggerStay2D(Collider2D other)
+    public class Enemy2Dying : EnemyState
     {
-        if (other.CompareTag("Bullet"))
+        public Enemy2Dying(FSM fsm, int id, Enemy enemy) : base(fsm, id, enemy)
         {
-            Debug.Log("Trigger exited");
-            isDamageTaken = false;
+        }
+
+        public override void Enter()
+        {
+            base.Enter();
+        }
+        public override void Update()
+        {
+            base.Update();
+        }
+        public override void Exit()
+        {
+            base.Exit();
+        }
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
         }
     }
-
-    public void FindPlayer()
+    public enum EnemyStates2
     {
-        float distanceToPlayer = Vector2.Distance(transform.position, Player.transform.position);
-        if (distanceToPlayer <= enemy_Stats.RangeofSight)
-        {
-            currentBehavior = Behaviours.Attacking;
-        }
+        PATROL,
+        ATTACKING,
+        DYING
     }
-
-
-    public void StartledAndMove()
-    {
-        if (SightLine)
-        {
-            Vector3 direction = (Player.transform.position - transform.position).normalized;
-            transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
-        }
-        
-    }
-
-    public void MoveToPlayer()
-    {
-            Vector3 direction = (Player.transform.position - transform.position).normalized;
-            transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
-    }
-
-    public void StillInSight()
-    {
-        RaycastHit2D ray = Physics2D.Raycast(transform.position, Player.transform.position - transform.position);
-        if (ray.collider != null)
-        {
-            SightLine = ray.collider.CompareTag("Player");
-            if (SightLine)
-            {
-                Debug.DrawRay(transform.position, Player.transform.position - transform.position, Color.green);
-            }
-            else
-            {
-                Debug.DrawRay(transform.position, Player.transform.position - transform.position, Color.red);
-            }
-        }
-    }
-
-
-    public void protectionDown()
-    {
-        currentProtectLevel = enemy_Stats.protectionLevel - 10;
-        Debug.Log($"Current Protection Level: {currentProtectLevel}");
-        if (currentProtectLevel <= 0)
-        {
-            DamageonHealth();
-        }
-        else
-        {
-            enemy_Stats.protectionLevel = currentProtectLevel;
-        }
-    }
-
-    public void ResetStats()
-    {
-        enemy_Stats.current_Health = enemy_Stats.max_Health;
-        enemy_Stats.protectionLevel = enemy_Stats.max_Protection;
-    }*/
-
-
 }
 
-public enum Behaviours
-{
-    Patrolling,
-    Attacking,
-    TakingDamage,
-    Death
-}
+
+
+

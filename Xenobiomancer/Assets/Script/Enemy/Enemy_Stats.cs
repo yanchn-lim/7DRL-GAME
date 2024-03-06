@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Enemy_status", menuName = "ScriptableObjects/Enemy_Stats")]
 public class Enemy_Stats : ScriptableObject
 {
-    public string enemyName;
+    public string Type;
 
     public float max_Health;
     public float min_Health;
