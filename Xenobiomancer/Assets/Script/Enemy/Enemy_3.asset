@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5eb0d8af2e9104d805f08a7102fb26, type: 3}
   m_Name: Enemy_3
   m_EditorClassIdentifier: 
-  Type: 
-  max_Health: 0
+  Type: Runner
+  max_Health: 40
   min_Health: 0
-  current_Health: 0
+  current_Health: 40
   spawnPoints: []
-  damageToPlayer: 0
-  protectionLevel: 0
-  RangeofSight: 0
-  MovementSpeed: 0
-  max_Protection: 0
+  damageToPlayer: 43
+  protectionLevel: 5
+  RangeofSight: 15
+  MovementSpeed: 6
+  max_Protection: 9
