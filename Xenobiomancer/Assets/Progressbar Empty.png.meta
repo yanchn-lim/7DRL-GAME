@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Progressbar Empty_0: 1293378012542396799
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
