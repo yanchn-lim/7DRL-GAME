@@ -41,6 +41,9 @@ namespace DataStructure
         public LevelNodeType Type { get; set; }
         public int HorizontalDepth { get; set; }
         public Vector3 DebugPos { get; set; }
+        public Color DebugColor { get; set; }
+        float weight = -1;
+        public float DebugWeight { get { return weight; } set { weight = value; } }
 
     }
 

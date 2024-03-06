@@ -21,7 +21,6 @@ namespace Patterns
         public static T SelectWeightedItem<T>(Dictionary<T, float> weightedItems)
         {
             float totalWeight = 0f;
-            bool itemAcquired = false;
 
             // Calculate the total weight of all items in the dictionary.
             foreach (float weight in weightedItems.Values)
@@ -29,23 +28,24 @@ namespace Patterns
                 totalWeight += weight;
             }
 
-            // Loop until an item is acquired
-            while (!itemAcquired)
-            {
-                // Iterate through each item in the dictionary.
-                foreach (var item in weightedItems)
-                {
-                    // Generate a random value within the total weight range.
-                    float randomValue = Random.Range(0, totalWeight);
-                    float currentWeight = item.Value;
+            float randomValue = Random.Range(0, totalWeight);
 
-                    // Check if the random value falls within the current item's weight range.
-                    if (randomValue < currentWeight)
-                    {
-                        return item.Key;
-                    }
+            // Iterate through each item in the dictionary.
+            foreach (var item in weightedItems)
+            {
+                // Generate a random value within the total weight range.
+                float currentWeight = item.Value;
+
+                // Check if the random value falls within the current item's weight range.
+                if (randomValue < currentWeight)
+                {
+                    return item.Key;
                 }
+
+                // Subtract the current item's weight from the random value.
+                randomValue -= currentWeight;
             }
+            
 
             Debug.Log("returning default");
             return default;// Return the default value (null for reference types).

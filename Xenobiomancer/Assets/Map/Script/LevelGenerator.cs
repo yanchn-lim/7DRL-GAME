@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DataStructure;
+using Patterns;
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -27,8 +28,9 @@ public class LevelGenerator : MonoBehaviour
 
         CreateStart();
         CreateSpine();
-        Debugging();
         CreateBranch();
+        Debugging();
+
     }
 
     LevelNode CreateNode(int depth,int horizontalDepth)
@@ -87,44 +89,67 @@ public class LevelGenerator : MonoBehaviour
 
         //set graph
         int maxWeight = Mathf.Abs(graph.MaxDepth - halfDepth);
-        curve.MoveKey(0,new(0,maxWeight));
-        curve.AddKey(maxHorizontalDepth, 0);
-        
+
         foreach (var node in graph.GetSpine())
         {
             if (node.Depth == -1)
                 continue;
 
             float weight = Mathf.Abs(node.Depth - halfDepth);
+            node.DebugWeight = weight;
             Dictionary<int, float> numRoomWeight = new();
-
             float totalW = 0;
             for (int i = 0; i < maxHorizontalDepth + 1; i++)
             {
-                float w = GetWeight(weight,i,k);
+                float w = GetWeight(weight,i);
+                numRoomWeight.Add(i, w);
                 totalW += w;
-                //Debug.Log($"Depth : {node.Depth}\nHoriDepth : {i}\nWeight : {w}");
-                //numRoomWeight.Add(i, 1 / (weight*i));
             }
-
-
 
             for (int i = 0; i < maxHorizontalDepth + 1; i++)
             {
-                float w = GetWeight(weight, i, k);
-                //totalW += w;
-                Debug.Log($"Weight : {weight} HoriDepth : {i} Percentage : {w / totalW * 100}%  W = {w}");
-                //numRoomWeight.Add(i, 1 / (weight*i));
+                float w = GetWeight(weight, i);
+                Debug.Log($"Weight : {weight} HoriDepth : {i} % = {w/totalW * 100}% W = {w}");
             }
+
+            int numRoomsL = ProbabilityManager.SelectWeightedItem(numRoomWeight);
+            int numRoomsR = ProbabilityManager.SelectWeightedItem(numRoomWeight);
+
+            CreateLeftBranch(numRoomsL, node);
+            CreateRightBranch(numRoomsR, node);
 
         }
         
     }
 
-    float GetWeight(float weight,float i, float k)
+    void CreateLeftBranch(int num,LevelNode rootNode)
     {
-        float w = curve.Evaluate(weight * (i + 0.1f * k));
-        return w;
+        LevelNode prevNode = rootNode;
+        for (int i = 1; i < num + 1; i++)
+        {
+            LevelNode currNode = CreateNode(rootNode.Depth, -i);
+            currNode.Type = LevelNodeType.NORMAL;
+            graph.AddEdge(prevNode, currNode);
+            prevNode = currNode;
+        }
+    }
+
+    void CreateRightBranch(int num, LevelNode rootNode)
+    {
+        LevelNode prevNode = rootNode;
+        for (int i = 1; i < num + 1; i++)
+        {
+            LevelNode currNode = CreateNode(rootNode.Depth, i);
+            currNode.Type = LevelNodeType.NORMAL;
+            graph.AddEdge(prevNode, currNode);
+            prevNode = currNode;
+        }
+    }
+
+    float GetWeight(float weight,float i)
+    {
+        float w = 1 - Mathf.Pow(i - (weight + (i * k)), 3);
+        return Mathf.Abs(w);
     }
 
     void Debugging()
@@ -175,12 +200,23 @@ public class LevelGenerator : MonoBehaviour
                 DisplayPath(node, target);
             }
         }
+  
     }
 
     void DisplayNode(LevelNode node,GameObject prefab)
     {
         var go = Instantiate(prefab).transform;
         go.gameObject.name = $"Node-{node.Depth}";
+        node.DebugColor = go.GetComponent<SpriteRenderer>().color;
+        Color c = node.DebugColor;
+        if (node.Depth != -1 && node.DebugWeight != -1)
+        {
+            c /= node.DebugWeight;
+            c.a = 1;
+            node.DebugColor = c;
+            go.GetComponent<SpriteRenderer>().color = c;
+        }
+
         go.position = node.DebugPos;
     }
 
