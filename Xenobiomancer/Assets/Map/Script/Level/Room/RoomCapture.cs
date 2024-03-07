@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using UnityEditor;
 public class RoomCapture : MonoBehaviour
 {
     public Tilemap roomTileMap;
     public RoomData roomData;
-    public RoomName roomName;
 
     private void Update()
     {
@@ -26,7 +25,7 @@ public class RoomCapture : MonoBehaviour
         roomData.Width = bounds.size.x;
         roomData.Height = bounds.size.y;
         roomData.GetRoomCenter();
-        roomData.Name = roomName;
+        EditorUtility.SetDirty(roomData);
         Debug.Log("created room");
         return roomData;
     }

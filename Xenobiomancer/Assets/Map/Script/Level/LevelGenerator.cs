@@ -11,9 +11,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     GameObject spawnPrefab, rootPrefab, nodePrefab, linePrefab;
     [SerializeField]
-    RoomData spawnRoomData;
-    [SerializeField]
-    RoomData[] roomData;
+    RoomData[] spawnRoomData, rootRoomData, spineRoomData,normalRoomData;
+
     [SerializeField]
     Tilemap tileMap;
 
@@ -85,7 +84,7 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 1; i < currMaxDepth + 1; i++)
         {
-            LevelNode currNode = CreateNode(i,0,LevelNodeType.NORMAL);
+            LevelNode currNode = CreateNode(i, 0, LevelNodeType.SPINE);
             graph.AddEdge(prevNode, currNode);
             prevNode = currNode;
         }
@@ -154,15 +153,31 @@ public class LevelGenerator : MonoBehaviour
     void AssignRoom()
     {
         foreach (var node in graph.NodeList)
-        {
-            if(node.Type == LevelNodeType.SPAWN)
-            {
-                node.RoomData = spawnRoomData;
-                continue;
-            }
+        {           
+            node.RoomData = GetRoomData(node.Type);
+        }
+    }
 
-            int randIndex = Random.Range(0,roomData.Length);
-            node.RoomData = roomData[randIndex];
+    RoomData GetRoomData(LevelNodeType type)
+    {
+        int randIndex;
+        switch (type)
+        {
+            case LevelNodeType.ROOT:
+                randIndex = Random.Range(0,rootRoomData.Length);
+                return rootRoomData[randIndex];
+            case LevelNodeType.SPAWN:
+                randIndex = Random.Range(0, spawnRoomData.Length);
+                return spawnRoomData[randIndex];
+            case LevelNodeType.SPINE:
+                randIndex = Random.Range(0, spineRoomData.Length);
+                return spineRoomData[randIndex];
+            case LevelNodeType.NORMAL:
+                randIndex = Random.Range(0, normalRoomData.Length);
+                return normalRoomData[randIndex];
+            default:
+                randIndex = Random.Range(0, normalRoomData.Length);
+                return normalRoomData[randIndex];
         }
     }
 
@@ -187,10 +202,8 @@ public class LevelGenerator : MonoBehaviour
         {
             return 0;
         }
- 
-        int distFromPrev = 0;
 
-        
+        int distFromPrev = 0;
 
         foreach (LevelNode prevNode in node.AdjacencyList)
         {
@@ -205,15 +218,15 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        if(node.HorizontalDepth < 0)
+        if (node.HorizontalDepth < 0)
         {
             return distFromPrev - node.RoomData.Width + 1;
         }
         else
         {
             return distFromPrev + node.RoomData.Width - 1;
-
         }
+
     }
 
     int CalculateVerticalDistanceFromRoot(LevelNode node)

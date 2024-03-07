@@ -484,12 +484,30 @@ MonoBehaviour:
   rootPrefab: {fileID: 2538131209329690139, guid: 39b55f20fce895844913af2fa2e5cbb4, type: 3}
   nodePrefab: {fileID: 7452883735577756736, guid: d8be590a297aee441ae3183e84311728, type: 3}
   linePrefab: {fileID: 6026538896086070210, guid: 8baa9624ce327ca4ca8cd56816acd545, type: 3}
-  spawnRoomData: {fileID: 11400000, guid: cf4aa2bbb13ce544482ac6fa04988150, type: 2}
-  roomData:
-  - {fileID: 11400000, guid: c5efcd4dc96a02d4bbac79c6866be31f, type: 2}
-  - {fileID: 11400000, guid: f82079a43814d3f46904cbf656482e90, type: 2}
-  - {fileID: 11400000, guid: 7c8425b6752dee34880e23dbe16404f0, type: 2}
-  - {fileID: 11400000, guid: 770ed524447c421468a2a69676a17690, type: 2}
+  spawnRoomData:
+  - {fileID: 11400000, guid: 7429526b67f394f4e8beb30fdb39a786, type: 2}
+  - {fileID: 11400000, guid: b1f362e87c90ac746945ddc809d07146, type: 2}
+  - {fileID: 11400000, guid: f5f85b2acec897a40b00d4a227e7818c, type: 2}
+  - {fileID: 11400000, guid: a010686536716ab4697ae25998bfe1eb, type: 2}
+  - {fileID: 11400000, guid: 4c96c1c9924019d478ad70e6c9a609d7, type: 2}
+  rootRoomData:
+  - {fileID: 11400000, guid: d88b2eaeb0d271c47bde60ece69ff88c, type: 2}
+  - {fileID: 11400000, guid: 50fdb6df8d84c0a4ab2c8e094ff586e5, type: 2}
+  - {fileID: 11400000, guid: bc4883dcc3ddc7347a727715447c6d7c, type: 2}
+  - {fileID: 11400000, guid: 582daeb0fa057ce4aa29817d69e1b65c, type: 2}
+  - {fileID: 11400000, guid: d031a8561a69f474b9425d2b572ed4da, type: 2}
+  spineRoomData:
+  - {fileID: 11400000, guid: b1b2b90ebb47bfb4d975b9fec6230497, type: 2}
+  - {fileID: 11400000, guid: 74e73cff837e611498039c02726679b8, type: 2}
+  - {fileID: 11400000, guid: ea98610d59cf9c840bc76ed3997a5314, type: 2}
+  - {fileID: 11400000, guid: c073238e12fc44b41bd3b0b9983cd6be, type: 2}
+  - {fileID: 11400000, guid: 77b837402fef2714cbabec956134d7d2, type: 2}
+  normalRoomData:
+  - {fileID: 11400000, guid: 680e35f74b79adc45a52476584ef19d2, type: 2}
+  - {fileID: 11400000, guid: 781f1e9ab25636442acf627dac681734, type: 2}
+  - {fileID: 11400000, guid: 182a04c44581bae4f9709d7d3ec7b9f3, type: 2}
+  - {fileID: 11400000, guid: 4615279eae6f09844ae702ce6f0c9117, type: 2}
+  - {fileID: 11400000, guid: 873285152d159cf4192c2b45b884f57b, type: 2}
   tileMap: {fileID: 373802915}
   k: 0.2
 --- !u!4 &558312614
@@ -552,8 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomTileMap: {fileID: 373802915}
-  roomData: {fileID: 11400000, guid: cf4aa2bbb13ce544482ac6fa04988150, type: 2}
-  roomName: 0
+  roomData: {fileID: 11400000, guid: d031a8561a69f474b9425d2b572ed4da, type: 2}
 --- !u!1 &944536564
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMap: {fileID: 373802915}
-  data: {fileID: 11400000, guid: 7c8425b6752dee34880e23dbe16404f0, type: 2}
+  data: {fileID: 11400000, guid: d031a8561a69f474b9425d2b572ed4da, type: 2}
 --- !u!4 &944536566
 Transform:
   m_ObjectHideFlags: 0

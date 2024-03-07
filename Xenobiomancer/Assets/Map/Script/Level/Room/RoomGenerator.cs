@@ -41,7 +41,9 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int y = 0; y < data.Height; y++)
             {
-                Vector3Int tilePos = new(pos.x + x, pos.y + y, pos.z);
+                int offsetX = data.Center.x;
+                int offsetY = data.Center.y;
+                Vector3Int tilePos = new(pos.x + x - offsetX, pos.y + y - offsetY, pos.z);
 
                 TileBase tile = data.Tiles[x + y * data.Width];
                 //edit the room

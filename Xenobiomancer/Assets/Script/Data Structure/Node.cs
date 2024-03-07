@@ -68,6 +68,7 @@ namespace DataStructure
     {
         ROOT,
         SPAWN,
+        SPINE,
         NORMAL
     }
 
