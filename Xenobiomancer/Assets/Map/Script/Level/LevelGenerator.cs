@@ -97,9 +97,6 @@ public class LevelGenerator : MonoBehaviour
     {
         int halfDepth = Mathf.FloorToInt(currMaxDepth/2);
 
-        //set graph
-        int maxWeight = Mathf.Abs(graph.MaxDepth - halfDepth);
-
         foreach (var node in graph.GetSpine())
         {
             if (node.Depth == -1)
@@ -114,12 +111,6 @@ public class LevelGenerator : MonoBehaviour
                 float w = GetWeight(weight,i);
                 numRoomWeight.Add(i, w);
                 totalW += w;
-            }
-
-            for (int i = 0; i < maxHorizontalDepth + 1; i++)
-            {
-                float w = GetWeight(weight, i);
-                Debug.Log($"Weight : {weight} HoriDepth : {i} % = {w/totalW * 100}% W = {w}");
             }
 
             int numRoomsL = ProbabilityManager.SelectWeightedItem(numRoomWeight);
@@ -162,6 +153,8 @@ public class LevelGenerator : MonoBehaviour
         return Mathf.Abs(w);
     }
 
+
+    #region DEBUGGING
     void Debugging()
     {
         //for visualization
@@ -238,5 +231,5 @@ public class LevelGenerator : MonoBehaviour
         line.SetPosition(1, target.DebugPos + Vector3.back);
     }
 
-
+    #endregion
 }
