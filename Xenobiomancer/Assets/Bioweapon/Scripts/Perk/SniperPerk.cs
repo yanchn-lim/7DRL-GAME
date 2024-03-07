@@ -2,14 +2,14 @@
 
 namespace Bioweapon
 {
-    [CreateAssetMenu(fileName = "Rifle perk", menuName = "ScriptableObjects/new perk/Rifle perk")]
-    public class RiflePerk : PerkBase
+    [CreateAssetMenu(fileName = "Sniper perk", menuName = "ScriptableObjects/new perk/Sniper perk")]
+    public class SniperPerk : PerkBase
     {
-        [Header("Rifle upgrades")]
+        [Header("Sniper upgrades")]
         [Tooltip("increase the amount of bullet shot")]
         [SerializeField] private int shotsIncrease;
         [Tooltip("increase the accuracy of the shot")]
-        [Range(0,1)]
+        [Range(0, 1)]
         [SerializeField] private float accuracyIncrease;
         [Tooltip("Decrease the spread of the bullet")]
         [Range(0, 40)]
@@ -27,7 +27,5 @@ namespace Bioweapon
         public float BulletSpeedIncrease { get => bulletSpeedIncrease; }
         public int BulletLifeTimeIncrease { get => bulletLifeTimeIncrease; }
         public int IncreaseMaxAmmo { get => increaseMaxAmmo; }
-
-        
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UpgradeStation;
 
 namespace Bioweapon
 {
@@ -23,11 +24,6 @@ namespace Bioweapon
             shootingTrajectory.fillAmount = angleOfSpread * fillAngleRatio;
         }
 
-        public override void UpdateFunction()
-        {
-
-            base.UpdateFunction();
-        }
         protected override void MethodToFireBullet()
         {
             for(int i = 0; i < bulletFiredPerTurn; i++)
@@ -50,5 +46,23 @@ namespace Bioweapon
             shootingTrajectory.gameObject.SetActive(false);
         }
 
+        private void UpgradeShotGun(ShotgunPerk perk)
+        {
+            angleOfSpread -= perk.ReductionOfSpread;
+            bulletFiredPerTurn += perk.PelletIncrease;
+            accuracy += perk.AccuracyIncrease;
+            bulletSpeedPerTurn += perk.BulletSpeedIncrease;
+            bulletKillTimer += perk.BulletLifeTimeIncrease;
+            maxMagSize += perk.IncreaseMaxAmmoOfTheMag;
+            ammoIncrease += perk.IncreaseMaxAmmoOfTheMag;
+
+        }
+
+        public override void Upgrade(int i)
+        {
+            ShotgunPerk perk = upgradeData.ShotgunPerks[i];
+            UpgradeShotGun(perk);
+            perkGunGain.Add(perk);
+        }
     }
 }

@@ -7,8 +7,6 @@ namespace Bioweapon
         [Header("Sniper variable")]
         [SerializeField] private GameObject trajectory;
 
-
-
         public override void HideTrajectory()
         {
             trajectory.SetActive(false);
@@ -19,6 +17,22 @@ namespace Bioweapon
             trajectory.SetActive(true);
         }
 
+        public void UpgradeStats(SniperPerk perk)
+        {
+            bulletFiredPerTurn += perk.ShotsIncrease;
+            accuracy += perk.AccuracyIncrease;
+            angleOfOffset -= perk.ReduceBulletSpread;
+            bulletSpeedPerTurn += perk.BulletSpeedIncrease;
+            bulletKillTimer += perk.BulletLifeTimeIncrease;
+            maxMagSize += perk.IncreaseMaxAmmo;
+        }
+
+        public override void Upgrade(int i)
+        {
+            SniperPerk perk = upgradeData.SniperPerks[i];
+            UpgradeStats(perk);
+            perkGunGain.Add(perk);
+        }
 
         protected override void MethodToFireBullet()
         {

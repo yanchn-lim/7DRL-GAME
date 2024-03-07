@@ -1,6 +1,8 @@
 ﻿using Bioweapon;
 using Patterns;
 using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,33 +14,45 @@ namespace UpgradeStation
         private FSM fsm;
 
         [SerializeField] private GameObject overallPanel;
+        [SerializeField] private UpgradeStationData data;
 
         #region select weapon panel
-        [Header("select weapon related")]
         private Weapon weaponSelected;
-        [SerializeField] private Weapon[] currentWeapons;
-        [SerializeField] private WeaponSelectionButton buttonPrefab;
+        private Weapon[] currentWeapons;
+        [Header("select weapon related")]
+        [SerializeField] private WeaponSelectionButton weaponSelectionPrefab;
         [SerializeField] private Transform gunSelectionPanel;
         #endregion
 
-        [SerializeField] private Button submitButton;
+        #region perk panel
+        [Header("select perk related")]
+        [SerializeField] private TextMeshProUGUI descriptionText;
+        [SerializeField] private Transform perkSelectionPanel;
+        [SerializeField] private PerkSelectionButton perkSelectionPrefab;
+        private List<PerkSelectionButton> perkSelectionButtons = new List<PerkSelectionButton>();
+        #endregion
 
-
-        private void Awake()
-        {
-            EventManager.Instance.AddListener(EventName.UseUpgradeStation, ShowUpgradeUI);
-            EventManager.Instance.AddListener(EventName.LeaveUpgradeStation, HideUpgradeUI);
-        }
+        public Player Player { get => player; }
+        public UpgradeStationData Data { get => data; }
 
         private void Start()
         {
-            HideUpgradeUI();
-
+            HidePanel();
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            currentWeapons = player.AvaliableWeapons;
 
             fsm = new FSM();
             fsm.Add((int)UpgradeState.SELECTWEAPONSTATE, new SelectWeaponState(fsm,this));
-            fsm.SetCurrentState((int)UpgradeState.SELECTWEAPONSTATE);
+            fsm.Add((int)UpgradeState.SELECTPERKSTATE, new PerkUpgradeState(fsm, this));
+
+            if (Player.PlayerWeapon.GunType != GunType.Pistol)
+            {
+                fsm.SetCurrentState((int)UpgradeState.SELECTPERKSTATE);
+            }
+            else
+            {
+                fsm.SetCurrentState((int)UpgradeState.SELECTWEAPONSTATE);
+            }
         }
 
         private void Update()
@@ -53,19 +67,21 @@ namespace UpgradeStation
         public void OnCloseButton()
         {
             EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
+            HidePanel();
+
         }
-        /// <summary>
-        /// Hiding the upgrade UI for the player
-        /// </summary>
-        private void HideUpgradeUI()
+
+        private void HidePanel()
         {
             overallPanel.SetActive(false);
         }
+
         /// <summary>
         /// Display the upgrade UI for the player 
         /// </summary>
         public void ShowUpgradeUI()
         {
+            EventManager.Instance.TriggerEvent(EventName.UseUpgradeStation);
             overallPanel.SetActive(true);
         }
         #endregion
@@ -77,10 +93,6 @@ namespace UpgradeStation
         public void PrepareWeaponSelection()
         {
             weaponSelected = null;
-            submitButton.onClick.RemoveAllListeners();
-            submitButton.onClick.AddListener(SubmitWeapon);
-            submitButton.gameObject.SetActive(false);
-
         }
         /// <summary>
         /// display the avaliable weapons to the player
@@ -89,24 +101,61 @@ namespace UpgradeStation
         {
             for(int i = 0; i < currentWeapons.Length; i++)
             {
-                var button = Instantiate(buttonPrefab, gunSelectionPanel);
+                var button = Instantiate(weaponSelectionPrefab, gunSelectionPanel);
                 button.GetComponent<WeaponSelectionButton>().Init(currentWeapons[i] , this);
             }
         }
-
         //when player click to select the weapon they want
         public void SelectWeapon(Weapon weapon)
         {
-            submitButton.gameObject.SetActive(true);
             weaponSelected = weapon;
         }
         //when player click the submit button
-        private void SubmitWeapon()
+        public void SubmitWeapon()
         {
             player.SwitchWeapon(weaponSelected);
             EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
         }
         #endregion
 
+        #region upgrade perk
+        public void PreparePerkSelection()
+        {
+            gunSelectionPanel.gameObject.SetActive(false);
+            perkSelectionPanel.gameObject.SetActive(true);
+        }
+
+        public void CreatePerkSelection(List<PerkBase> perks)
+        {
+            if (perks == null) Debug.LogError("error");
+
+            //do make the check if there is nothing
+            for(int i = 0; i < perks.Count;i++)
+            {
+                var perkButton = Instantiate(perkSelectionPrefab, perkSelectionPanel).GetComponent<PerkSelectionButton>();
+                perkButton.Init(perks[i],this);
+                perkSelectionButtons.Add(perkButton);
+            }
+        }
+
+        public void CheckIfPerkStillExist()
+        {
+            List<PerkSelectionButton> perks = new List<PerkSelectionButton>(perkSelectionButtons);
+            foreach(var perkButton in perks)
+            {
+                if (player.PlayerWeapon.PerkGunGain.Contains(perkButton.AssignPerk))
+                {
+                    perkSelectionButtons.Remove(perkButton);
+                    perkButton.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        public void ShowDescriptionOfPerk(PerkBase perk)
+        {
+            descriptionText.text = perk.Description;
+        }
+
+        #endregion
     }
 }

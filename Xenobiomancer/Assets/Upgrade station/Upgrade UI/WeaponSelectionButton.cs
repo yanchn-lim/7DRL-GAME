@@ -6,13 +6,24 @@ using UnityEngine.UI;
 
 namespace UpgradeStation
 {
-    public class WeaponSelectionButton : MonoBehaviour
+    public class WeaponSelectionButton : DoubleClickButton
     {
         private Weapon assignWeapon;
         private UpgradeUI ui;
         [SerializeField] private TextMeshProUGUI nameOfWeapon;
         [SerializeField] private TextMeshProUGUI costOfWeapon;
         [SerializeField] private Button button;
+
+        public override void clickFirstTime()
+        {
+            ui.SelectWeapon(assignWeapon);
+        }
+
+        public override void clickSecondTime()
+        {    
+            ui.SubmitWeapon();
+        }
+
         public void Init(Weapon weapon , UpgradeUI usedUI)
         {
             assignWeapon = weapon;

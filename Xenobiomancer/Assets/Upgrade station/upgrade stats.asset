@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ec7645ff1350c459bcb504772bc75c, type: 3}
+  m_Name: upgrade stats
+  m_EditorClassIdentifier: 
+  shotgunPerks:
+  - {fileID: 11400000, guid: 89f0fe581e4082f43826ded8e425489e, type: 2}
+  - {fileID: 11400000, guid: 0ae736fbc0735f345877a6e1d882f7d9, type: 2}
+  - {fileID: 11400000, guid: a2769fc0ebd5ac943a808522ff0e3625, type: 2}
+  - {fileID: 11400000, guid: 21180dcef0416654cbab4e4458716bab, type: 2}
+  - {fileID: 11400000, guid: dea495979a904254cb9b0f9c1075bc72, type: 2}
+  riflePerks:
+  - {fileID: 11400000, guid: 0ff3e479e6119924ebfcce89409709eb, type: 2}
+  - {fileID: 11400000, guid: ca018aa73a8d65045aeb25ec72bd3e53, type: 2}
+  - {fileID: 11400000, guid: 6b9149139587b4f43945f731d68bdfbf, type: 2}
+  - {fileID: 11400000, guid: 92dcd5fb4db79d34a951ec1c2eb64800, type: 2}
+  - {fileID: 11400000, guid: dd53b4d9278e4d2498a82c426d37b7bc, type: 2}
+  - {fileID: 11400000, guid: b797e1844af5a4d45b8942d3d78fff0b, type: 2}
+  sniperPerks:
+  - {fileID: 11400000, guid: 68cb8394c2bd55841aff695f50fedf3c, type: 2}
+  - {fileID: 11400000, guid: 0a43a6db171bb4b4486936ab865e40aa, type: 2}
+  - {fileID: 11400000, guid: 14845fc57d08b16459e4686ca6b5dc84, type: 2}
+  - {fileID: 11400000, guid: 91740a55d74c57446b2ee5b89ac2f22d, type: 2}
+  - {fileID: 11400000, guid: 4296ffdada57cc94c9187f24bcad911d, type: 2}
+  lasergunsPerk:
+  - {fileID: 11400000, guid: 341619c7fc7baa64cb8c167db504376e, type: 2}
+  - {fileID: 11400000, guid: 7a9058a3ae854cc4fb86882ed122ea43, type: 2}
+  - {fileID: 11400000, guid: 4dd0696013f79cc40aa7b941f367e028, type: 2}
+  - {fileID: 11400000, guid: efa4e806c7868e24595881e6ac7c5cba, type: 2}
+  - {fileID: 11400000, guid: f029ea7a7702f3e4ba5fb4106f1d47cd, type: 2}
+  toggleRadius: 1.25

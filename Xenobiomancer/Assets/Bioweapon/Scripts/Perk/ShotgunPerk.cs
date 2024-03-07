@@ -3,7 +3,7 @@
 namespace Bioweapon
 {
     [CreateAssetMenu(fileName = "shotgun perk", menuName = "ScriptableObjects/new perk/shotgun perk")]
-    public class ShotgunPerk : Perk<Shotgun>
+    public class ShotgunPerk : PerkBase
     {
         [Header("Shotgun upgrades")]
         [Tooltip("reduce the shotgun spread of the bullet")]
@@ -15,13 +15,18 @@ namespace Bioweapon
         [Tooltip("increase the speed of the bullet")]
         [SerializeField] private float bulletSpeedIncrease;
         [Tooltip("long bullet lifetime")]
-        [SerializeField] private float bulletLifeTimeIncrease;
-       
-        public override void Upgrade(Shotgun weapon)
-        {
-            weapon.AddPerk(this);
-            
+        [SerializeField] private int bulletLifeTimeIncrease;
+        [Tooltip("increase max mag of the shotgun")]
+        [SerializeField] private int increaseCurrentMag;
+        [Tooltip("increase max ammo of the shotgun")]
+        [SerializeField] private int increaseMaxAmmoOfTheMag;
 
-        }
+        public float ReductionOfSpread { get => reductionOfSpread; }
+        public int PelletIncrease { get => pelletIncrease; }
+        public float AccuracyIncrease { get => accuracyIncrease; }
+        public float BulletSpeedIncrease { get => bulletSpeedIncrease; }
+        public int BulletLifeTimeIncrease { get => bulletLifeTimeIncrease; }
+        public int IncreaseCurrentMag { get => increaseCurrentMag; }
+        public int IncreaseMaxAmmoOfTheMag { get => increaseMaxAmmoOfTheMag; }
     }
 }

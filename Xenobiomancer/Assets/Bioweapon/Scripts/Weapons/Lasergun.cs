@@ -12,7 +12,7 @@ namespace Bioweapon
 
         [Range(0,1)]
         [SerializeField] private float startingBeamWidth;
-        [Range(0, 1)]
+        [Range(0, 5)]
         [SerializeField] private float endingBeamWidth;
         [Range(0,1)]
         [Tooltip("a percentage of it to charge up before shooting (count in amount of sec in a turn)")]
@@ -20,8 +20,6 @@ namespace Bioweapon
         [Range(0, 1)]
         [Tooltip("a percentage of it to retract back after shooting(count in amount of sec in a turn)")]
         [SerializeField] private float recoverytimeForBeam;
-
-
 
         public override void HideTrajectory()
         {
@@ -32,6 +30,20 @@ namespace Bioweapon
         public override void ShowTrajectory()
         {
             trajectory.gameObject.SetActive(true);
+        }
+
+        public void UpgradeLaser(LasergunPerk perk)
+        {
+            endingBeamWidth += perk.IncreaseBeamWidth;
+            lengthOfBeam += perk.IncreaseBeamLength;
+            chargeUpBeam -= perk.ReduceChargeUp;
+        }
+
+        public override void Upgrade(int i)
+        {
+            LasergunPerk perk = upgradeData.LasergunsPerk[i];
+            UpgradeLaser(perk);
+            perkGunGain.Add(perk);
         }
 
         protected override void MethodToFireBullet()

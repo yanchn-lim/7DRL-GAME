@@ -19,7 +19,11 @@ namespace Bioweapon
         {
             trajectory.SetActive(true);
         }
-        
+
+        public override void Upgrade(int i)
+        {
+            print("no upgrades");
+        }
 
         protected override void MethodToFireBullet()
         {

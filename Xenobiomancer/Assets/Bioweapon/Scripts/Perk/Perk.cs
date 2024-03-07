@@ -1,6 +1,7 @@
 ﻿using Bioweapon;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Bioweapon
 {
@@ -11,12 +12,13 @@ namespace Bioweapon
         [SerializeField] private string nameOfPerk;
         [TextArea(2,3)]
         [SerializeField] private string description;
+        [SerializeField] private int cost;
+        [SerializeField] private Sprite logo;
 
-    }
-
-    public abstract class Perk<weaponType>: PerkBase where weaponType : Weapon
-    {
-        public abstract void Upgrade(weaponType weapon);
+        public string NameOfPerk { get => nameOfPerk; }
+        public string Description { get => description; }
+        public int Cost { get => cost; }
+        public Sprite Logo { get => logo; }
     }
 
 

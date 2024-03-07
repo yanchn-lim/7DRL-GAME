@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84ec7645ff1350c459bcb504772bc75c, type: 3}
-  m_Name: upgrade station stats
+  m_Script: {fileID: 11500000, guid: bf86b6a5b41c11b47846c78eb408c08d, type: 3}
+  m_Name: lasergun perk 1
   m_EditorClassIdentifier: 
-  availablePerks: []
-  toggleRadius: 1.25
+  nameOfPerk: 1l
+  description: 
+  cost: 0
+  logo: {fileID: 0}

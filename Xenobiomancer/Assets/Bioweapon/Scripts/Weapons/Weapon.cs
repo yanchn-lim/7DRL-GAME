@@ -2,14 +2,17 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UpgradeStation;
 
 namespace Bioweapon
 {
     public abstract class Weapon : MonoBehaviour  
     {
         //bullet related
+
         [SerializeField] protected Transform gun; //the gun the play is using
         [SerializeField] protected Transform firingPosition; //where the bullets will be fired at
+        [SerializeField] protected UpgradeStationData upgradeData;
 
         #region generic gun function
 
@@ -19,12 +22,16 @@ namespace Bioweapon
         [SerializeField] protected string nameOfTheWeapon;
         [Tooltip("cost of the weapon")]
         [SerializeField] protected int cost;
+        [Tooltip("short description of the gun")]
+        [SerializeField] protected string shortDescription;
         [Tooltip("max mag size")]
         [SerializeField] protected int maxMagSize;
         [Tooltip("current mag size")]
         [SerializeField] protected int currentMagSize;
         [Tooltip("Current Ammo")]
         [SerializeField] protected int ammoSize;
+        [Tooltip("Ammo increase if they plan to buy more ammo")]
+        [SerializeField] protected int ammoIncrease;
 
         [Tooltip("The counter to count how many turn it took to reload the gun")]
         [SerializeField] protected int reloadCounter;
@@ -38,17 +45,17 @@ namespace Bioweapon
         public string NameOfTheWeapon { get => nameOfTheWeapon; }
         public int Cost { get => cost; }
         public GunType GunType { get => gunType; }
+        protected List<PerkBase> perkGunGain = new List<PerkBase>();
+        public List<PerkBase> PerkGunGain { get => perkGunGain; }
 
         #endregion
 
-        protected List<PerkBase> perkGunGain;
 
         protected virtual void Start()
         {
             //this is to prevent any missing variable that the you might miss
             if (gun == null) Debug.LogError("No gun attact!");
             if (firingPosition == null) Debug.LogError("No firing position indicated");
-            perkGunGain = new List<PerkBase>();
         }
 
 
@@ -136,6 +143,12 @@ namespace Bioweapon
 
         public abstract void ShowTrajectory();
         public abstract void HideTrajectory();
+
+        /// <summary>
+        /// Upgrade using the index of the perks as to upgrade
+        /// </summary>
+        /// <param name="i">perk index</param>
+        public abstract void Upgrade(int i);
 
         public  void AddPerk (PerkBase perk)
         {

@@ -8,20 +8,19 @@ namespace UpgradeStation
 {
     public class UpgradeStationBehaviour : MonoBehaviour
     {
+        [SerializeField] private UpgradeUI upgradeUI;
         [SerializeField] private UpgradeStationData data;
         [SerializeField] private TextMeshProUGUI information;
-        private static List<int> perksUsed;
         private Player player;
         private bool playerIsNearby;
+
+        public UpgradeStationData Data { get => data; }
 
         private void Awake()
         {
             //might need to change this later since this a bad way to find player
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-            if (perksUsed == null)
-            {
-                perksUsed = new List<int>();
-            }
+            
         }
 
         private void Update()
@@ -30,7 +29,7 @@ namespace UpgradeStation
 
             if (playerIsNearby && Input.GetKeyUp(KeyCode.E))
             {
-                EventManager.Instance.TriggerEvent(EventName.UseUpgradeStation);
+                upgradeUI.ShowUpgradeUI();
             }
         }
 

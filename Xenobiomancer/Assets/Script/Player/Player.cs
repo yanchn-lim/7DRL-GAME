@@ -14,15 +14,14 @@ public class Player : Stats, IDamageable
 {
     [Header("Gun")]
     [SerializeField] private GunType currentGunType;
-    [SerializeField] private Weapon pistol;
-    [SerializeField] private Weapon shotgun;
-    [SerializeField] private Weapon rifle;
-    [SerializeField] private Weapon Sniper;
-    [SerializeField] private Weapon Lasergun;
+    [SerializeField] private Weapon[] avaliableWeapons;
 
     [Header("current weapon")]
     [SerializeField] private Weapon currentWeapon;
     public Weapon PlayerWeapon { get => currentWeapon; }
+    public Weapon[] AvaliableWeapons { get => avaliableWeapons; }
+    public GunType CurrentGunType { get => currentGunType;}
+
     [Header("HUD")]
     //text to help the player
     [SerializeField] private TextMeshProUGUI informationText;

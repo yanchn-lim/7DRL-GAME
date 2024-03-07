@@ -38,7 +38,7 @@ namespace Bioweapon
             }
         }
 
-        public void Upgrade(RiflePerk perk)
+        public void UpgradeStats(RiflePerk perk)
         {
             bulletFiredPerTurn += perk.ShotsIncrease;
             accuracy += perk.AccuracyIncrease;
@@ -48,6 +48,12 @@ namespace Bioweapon
             maxMagSize += perk.IncreaseMaxAmmo;
         }
 
+        public override void Upgrade(int i)
+        {
+            RiflePerk perk = upgradeData.RiflePerks[i];
+            UpgradeStats(perk);
+            perkGunGain.Add(perk);
+        }
     }
 
 }
