@@ -46,8 +46,7 @@ public class RoomGenerator : MonoBehaviour
                 TileBase tile = data.Tiles[x + y * data.Width];
                 //edit the room
                 //code here
-
-                if (tile != null)
+                if (tile != null && map.GetTile(tilePos) == null)
                 {
                     map.SetTile(tilePos, tile);
                 }

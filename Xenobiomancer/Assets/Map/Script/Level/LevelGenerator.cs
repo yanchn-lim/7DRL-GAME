@@ -43,8 +43,8 @@ public class LevelGenerator : MonoBehaviour
         CreateStart();
         CreateSpine();
         CreateBranch();
-        AssignPos();
         AssignRoom();
+        AssignPos();
         GenerateRoom();
         //Debugging();
 
@@ -163,8 +163,73 @@ public class LevelGenerator : MonoBehaviour
 
             int randIndex = Random.Range(0,roomData.Length);
             node.RoomData = roomData[randIndex];
+        }
+    }
+
+    void AssignPos()
+    {
+        int offsetY = 12;
+        int offsetX = 15;
+        foreach (LevelNode node in graph.NodeList)
+        {
+            int y = node.Depth * offsetY;
+            //int x = node.HorizontalDepth * offsetX;
+            //int y = CalculateVerticalDistanceFromRoot(node);
+            int x = CalculateHorizontalDistanceFromRoot(node);
+            Vector3Int pos = new(x, y, 0);
+            node.Position = pos;
+        }
+    }
+
+    int CalculateHorizontalDistanceFromRoot(LevelNode node)
+    {
+        if (node.HorizontalDepth == 0)
+        {
+            return 0;
+        }
+ 
+        int distFromPrev = 0;
+
+        
+
+        foreach (LevelNode prevNode in node.AdjacencyList)
+        {
+            if (prevNode.Depth == node.Depth || prevNode.DistanceFromSpine < node.DistanceFromSpine)
+            {
+                if (node.HorizontalDepth == 1 && prevNode.HorizontalDepth == 0)
+                {
+                    distFromPrev += prevNode.RoomData.Width;
+                }
+
+                distFromPrev += CalculateHorizontalDistanceFromRoot(prevNode);
+            }
+        }
+
+        if(node.HorizontalDepth < 0)
+        {
+            return distFromPrev - node.RoomData.Width + 1;
+        }
+        else
+        {
+            return distFromPrev + node.RoomData.Width - 1;
 
         }
+    }
+
+    int CalculateVerticalDistanceFromRoot(LevelNode node)
+    {
+        int distFromPrev = 0;
+
+        foreach (LevelNode prevNode in node.AdjacencyList)
+        {
+            if (prevNode.Depth < node.Depth)
+            {
+                distFromPrev += CalculateVerticalDistanceFromRoot(prevNode);
+            }
+        }
+
+
+        return distFromPrev + node.RoomData.Width - 1;       
     }
 
     void GenerateRoom()
@@ -182,20 +247,6 @@ public class LevelGenerator : MonoBehaviour
         AssignPos();
         DisplayMap();
     }
-
-    void AssignPos()
-    {
-        int offsetY = 10;
-        int offsetX = 10;
-        foreach (LevelNode item in graph.NodeList)
-        {
-            int y = item.Depth * offsetY;
-            int x = item.HorizontalDepth * offsetX;
-            Vector3Int pos = new(x, y,0);
-            item.Position = pos;
-        }
-    }
-
     void DisplayMap()
     {
         foreach (LevelNode node in graph.NodeList)

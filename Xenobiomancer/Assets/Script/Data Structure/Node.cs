@@ -35,11 +35,11 @@ namespace DataStructure
         
     }
 
-
     public class LevelNode : Node
     {
         public LevelNodeType Type { get; set; }
         public int HorizontalDepth { get; set; }
+        public int DistanceFromSpine { get { return Mathf.Abs(HorizontalDepth); } }
         public List<EntranceDirection> Entrances { get; }
         public RoomData RoomData { get; set; }
         public Vector3Int Position { get; set; }
