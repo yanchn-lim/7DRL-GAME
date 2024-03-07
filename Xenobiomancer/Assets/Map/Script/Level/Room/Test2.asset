@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Width: 0
   Height: 0
-  GroundTiles: {fileID: 0}
-  WallTiles: {fileID: 0}
+  Center: {x: 0, y: 0}
   Tiles: []
+  Name: 0

@@ -355,7 +355,31 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -363,30 +387,48 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: 4.1759047e+37
+      e00: -0.00000046697005
+      e01: 4e-45
+      e02: -1.3875203e+24
+      e03: 0
+      e10: 2.23e-43
+      e11: NaN
+      e12: 4.5907e-41
+      e13: 0
+      e20: NaN
+      e21: 0
+      e22: -0.0000004669696
+      e23: 0
+      e30: 0
+      e31: 7.34684e-40
+      e32: 2.23e-43
+      e33: 1
+  - m_RefCount: 0
+    m_Data:
+      e00: 0
       e01: 0
       e02: 1e-45
       e03: 6.917536e+19
-      e10: 6.63e-43
+      e10: 0
       e11: 0
       e12: 0
       e13: 6.6e-43
       e20: -1.3875203e+24
       e21: 6.917536e+19
-      e22: -1.27641e-40
-      e23: -1.1507995e-19
+      e22: -1.8403e-40
+      e23: -2.6366734e-19
       e30: 4.5907e-41
       e31: 6.6e-43
       e32: 6.63e-43
       e33: 6.6e-43
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: -1.1507943e-19, g: -1.1507943e-19, b: -1.1507943e-19, a: -1.1507943e-19}
+    m_Data: {r: -2.636663e-19, g: -2.636663e-19, b: -2.636663e-19, a: -2.636663e-19}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -9, y: -6, z: 0}
-  m_Size: {x: 19, y: 12, z: 1}
+  m_Size: {x: 22, y: 16, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -422,7 +464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &558312613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,39 +484,13 @@ MonoBehaviour:
   rootPrefab: {fileID: 2538131209329690139, guid: 39b55f20fce895844913af2fa2e5cbb4, type: 3}
   nodePrefab: {fileID: 7452883735577756736, guid: d8be590a297aee441ae3183e84311728, type: 3}
   linePrefab: {fileID: 6026538896086070210, guid: 8baa9624ce327ca4ca8cd56816acd545, type: 3}
-  curve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.5494775
-      value: 0.30192554
-      inSlope: 1.0989549
-      outSlope: 1.0989549
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  spawnRoomData: {fileID: 11400000, guid: cf4aa2bbb13ce544482ac6fa04988150, type: 2}
+  roomData:
+  - {fileID: 11400000, guid: c5efcd4dc96a02d4bbac79c6866be31f, type: 2}
+  - {fileID: 11400000, guid: f82079a43814d3f46904cbf656482e90, type: 2}
+  - {fileID: 11400000, guid: 7c8425b6752dee34880e23dbe16404f0, type: 2}
+  - {fileID: 11400000, guid: 770ed524447c421468a2a69676a17690, type: 2}
+  tileMap: {fileID: 373802915}
   k: 0.2
 --- !u!4 &558312614
 Transform:
@@ -536,7 +552,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomTileMap: {fileID: 373802915}
-  roomData: {fileID: 11400000, guid: 7c8425b6752dee34880e23dbe16404f0, type: 2}
+  roomData: {fileID: 11400000, guid: cf4aa2bbb13ce544482ac6fa04988150, type: 2}
+  roomName: 0
 --- !u!1 &944536564
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,7 +570,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &944536565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,7 +584,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMap: {fileID: 373802915}
-  data: {fileID: 11400000, guid: 7c8425b6752dee34880e23dbe16404f0, type: 2}
+  data: {fileID: 11400000, guid: 770ed524447c421468a2a69676a17690, type: 2}
 --- !u!4 &944536566
 Transform:
   m_ObjectHideFlags: 0

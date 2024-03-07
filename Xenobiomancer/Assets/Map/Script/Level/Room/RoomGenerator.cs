@@ -24,13 +24,32 @@ public class RoomGenerator : MonoBehaviour
                 Vector3Int tilePos = new(pos.x + x, pos.y + y, pos.z);
 
                 TileBase tile = data.Tiles[x + y * data.Width];
-
                 //edit the room
                 //code here
 
-                if(tile != null)
+                if (tile != null)
                 {
                     tileMap.SetTile(tilePos, tile);
+                }
+            }
+        }
+    }
+
+    public static void GenerateRoom(Tilemap map,RoomData data, Vector3Int pos)
+    {
+        for (int x = 0; x < data.Width; x++)
+        {
+            for (int y = 0; y < data.Height; y++)
+            {
+                Vector3Int tilePos = new(pos.x + x, pos.y + y, pos.z);
+
+                TileBase tile = data.Tiles[x + y * data.Width];
+                //edit the room
+                //code here
+
+                if (tile != null)
+                {
+                    map.SetTile(tilePos, tile);
                 }
             }
         }

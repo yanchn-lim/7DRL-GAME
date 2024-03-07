@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e84206d15b5c5c34a87a2cf96af12497, type: 3}
-  m_Name: Test
+  m_Name: Test4
   m_EditorClassIdentifier: 
   Width: 0
   Height: 0
-  GroundTiles: {fileID: 0}
-  WallTiles: {fileID: 0}
+  Center: {x: 0, y: 0}
   Tiles: []
+  Name: 0

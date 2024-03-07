@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DataStructure;
 using Patterns;
+using UnityEngine.Tilemaps;
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -10,7 +11,12 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     GameObject spawnPrefab, rootPrefab, nodePrefab, linePrefab;
     [SerializeField]
-    AnimationCurve curve;
+    RoomData spawnRoomData;
+    [SerializeField]
+    RoomData[] roomData;
+    [SerializeField]
+    Tilemap tileMap;
+
     int currMaxDepth;
 
     LevelGraph graph;
@@ -30,8 +36,6 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    
-
     void Initialize()
     {
         graph = new();
@@ -39,7 +43,10 @@ public class LevelGenerator : MonoBehaviour
         CreateStart();
         CreateSpine();
         CreateBranch();
-        Debugging();
+        AssignPos();
+        AssignRoom();
+        GenerateRoom();
+        //Debugging();
 
     }
 
@@ -53,31 +60,23 @@ public class LevelGenerator : MonoBehaviour
         return node;
     }
 
-    #region Initialize Start of level
+    LevelNode CreateNode(int depth, int horizontalDepth, LevelNodeType type)
+    {
+        LevelNode node = new();
+        node.Id = graph.NodeCount;
+        node.Depth = depth;
+        node.HorizontalDepth = horizontalDepth;
+        node.Type = type;
+        graph.AddNode(node);
+        return node;
+    }
+
     void CreateStart()
     {
-        CreateSpawnNode();
-        CreateRootNode();
-        ConnectSpawnToRoot();
+        spawnNode = CreateNode(-1, 0, LevelNodeType.SPAWN);
+        rootNode = CreateNode(0, 0, LevelNodeType.ROOT);
+        graph.AddEdge(spawnNode.Id, rootNode);
     }
-
-    void CreateSpawnNode()
-    {
-        spawnNode = CreateNode(-1,0);
-        spawnNode.Type = LevelNodeType.SPAWN;
-    }
-
-    void CreateRootNode()
-    {
-        rootNode = CreateNode(0,0);
-        rootNode.Type = LevelNodeType.ROOT;
-    }
-
-    void ConnectSpawnToRoot()
-    {
-        graph.AddEdge(spawnNode.Id,rootNode);
-    }
-    #endregion
 
     void CreateSpine()
     {
@@ -86,12 +85,13 @@ public class LevelGenerator : MonoBehaviour
 
         for (int i = 1; i < currMaxDepth + 1; i++)
         {
-            LevelNode currNode = CreateNode(i,0);
-            currNode.Type = LevelNodeType.NORMAL;
+            LevelNode currNode = CreateNode(i,0,LevelNodeType.NORMAL);
             graph.AddEdge(prevNode, currNode);
             prevNode = currNode;
         }
     }
+
+    #region Creating Branches
     public float k = 0.1f;
     void CreateBranch()
     {
@@ -118,7 +118,6 @@ public class LevelGenerator : MonoBehaviour
 
             CreateLeftBranch(numRoomsL, node);
             CreateRightBranch(numRoomsR, node);
-
         }
         
     }
@@ -128,8 +127,7 @@ public class LevelGenerator : MonoBehaviour
         LevelNode prevNode = rootNode;
         for (int i = 1; i < num + 1; i++)
         {
-            LevelNode currNode = CreateNode(rootNode.Depth, -i);
-            currNode.Type = LevelNodeType.NORMAL;
+            LevelNode currNode = CreateNode(rootNode.Depth, -i, LevelNodeType.NORMAL);
             graph.AddEdge(prevNode, currNode);
             prevNode = currNode;
         }
@@ -140,8 +138,7 @@ public class LevelGenerator : MonoBehaviour
         LevelNode prevNode = rootNode;
         for (int i = 1; i < num + 1; i++)
         {
-            LevelNode currNode = CreateNode(rootNode.Depth, i);
-            currNode.Type = LevelNodeType.NORMAL;
+            LevelNode currNode = CreateNode(rootNode.Depth, i, LevelNodeType.NORMAL);
             graph.AddEdge(prevNode, currNode);
             prevNode = currNode;
         }
@@ -152,7 +149,31 @@ public class LevelGenerator : MonoBehaviour
         float w = 1 - Mathf.Pow(i - (weight + (i * k)), 3);
         return Mathf.Abs(w);
     }
+    #endregion
 
+    void AssignRoom()
+    {
+        foreach (var node in graph.NodeList)
+        {
+            if(node.Type == LevelNodeType.SPAWN)
+            {
+                node.RoomData = spawnRoomData;
+                continue;
+            }
+
+            int randIndex = Random.Range(0,roomData.Length);
+            node.RoomData = roomData[randIndex];
+
+        }
+    }
+
+    void GenerateRoom()
+    {
+        foreach (var node in graph.NodeList)
+        {
+            RoomGenerator.GenerateRoom(tileMap,node.RoomData,node.Position);
+        }
+    }
 
     #region DEBUGGING
     void Debugging()
@@ -164,14 +185,14 @@ public class LevelGenerator : MonoBehaviour
 
     void AssignPos()
     {
-        float offsetY = 1.2f;
-        float offsetX = 1.2f;
+        int offsetY = 10;
+        int offsetX = 10;
         foreach (LevelNode item in graph.NodeList)
         {
-            float y = item.Depth * offsetY;
-            float x = item.HorizontalDepth * offsetX;
-            Vector2 pos = new(x, y);
-            item.DebugPos = pos;
+            int y = item.Depth * offsetY;
+            int x = item.HorizontalDepth * offsetX;
+            Vector3Int pos = new(x, y,0);
+            item.Position = pos;
         }
     }
 
@@ -220,15 +241,15 @@ public class LevelGenerator : MonoBehaviour
             go.GetComponent<SpriteRenderer>().color = c;
         }
 
-        go.position = node.DebugPos;
+        go.position = node.Position;
     }
 
     void DisplayPath(LevelNode node, LevelNode target)
     {
         //spawn a line
         var line = Instantiate(linePrefab).GetComponent<LineRenderer>();
-        line.SetPosition(0, node.DebugPos + Vector3.back);
-        line.SetPosition(1, target.DebugPos + Vector3.back);
+        line.SetPosition(0, node.Position + Vector3.back);
+        line.SetPosition(1, target.Position + Vector3.back);
     }
 
     #endregion
