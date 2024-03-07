@@ -10,7 +10,9 @@ public class RoomData : ScriptableObject
     public TileBase GroundTiles;
     public TileBase WallTiles;
     public TileBase[] Tiles;
+    
 
+ 
 
     enum EntranceDirection
     {

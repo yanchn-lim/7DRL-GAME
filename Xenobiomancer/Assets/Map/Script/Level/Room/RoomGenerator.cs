@@ -9,6 +9,7 @@ public class RoomGenerator : MonoBehaviour
     Tilemap tileMap;
     [SerializeField]
     RoomData data;
+
     private void Start()
     {
         GenerateRoom(data,new(0,0,0));
@@ -20,9 +21,13 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int y = 0; y < data.Height; y++)
             {
-                Vector3Int tilePos = new(pos.x + x, pos.y - y, pos.z);
+                Vector3Int tilePos = new(pos.x + x, pos.y + y, pos.z);
 
                 TileBase tile = data.Tiles[x + y * data.Width];
+
+                //edit the room
+                //code here
+
                 if(tile != null)
                 {
                     tileMap.SetTile(tilePos, tile);

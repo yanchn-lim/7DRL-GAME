@@ -7,6 +7,7 @@ public class RoomCapture : MonoBehaviour
 {
     public Tilemap roomTileMap;
     public RoomData roomData;
+
     private void Update()
     {
         if (Input.GetKey(KeyCode.F))
@@ -20,7 +21,6 @@ public class RoomCapture : MonoBehaviour
         BoundsInt bounds = roomTileMap.cellBounds;
         TileBase[] capturedTiles = roomTileMap.GetTilesBlock(bounds);
 
-        roomData.name = "TESTES";
         roomData.Tiles = capturedTiles;
         roomData.Width = bounds.size.x;
         roomData.Height = bounds.size.y;
@@ -29,3 +29,4 @@ public class RoomCapture : MonoBehaviour
         return roomData;
     }
 }
+ 
