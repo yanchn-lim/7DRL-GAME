@@ -41,26 +41,39 @@ namespace UpgradeStation
             fsm.SetCurrentState((int)UpgradeState.SELECTWEAPONSTATE);
         }
 
-        public void OnCloseButton()
-        {
-            EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
-        }
-
-        private void HideUpgradeUI()
-        {
-            overallPanel.SetActive(false);
-        }
-
-        public void ShowUpgradeUI()
-        {
-            overallPanel.SetActive(true);
-        }
-
         private void Update()
         {
             fsm.Update();
         }
 
+        #region general UI function
+        /// <summary>
+        /// when the player click on the close button
+        /// </summary>
+        public void OnCloseButton()
+        {
+            EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
+        }
+        /// <summary>
+        /// Hiding the upgrade UI for the player
+        /// </summary>
+        private void HideUpgradeUI()
+        {
+            overallPanel.SetActive(false);
+        }
+        /// <summary>
+        /// Display the upgrade UI for the player 
+        /// </summary>
+        public void ShowUpgradeUI()
+        {
+            overallPanel.SetActive(true);
+        }
+        #endregion
+
+        #region related to weapon selection
+        /// <summary>
+        /// Set the submit button and values to prepare for selection of weapon
+        /// </summary>
         public void PrepareWeaponSelection()
         {
             weaponSelected = null;
@@ -69,8 +82,10 @@ namespace UpgradeStation
             submitButton.gameObject.SetActive(false);
 
         }
-
-        public void SetUpWeapon()
+        /// <summary>
+        /// display the avaliable weapons to the player
+        /// </summary>
+        public void SetUpWeaponButton()
         {
             for(int i = 0; i < currentWeapons.Length; i++)
             {
@@ -91,40 +106,7 @@ namespace UpgradeStation
             player.SwitchWeapon(weaponSelected);
             EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
         }
+        #endregion
 
-
-    }
-
-    public class UpgradeUIState : FSMState
-    {
-        protected UpgradeUI ui;
-        public UpgradeUIState(FSM fsm, UpgradeUI ui) : base(fsm)
-        {
-            this.ui = ui;
-        }
-    }
-
-    public class SelectWeaponState : UpgradeUIState
-    {
-        public SelectWeaponState(FSM fsm, UpgradeUI ui) : base(fsm, ui)
-        {
-            mId = (int)UpgradeState.SELECTWEAPONSTATE;
-        }
-
-        public override void Enter()
-        {
-            ui.SetUpWeapon();
-            //have nothing to select
-            ui.PrepareWeaponSelection();    
-        }
-
-        
-        
-    }
-
-    public enum UpgradeState
-    {
-        SELECTWEAPONSTATE,
-        SELECTPERKSTATE
     }
 }
