@@ -121,6 +121,7 @@ public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
         // makes the other nodes in the same depth to be inaccessible
         // and also make the next depth's node that is connected to this node be accessible
         EventManager.Instance.TriggerEvent<Node>(EventName.MAP_NODE_CLICKED, Node);
+        EventManager.Instance.TriggerEvent(EventName.MAP_NODE_CLICKED);
     }
 
 

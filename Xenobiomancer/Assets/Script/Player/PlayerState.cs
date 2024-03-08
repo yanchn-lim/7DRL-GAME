@@ -13,7 +13,8 @@ public enum PlayerStateType
     MOVEMENT,
     ATTACK,
     RELOAD,
-    INTERACT
+    INTERACT,
+    MAP
 }
 
 public class PlayerState : FSMState
@@ -31,22 +32,30 @@ public class PlayerState : FSMState
     {
         EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
         EventManager.Instance.AddListener(EventName.UseUpgradeStation, PlayerInteractWithUpgradeStation);
+        EventManager.Instance.AddListener(EventName.LEVEL_COMPLETED, PlayerLookMap);
     }
 
     public override void Exit()
     {
         EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
         EventManager.Instance.RemoveListener(EventName.UseUpgradeStation, PlayerInteractWithUpgradeStation);
+        EventManager.Instance.RemoveListener(EventName.LEVEL_COMPLETED, PlayerLookMap);
     }
 
     private void PlayerDecidedMovement()
     {
         mPlayer.fsm.SetCurrentState((int)PlayerStateType.IDLE);
+       
     }
 
     private void PlayerInteractWithUpgradeStation()
     {
         mFsm.SetCurrentState((int)PlayerStateType.INTERACT);
+    }
+
+    private void PlayerLookMap()
+    {
+        mFsm.SetCurrentState((int)PlayerStateType.MAP);
     }
 
 }
@@ -232,6 +241,31 @@ public class PlayerState_INTERACTing : PlayerState
     public override void Exit()
     {
         EventManager.Instance.RemoveListener(EventName.LeaveUpgradeStation, (Action)SwitchToMovementState);
+
+    }
+
+    private void SwitchToMovementState()
+    {
+        mFsm.SetCurrentState((int)(PlayerStateType.MOVEMENT));
+    }
+}
+
+public class PlayerState_MAP : PlayerState
+{
+    public PlayerState_MAP(Player player) : base(player)
+    {
+        mId = (int)(PlayerStateType.MAP);
+    }
+
+    public override void Enter()
+    {
+        mPlayer.transform.position = new(0,0,0);
+        EventManager.Instance.AddListener(EventName.MAP_NODE_CLICKED, (Action)SwitchToMovementState);
+    }
+
+    public override void Exit()
+    {
+        EventManager.Instance.RemoveListener(EventName.MAP_NODE_CLICKED, (Action)SwitchToMovementState);
 
     }
 
