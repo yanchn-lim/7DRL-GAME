@@ -1,4 +1,5 @@
 ﻿using Patterns;
+using UnityEngine;
 
 namespace enemyT
 {
@@ -10,20 +11,42 @@ namespace enemyT
             mId = (int)EnemyState.IDLE;
         }
 
-        public override void Update()
+        public override void Enter()
         {
-            if(FindPlayerWithinVision())
+            EventManager.Instance.AddListener(EventName.TURN_END, DecideNextState);
+        }
+        public override void Exit() 
+        {
+            EventManager.Instance.AddListener(EventName.TURN_END, DecideNextState);
+        }
+
+        private void DecideNextState()
+        {
+
+            if (PlayerWithinVision() || enemyReference.Path != null)
             {
-                mFsm.SetCurrentState((int) EnemyState.CHASING);
+                mFsm.SetCurrentState((int)EnemyState.CHASING);
             }
             else
             {
-                //do some idle action
+                mFsm.SetCurrentState((int)(EnemyState.IDLE));
             }
         }
+        public override void Update()
+        {
+            Debug.Log("idle State");
+        }
+        //    if (PlayerWithinVision())
+        //    {
+        //        mFsm.SetCurrentState((int) EnemyState.CHASING);
+        //    }
+        //    else
+        //    {
+        //        //do some idle action
+        //    }
+        //}
 
-        //check if player is near enemy vision
 
-    }
+        }
 
 }

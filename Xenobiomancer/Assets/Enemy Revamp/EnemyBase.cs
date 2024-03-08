@@ -24,6 +24,7 @@ namespace enemyT
         [SerializeField] protected float degreeOfVision;
         [Tooltip("length of the vision")]
         [SerializeField] protected float lengthOfVision;
+        protected Stack<Vector2> path;
 
         private Player player;
         protected FSM fsm;
@@ -37,6 +38,7 @@ namespace enemyT
         public float LengthOfVision { get => lengthOfVision; }
         public Player Player { get => player; }
         public float RotationSpeed { get => rotationSpeed;  }
+        public Stack<Vector2> Path { get => path; set => path = value; }
         #endregion
 
         protected virtual void Start() //for starting the enemy
@@ -47,7 +49,7 @@ namespace enemyT
 
         protected virtual void Update()
         {
-            Grid.Instance.GeneratePath(transform.position, Player.transform.position);
+            GridHelper.Instance.GeneratePath(transform.position, Player.transform.position);
             fsm.Update();
         }
         protected abstract void SetupFSM();

@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class Grid : Patterns.Singleton<Grid>
+public class GridHelper : Patterns.Singleton<GridHelper>
 {
     [SerializeField] Tilemap grid;
     [SerializeField] Transform dummyTest;
