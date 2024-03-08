@@ -1,59 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+///same pattern throughout the scripts, refer to enemy_behaviour_2
 namespace Patterns
 {
     public class Enemy_Behaviour : Enemy
     {
         public FSM zfsm;
-        public Enemy enemy;
         public GameObject Bullet_enemy;
         private float retaliationTimer = 0f;
         public float retaliationInterval = 0.1f;
+        public float currentHealth3;
+        public float currentProtectLevel3;
+        private bool amorDown;
+
+        public new bool SightLine { get; private set; }
 
         private void Start()
         {
             Bullet_enemy = Resources.Load<GameObject>("enemy_Bullet");
-            enemy = GameObject.Find("Enemy_1").GetComponent<Enemy>();
-            zfsm = new FSM();
-            zfsm.Add((int)EnemyStates.PATROL, new Enemy2Patrol(zfsm, (int)(EnemyStates2.PATROL), this));
-            zfsm.Add((int)EnemyStates.ATTACKING, new Enemy2Attack(zfsm, (int)(EnemyStates2.ATTACKING), this));
-            zfsm.Add((int)EnemyStates.DYING, new Enemy2Dying(zfsm, (int)(EnemyStates2.DYING), this));
-            zfsm.SetCurrentState((int)EnemyStates.PATROL);
+            fsm = new FSM();
+            fsm.Add((int)EnemyStates2.PATROL1, new Patrol2(fsm, (int)(EnemyStates2.PATROL1), this));
+            fsm.Add((int)EnemyStates2.ATTACKING1, new Attack1(fsm, (int)(EnemyStates2.ATTACKING1), this));
+            fsm.Add((int)EnemyStates2.DYING1, new Dying1(fsm, (int)(EnemyStates2.DYING1), this));
+            fsm.SetCurrentState((int)EnemyStates.PATROL);
+            currentHealth2 = 100;
+            currentProtectLevel2 = 100;
         }
 
         private void Update()
         {
-            zfsm.Update();
+            fsm.Update();
         }
 
         public void Retaliation()
         {
-            /*            Vector3 directionToPlayer = Player.transform.position - transform.position;
 
-
-                        float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-
-                        // Instantiate a bullet in the direction the player is facing
-                        GameObject bullet = Instantiate(Bullet_enemy, transform.position, Quaternion.Euler(0, 0, angle));
-
-                        // Set the velocity of the bullet
-                        bullet.GetComponent<Rigidbody2D>().velocity = directionToPlayer.normalized * 4f;*/
-
-            /*            Vector3 directionToPlayer = Player.transform.position - transform.position;
-                        directionToPlayer.Normalize(); // Normalize to get a unit vector
-
-                        // Calculate the angle between the forward direction of the enemy and the direction to the player
-                        float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
-
-                        // Instantiate the bullet prefab at the enemy's position
-                        GameObject bullet = Instantiate(Bullet_enemy, transform.position, Quaternion.Euler(0, 0, angle));
-
-                        // Set the bullet's velocity based on the direction
-                        bullet.GetComponent<Rigidbody2D>().velocity = directionToPlayer * 2f;*/
-
-            if (enemy.SightLine)
+            if (this.SightLine)
             {
                 retaliationTimer += Time.deltaTime;
                 if (retaliationTimer >= retaliationInterval)
@@ -81,19 +64,68 @@ namespace Patterns
             }
         }
 
+        public override void protectionDown()
+        {
+            if (isDamageTaken)
+            {
+                var enemy_currentProtection1 = enemy_Stats.max_Protection - 10f;
+                Debug.Log($"Current Health Level: {enemy_currentProtection1}");
+                if (enemy_currentProtection1 < enemy_Stats.min_Protection)
+                {
+                    amorDown = true;
+                    DamageonHealth();
+                    amorDown = false;
+                }
+                else
+                {
+                    currentProtectLevel3 = enemy_currentProtection1;
+                }
+            }
+        }
+
+        public override void DamageonHealth()
+        {
+            if (amrorDown)
+            {
+                var enemy3_healthCurrent = enemy_Stats.max_Health - 10;
+                Debug.Log($"Current Health Level: {enemy3_healthCurrent}");
+
+                if (enemy3_healthCurrent <= enemy_Stats.min_Health)
+                {
+                    fsm.SetCurrentState((int)EnemyStates.DYING);
+                }
+                else
+                {
+                    enemy3_healthCurrent = currentHealth3;
+                }
+
+            }
+        }
+
+        public override void StillInSight()
+        {
+            base.StillInSight();
+        }
+
+        public override void FindPlayer()
+        {
+            base.FindPlayer();
+        }
+
+
     }
     public class EnemyState2 : FSMState
     {
-        protected Enemy enemy;
-        public EnemyState2(FSM fsm, int id, Enemy enemy) : base(fsm, id)
+        protected Enemy_Behaviour enemy1;
+        public EnemyState2(FSM fsm, int id, Enemy_Behaviour enemy) : base(fsm, id)
         {
-            this.enemy = enemy;
+            this.enemy1 = enemy;
         }
     }
-    public class Enemy2Patrol : EnemyState
+    public class Patrol2 : EnemyState2
     { 
 
-        public Enemy2Patrol(FSM fsm, int id, Enemy enemy) : base(fsm, id, enemy)
+        public Patrol2(FSM fsm, int id, Enemy_Behaviour enemy) : base(fsm, id, enemy)
         {
         }
 
@@ -104,9 +136,9 @@ namespace Patterns
 
         public override void Update()
         {
-            enemy.FindPlayer();
+            enemy1.FindPlayer();
             Debug.Log("Finding Player");
-            if (enemy.distanceToPlayer <= enemy.enemy_Stats.RangeofSight)
+            if (enemy1.distanceToPlayer <= enemy1.enemy_Stats.RangeofSight)
             {
                 mFsm.SetCurrentState((int)EnemyStates.ATTACKING);
                 Debug.Log("Starting Chase");
@@ -123,12 +155,10 @@ namespace Patterns
         }
     }
 
-    public class Enemy2Attack : EnemyState
+    public class Attack1 : EnemyState2
     {
-        public Enemy_Behaviour enemyBehaviour;
-        public Enemy2Attack(FSM fsm, int id, Enemy enemy) : base(fsm, id, enemy)
+        public Attack1(FSM fsm, int id, Enemy_Behaviour enemy) : base(fsm, id, enemy)
         {
-            enemyBehaviour = enemy as Enemy_Behaviour;
         }
 
         public override void Enter()
@@ -137,23 +167,12 @@ namespace Patterns
         }
         public override void Update()
         {
-            enemy.StillInSight();
-            enemyBehaviour.Retaliation();
-            if (enemy.amrorDown)
-            {
-                enemy.currentHealth = enemy.enemy_Stats.current_Health - 1;
-                Debug.Log($"Current Health Level: {enemy.currentHealth}");
+            enemy1.StillInSight();
+            enemy1.Retaliation();
+            enemy1.protectionDown();
+            enemy1.DamageonHealth();
 
-                if (enemy.currentHealth <= enemy.enemy_Stats.min_Health)
-                {
-                    mFsm.SetCurrentState((int)EnemyStates.DYING);
-                }
-                else
-                {
-                    enemy.enemy_Stats.current_Health = enemy.currentHealth;
-                }
-
-            }
+            
         }
         public override void Exit()
         {
@@ -164,9 +183,9 @@ namespace Patterns
             base.FixedUpdate();
         }
     }
-    public class Enemy2Dying : EnemyState
+    public class Dying1 : EnemyState2
     {
-        public Enemy2Dying(FSM fsm, int id, Enemy enemy) : base(fsm, id, enemy)
+        public Dying1(FSM fsm, int id, Enemy_Behaviour enemy) : base(fsm, id, enemy)
         {
         }
 
@@ -189,9 +208,9 @@ namespace Patterns
     }
     public enum EnemyStates2
     {
-        PATROL,
-        ATTACKING,
-        DYING
+        PATROL1,
+        ATTACKING1,
+        DYING1
     }
 }
 

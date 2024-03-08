@@ -4,31 +4,30 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-
+///Same pattern throughout the scripts, refer to enemy_behaviour_2.cs
 namespace Patterns
 {
-    public class Enemy : MonoBehaviour
+    public class Enemy : Enemy1
     {
-        public Enemy_Stats enemy_Stats;
-        public GameObject Player;
-        public bool isDamageTaken = false;
-        public bool SightLine = false;
-        public float currentHealth;
-        public float currentProtectLevel;
-        public bool amrorDown = false;
-        public float distanceToPlayer;
-        public Player_Attack playerAttack;
-        public GameObject Bullet;
+
+        public bool isDamage = false;
+        public bool SightLine1 = false;
+        public float currentHealth2;
+        public float currentProtectLevel2;
+        public bool amrorDown1 = false;
+        public float distanceToPlayer1;
+        public Player_Attack playerAttack1;
+        public GameObject Bullet1;
 
         //public StateMachine stateMachine;
         public FSM fsm;
 
         private void Start()
         {
-            playerAttack = Player.GetComponent<Player_Attack>();
-            Bullet = playerAttack.bulletPrefab;
-            
-            Player = GameObject.Find("Player");
+            playerAttack1 = Player.GetComponent<Player_Attack>();
+            Bullet1 = playerAttack1.bulletPrefab;
+            currentHealth = 100;
+            currentProtectLevel = 100;
             fsm = new FSM();
             fsm.Add((int)EnemyStates.PATROL, new EnemyPatrolling(fsm, (int)(EnemyStates.PATROL), this));
             fsm.Add((int)EnemyStates.ATTACKING, new EnemyAttack(fsm, (int)(EnemyStates.ATTACKING), this));
@@ -41,114 +40,53 @@ namespace Patterns
             fsm.Update();
         }
 
-        public void DamageonHealth()
+        public override void protectionDown()
         {
             if (isDamageTaken)
             {
-                currentHealth = enemy_Stats.current_Health - 10f;
-                Debug.Log($"Current Health Level: {currentHealth}");
-
-                if (currentHealth <= enemy_Stats.min_Health)
+                var enemy_currentProtection = enemy_Stats.max_Protection - 10f;
+                Debug.Log($"Current Health Level: {enemy_currentProtection}");
+                if (enemy_currentProtection < enemy_Stats.min_Protection)
                 {
-                    
-                }
-                else
-                {
-                    enemy_Stats.current_Health = currentHealth;
-                }
-            }
-        }
-
-        void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("Bullet"))
-            {
-                Debug.Log("Trigger entered");
-                isDamageTaken = true;
-                // Call this immediately upon getting hit
-            }
-        }
-
-        void OnTriggerStay2D(Collider2D other)
-        {
-            if (other.CompareTag("Bullet"))
-            {
-                Destroy(other.gameObject);
-                Debug.Log("Trigger exited");
-                isDamageTaken = false;
-            }
-        }
-
-        public void FindPlayer()
-        {
-            distanceToPlayer = Vector2.Distance(transform.position, Player.transform.position);
-        }
-
-
-        public void StartledAndMove()
-        {
-            if (SightLine)
-            {
-                Vector3 direction = (Player.transform.position - transform.position).normalized;
-                transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
-            }
-
-        }
-
-        public void MoveToPlayer()
-        {
-            Vector3 direction = (Player.transform.position - transform.position).normalized;
-            transform.Translate(direction * enemy_Stats.MovementSpeed * Time.deltaTime);
-        }
-
-        public void StillInSight()
-        {
-            RaycastHit2D ray = Physics2D.Raycast(transform.position, Player.transform.position - transform.position);
-            if (ray.collider != null)
-            {
-                SightLine = ray.collider.CompareTag("Player");
-                if (SightLine)
-                {
-                    Debug.DrawRay(transform.position, Player.transform.position - transform.position, Color.green);
-                }
-                else
-                {
-                    Debug.DrawRay(transform.position, Player.transform.position - transform.position, Color.red);
-                    //move towards the end of the red raycast
-
-
-                }
-            }
-        }
-
-
-        public void protectionDown()
-        {
-            if (isDamageTaken)
-            {
-                currentProtectLevel = enemy_Stats.protectionLevel - 10f;
-                Debug.Log($"Current Protection Level: {currentProtectLevel}");
-                if (currentProtectLevel <= 0)
-                {
-                    amrorDown = true;
+                    amrorDown1 = true;
                     DamageonHealth();
-                    amrorDown = false;
-
+                    amrorDown1 = false;
                 }
                 else
                 {
-                    enemy_Stats.protectionLevel = currentProtectLevel;
+                    currentProtectLevel2 = enemy_currentProtection;
                 }
             }
         }
 
-        public void ResetStats()
+        public override void DamageonHealth()
         {
-            enemy_Stats.current_Health = enemy_Stats.max_Health;
-            enemy_Stats.protectionLevel = enemy_Stats.max_Protection;
+            if (amrorDown)
+            {
+                var enemy3_healthCurrent = enemy_Stats.max_Health - 10;
+                Debug.Log($"Current Health Level: {enemy3_healthCurrent}");
+
+                if (enemy3_healthCurrent <= enemy_Stats.min_Health)
+                {
+                    fsm.SetCurrentState((int)EnemyStates.DYING);
+                }
+                else
+                {
+                    enemy3_healthCurrent = currentHealth2;
+                }
+
+            }
         }
 
+        public override void StillInSight()
+        {
+            base.StillInSight();
+        }
 
+        public override void FindPlayer()
+        {
+            base.FindPlayer();
+        }
 
     }
 
@@ -204,7 +142,7 @@ namespace Patterns
 
     public class EnemyState : FSMState
     {
-        protected Enemy enemy;
+        public Enemy enemy; 
         public EnemyState(FSM fsm, int id, Enemy enemy) : base(fsm, id)
         {
             this.enemy = enemy;
@@ -212,6 +150,7 @@ namespace Patterns
     }
     public class EnemyPatrolling : EnemyState
     {
+        
         public EnemyPatrolling(FSM fsm, int id, Enemy enemy) : base(fsm, id, enemy)
         {
         }
@@ -223,29 +162,7 @@ namespace Patterns
 
         public override void Update()
         {
-            enemy.FindPlayer();
-            if (enemy.distanceToPlayer <= enemy.enemy_Stats.RangeofSight)
-            {
-                mFsm.SetCurrentState((int)EnemyStates.ATTACKING);
-                Debug.Log("Starting Chase");
-            }
-            enemy.protectionDown();
-
-            if (enemy.amrorDown)
-            {
-                enemy.currentHealth = enemy.enemy_Stats.current_Health - 1;
-                Debug.Log($"Current Health Level: {enemy.currentHealth}");
-
-                if (enemy.currentHealth <= enemy.enemy_Stats.min_Health)
-                {
-                    mFsm.SetCurrentState((int)EnemyStates.DYING);
-                }
-                else
-                {
-                    enemy.enemy_Stats.current_Health = enemy.currentHealth;
-                }
-
-            }
+ 
 
         }
         public override void Exit()
@@ -273,21 +190,10 @@ namespace Patterns
             enemy.StartledAndMove();
             enemy.StillInSight();
             enemy.protectionDown();
-            if (enemy.amrorDown)
-            {
-                enemy.currentHealth = enemy.enemy_Stats.current_Health - 1;
-                Debug.Log($"Current Health Level: {enemy.currentHealth}");
+            enemy.DamageonHealth(); 
+            
 
-                if (enemy.currentHealth <= enemy.enemy_Stats.min_Health)
-                {
-                    mFsm.SetCurrentState((int)EnemyStates.DYING);
-                }
-                else
-                {
-                    enemy.enemy_Stats.current_Health = enemy.currentHealth;
-                }
-
-            }
+            
         }
         public override void Exit()
         {

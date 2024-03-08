@@ -17,7 +17,7 @@ TagManager:
   - Player
   - Wall
   - Enemy
-  - 
+  - Spike
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Spike
+    uniqueID: 3072408573
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
