@@ -10,9 +10,15 @@ public class RoomCapture : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             CaptureRoomData();
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            roomTileMap.ClearAllTiles();
+            RoomGenerator.GenerateRoom(roomTileMap,roomData,new(0,0,0));
         }
     }
 

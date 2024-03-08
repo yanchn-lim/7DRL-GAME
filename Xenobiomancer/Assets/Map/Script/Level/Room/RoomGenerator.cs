@@ -15,6 +15,14 @@ public class RoomGenerator : MonoBehaviour
         GenerateRoom(data,new(0,0,0));
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            GenerateRoom(data, new(0, 0, 0));
+        }
+    }
+
     public void GenerateRoom(RoomData data, Vector3Int pos)
     {
         for (int x = 0; x < data.Width; x++)

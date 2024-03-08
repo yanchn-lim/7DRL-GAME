@@ -25,15 +25,7 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            ProbabilityManager.TestProbability();
-        }
+        //Initialize();
     }
 
     void Initialize()
@@ -204,8 +196,8 @@ public class LevelGenerator : MonoBehaviour
                         x += dist.RoomData.Width - 2;
                     }
                 }
-                x +=  curr.RoomData.Center.x + node.RoomData.Center.x - 1;
-                curr.Position = new(-x, pos.y, 0);
+                x +=  curr.RoomData.Center.x + node.RoomData.Center.x;
+                curr.Position = new(-x + 5, pos.y, 0);
             }
 
             foreach (LevelNode curr in rightBranch)

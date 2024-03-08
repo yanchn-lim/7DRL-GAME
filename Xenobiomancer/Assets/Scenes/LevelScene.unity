@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomTileMap: {fileID: 373802915}
-  roomData: {fileID: 11400000, guid: b1b2b90ebb47bfb4d975b9fec6230497, type: 2}
+  roomData: {fileID: 11400000, guid: 182a04c44581bae4f9709d7d3ec7b9f3, type: 2}
 --- !u!1 &944536564
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileMap: {fileID: 373802915}
-  data: {fileID: 11400000, guid: d031a8561a69f474b9425d2b572ed4da, type: 2}
+  data: {fileID: 11400000, guid: b1f362e87c90ac746945ddc809d07146, type: 2}
 --- !u!4 &944536566
 Transform:
   m_ObjectHideFlags: 0
