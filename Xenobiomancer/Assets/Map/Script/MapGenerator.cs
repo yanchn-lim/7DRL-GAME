@@ -24,6 +24,8 @@ public class MapGenerator : MonoBehaviour
         encounterProbability.Add(NodeEncounter.ABANDONED, 1);
         EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, DisableNodesInDepth);
         EventManager.Instance.AddListener<Node>(EventName.MAP_NODE_CLICKED, ConnectedNodeAccessible);
+        EventManager.Instance.AddListener(EventName.MAP_NODE_CLICKED, Debugger);
+
         InitializeMap();
     }
 
@@ -31,6 +33,11 @@ public class MapGenerator : MonoBehaviour
     {
         EventManager.Instance.RemoveListener<Node>(EventName.MAP_NODE_CLICKED, DisableNodesInDepth);
         EventManager.Instance.RemoveListener<Node>(EventName.MAP_NODE_CLICKED, ConnectedNodeAccessible);
+    }
+
+    void Debugger()
+    {
+        Debug.Log("cum in mouth");
     }
 
     void InitializeMap()

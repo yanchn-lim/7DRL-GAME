@@ -16,7 +16,7 @@ public class LevelGenerator : MonoBehaviour
     RoomData[] spawnRoomData, rootRoomData, spineRoomData,normalRoomData;
 
     [SerializeField]
-    Tilemap tileMap;
+    Tilemap tileMap,obstacleMap;
 
     int currMaxDepth;
 
@@ -32,6 +32,8 @@ public class LevelGenerator : MonoBehaviour
 
     void Initialize()
     {
+        obstacleMap.ClearAllTiles();
+        tileMap.ClearAllTiles();
         graph = new();
 
         CreateStart();
@@ -40,9 +42,9 @@ public class LevelGenerator : MonoBehaviour
         AssignRoom();
         AssignPosition();
         GenerateRoom();
+
+        RandomInsertObject();
         //Debugging();
-        string name = tileMap.GetSprite(Vector3Int.zero).name;
-        Debug.Log(name);
     }
 
     LevelNode CreateNode(int depth,int horizontalDepth)
@@ -220,7 +222,6 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-
     int CalculateVerticalDistanceFromRoot(LevelNode node)
     {
         if (node.Depth == -1)
@@ -252,7 +253,56 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    List<Vector3Int> GetAvailableObstacleSpawnPosition()
+    {
+        List<Vector3Int> positionList = new();
+        tileMap.CompressBounds();
+        BoundsInt bound = tileMap.cellBounds;
+        for (int x = bound.xMin; x < bound.xMax; x++)
+        {
+            for (int y = bound.yMin; y < bound.yMax; y++)
+            {
+                Vector3Int pos = new(x, y, 0);
+                
+                if(tileMap.GetTile(pos) != null)
+                {
+                    string name = tileMap.GetSprite(pos).name;
 
+                    if (name.Contains("Floor"))
+                    {
+                        Debug.Log("FLOOR FOUND");
+                        positionList.Add(pos);
+                    }
+                }
+            }
+        }
+
+        return positionList;
+    }
+    public TileBase testTile;
+    [Range(0, 5)]
+    public float scale;
+    [Range(0, 1)]
+    public float per;
+    void RandomInsertObject()
+    {
+        float randVal = Random.Range(0,10);
+        foreach (var pos in GetAvailableObstacleSpawnPosition())
+        {
+            float val = Mathf.PerlinNoise(pos.x * (scale +randVal),pos.y* (scale + randVal));
+            if (val > per)
+            {
+                obstacleMap.SetTile(pos,testTile);
+            }
+        }
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Initialize();
+        }
+    }
 
     #region DEBUGGING
     void Debugging()

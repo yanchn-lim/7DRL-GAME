@@ -24,7 +24,7 @@ public class MapHandler : MonoBehaviour
     //method used by the map button to open and closes the map
     public void ToggleMap()
     {
-        
+        Debug.Log("F0MW9E8NUWETQV90NU34TB-IM90N WEG [AOIK");
     }
 
 }
