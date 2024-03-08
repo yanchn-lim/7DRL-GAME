@@ -5,6 +5,7 @@ using DataStructure;
 using Patterns;
 using UnityEngine.Tilemaps;
 using System.Linq;
+
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -25,7 +26,8 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        //Initialize();
+        Initialize();
+        
     }
 
     void Initialize()
