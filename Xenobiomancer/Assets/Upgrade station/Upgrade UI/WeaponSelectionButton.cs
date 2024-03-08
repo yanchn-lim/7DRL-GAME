@@ -14,15 +14,16 @@ namespace UpgradeStation
         [SerializeField] private TextMeshProUGUI costOfWeapon;
         [SerializeField] private Button button;
 
-        public override void clickFirstTime()
+        public override void ClickFirstTime()
         {
             ui.SelectWeapon(assignWeapon);
         }
 
-        public override void clickSecondTime()
+        public override void ClickSecondTime()
         {    
             ui.SubmitWeapon();
         }
+
 
         public void Init(Weapon weapon , UpgradeUI usedUI)
         {

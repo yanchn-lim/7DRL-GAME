@@ -51,11 +51,11 @@ namespace UpgradeStation
             for(int i = 0; i < 3; i++)
             {
                 //get a random number from 0 to the end of the index
-                int randNum = UnityEngine.Random.Range(0, avaliableNumber.Count );
-                Debug.Log(randNum);
+                int randomIndex = UnityEngine.Random.Range(0, avaliableNumber.Count);
+                int randNum = avaliableNumber[randomIndex ];
                 perkToSelect.Add(avaliablePerks[randNum]);
 
-                avaliableNumber.RemoveAt(randNum); //remove that choice from the avaliable choices
+                avaliableNumber.RemoveAt(randomIndex); //remove that choice from the avaliable choices
             }//from here we have three different perks
             return perkToSelect;
 

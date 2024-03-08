@@ -18,9 +18,12 @@ namespace Bioweapon
             AdjustingTrjectory();
         }
 
+
+
         private void AdjustingTrjectory()
         {
-            shootingTrajectory.rectTransform.rotation = Quaternion.Euler(0f, 0f, angleOfSpread / 2);
+            shootingTrajectory.rectTransform.localRotation = Quaternion.Euler(0f, 0f, angleOfSpread / 2);
+
             shootingTrajectory.fillAmount = angleOfSpread * fillAngleRatio;
         }
 
@@ -62,6 +65,7 @@ namespace Bioweapon
         {
             ShotgunPerk perk = upgradeData.ShotgunPerks[i];
             UpgradeShotGun(perk);
+            AdjustingTrjectory();
             perkGunGain.Add(perk);
         }
     }

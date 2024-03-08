@@ -16,3 +16,6 @@ MonoBehaviour:
   description: 
   cost: 0
   logo: {fileID: 0}
+  increaseBeamWidth: 0
+  increaseBeamLength: 0
+  reduceChargeUp: 0.2

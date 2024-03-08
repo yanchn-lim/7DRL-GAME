@@ -84,6 +84,11 @@ namespace UpgradeStation
             EventManager.Instance.TriggerEvent(EventName.UseUpgradeStation);
             overallPanel.SetActive(true);
         }
+
+        public void ClearDescription()
+        {
+            descriptionText.text = string.Empty;
+        }
         #endregion
 
         #region related to weapon selection
@@ -93,6 +98,8 @@ namespace UpgradeStation
         public void PrepareWeaponSelection()
         {
             weaponSelected = null;
+            gunSelectionPanel.gameObject.SetActive(true);
+            perkSelectionPanel.gameObject.SetActive(false);
         }
         /// <summary>
         /// display the avaliable weapons to the player
@@ -147,6 +154,7 @@ namespace UpgradeStation
                 {
                     perkSelectionButtons.Remove(perkButton);
                     perkButton.gameObject.SetActive(false);
+                    ClearDescription();
                 }
             }
         }

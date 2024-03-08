@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f672388f5d518f4ca2c2b18c4f695ca, type: 3}
   m_Name: shotgun perk 2
   m_EditorClassIdentifier: 
-  nameOfPerk: 2s
-  description: 
+  nameOfPerk: spread reduction
+  description: lower spread to deal more damage
   cost: 0
   logo: {fileID: 0}
-  reductionOfSpread: 0
+  reductionOfSpread: 60
   pelletIncrease: 0
   accuracyIncrease: 0
   bulletSpeedIncrease: 0

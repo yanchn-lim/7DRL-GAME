@@ -4,11 +4,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UpgradeStation;
 
-public class PerkSelectionButton : DoubleClickButton
+public class PerkSelectionButton : DoubleClickButton 
 {
     [SerializeField] private TextMeshProUGUI perkText;
     [SerializeField] private Image perkImage;
@@ -17,24 +16,29 @@ public class PerkSelectionButton : DoubleClickButton
 
     public PerkBase AssignPerk { get => assignPerk;  }
 
-    public override void clickFirstTime()
+
+
+    public override void ClickFirstTime()
     {
         ui.ShowDescriptionOfPerk(AssignPerk);
     }
 
-    public override void clickSecondTime()
+    public override void ClickSecondTime()
     {
-        //search for the perk in the array
-        switch (ui.Player.CurrentGunType)
+        PerkBase[] perks = SelectPerkBasedOnWeapon();
+        for (int i = 0; i < perks.Length; i++)
         {
-            case (GunType.Rifle):
-                RifleAction();
-                break;
-            default:
-                break;
+            if (AssignPerk == perks[i])
+            {
+
+                ui.Player.PlayerWeapon.Upgrade(i);
+            }
         }
+    }
 
-
+    public override void ExitToggleState()
+    {
+        ui.ClearDescription();
     }
 
     public void Init(PerkBase perk, UpgradeUI ui)
@@ -45,42 +49,21 @@ public class PerkSelectionButton : DoubleClickButton
         this.ui = ui;
     }
 
-    private void RifleAction()
+
+    private PerkBase[] SelectPerkBasedOnWeapon()
     {
-        RiflePerk[] perks = ui.Data.RiflePerks;
-        for(int i = 0; i < perks.Length; i++)
+        switch (ui.Player.CurrentGunType)
         {
-            if(AssignPerk == perks[i])
-            {
-                ui.Player.PlayerWeapon.Upgrade(i);
-            }
+            case (GunType.Rifle):
+                return ui.Data.RiflePerks;
+            case (GunType.ShotGun):
+                return ui.Data.ShotgunPerks;
+            case (GunType.Laser):
+                return ui.Data.LasergunsPerk;
+            case (GunType.Sniper):
+                return ui.Data.SniperPerks;
+            default: return null;
         }
     }
 
-
-
-}
-
-
-public abstract class DoubleClickButton : MonoBehaviour, IPointerUpHandler
-{
-    private int timeClick = 0;
-
-    public abstract void clickFirstTime();
-    public abstract void clickSecondTime();
-
-    //when the player click finish
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if(timeClick == 0)
-        {
-            clickFirstTime();
-            timeClick++;
-        }
-        else if(timeClick == 1)
-        {
-            clickSecondTime();
-            timeClick = 0;//reset back
-        }
-    }
 }

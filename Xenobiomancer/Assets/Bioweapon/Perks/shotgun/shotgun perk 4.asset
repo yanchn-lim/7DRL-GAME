@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 
   cost: 0
   logo: {fileID: 0}
-  reductionOfSpread: 0
+  reductionOfSpread: 60
   pelletIncrease: 0
   accuracyIncrease: 0
   bulletSpeedIncrease: 0
