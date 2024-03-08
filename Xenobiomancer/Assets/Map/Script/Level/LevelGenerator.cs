@@ -191,45 +191,38 @@ public class LevelGenerator : MonoBehaviour
             int y = CalculateVerticalDistanceFromRoot(node);
             Vector3Int pos = new(0, y, 0);
             node.Position = pos;
+            List<LevelNode> leftBranch = graph.GetLeftBranch(node);
+            List<LevelNode> rightBranch = graph.GetRightBranch(node);
 
-            foreach (LevelNode curr in graph.GetLeftBranch(node))
+            foreach (LevelNode curr in leftBranch)
             {
                 int x = 0;
-                foreach (LevelNode dist in graph.GetLeftBranch(node))
+                foreach (LevelNode dist in leftBranch)
                 {
-                    if (curr.DistanceFromSpine > dist.DistanceFromSpine)
-                        continue;
-                    x += dist.RoomData.Width;
+                    if (dist.DistanceFromSpine < curr.DistanceFromSpine)
+                    {
+                        x += dist.RoomData.Width - 2;
+                    }
                 }
-                x += node.RoomData.Center.x;
+                x +=  curr.RoomData.Center.x + node.RoomData.Center.x - 1;
                 curr.Position = new(-x, pos.y, 0);
             }
 
-            foreach (LevelNode curr in graph.GetRightBranch(node))
+            foreach (LevelNode curr in rightBranch)
             {
                 int x = 0;
-                foreach (LevelNode dist in graph.GetRightBranch(node))
+                foreach (LevelNode dist in rightBranch)
                 {
-                    if (curr.DistanceFromSpine > dist.DistanceFromSpine)
-                        continue;
-                    x += dist.RoomData.Width;
+                    if (dist.DistanceFromSpine < curr.DistanceFromSpine)
+                    {
+                        x += dist.RoomData.Width - 1;
+                    }
                 }
-                x -= node.RoomData.Center.x;
+                x += curr.RoomData.Center.x;
                 curr.Position = new(x, pos.y, 0);
+                
             }
         }
-
-        //foreach (LevelNode node in graph.NodeList)
-        //{
-        //    if (node.HorizontalDepth == 0)
-        //        continue;
-        //    LevelNode root = spineNodes.First(item => item.Depth == node.Depth);
-        //    int y = root.Position.y;
-        //    int x = CalculateHorizontalDistanceFromRoot(node);
-        //    //int x = 0;
-        //    Vector3Int pos = new(x,y, 0);
-        //    node.Position = pos;
-        //}
     }
 
     int CalculateHorizontalDistanceFromRoot(LevelNode node)

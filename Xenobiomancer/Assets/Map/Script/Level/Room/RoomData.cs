@@ -14,7 +14,7 @@ public class RoomData : ScriptableObject
 
     public Vector2Int GetRoomCenter()
     {
-        Center = new(Width/2,Height/2);
+        Center = new(Width/2 + 1,Height/2 + 1);
         return Center;
     }
 }

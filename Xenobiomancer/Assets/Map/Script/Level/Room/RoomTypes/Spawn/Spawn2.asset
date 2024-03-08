@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Width: 9
   Height: 8
-  Center: {x: 4, y: 4}
+  Center: {x: 5, y: 4}
   Tiles:
   - {fileID: 11400000, guid: e66280807ee669d46b1674b40e9718d9, type: 2}
   - {fileID: 11400000, guid: e66280807ee669d46b1674b40e9718d9, type: 2}
