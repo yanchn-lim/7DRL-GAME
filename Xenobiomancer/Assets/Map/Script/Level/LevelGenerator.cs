@@ -41,7 +41,8 @@ public class LevelGenerator : MonoBehaviour
         AssignPosition();
         GenerateRoom();
         //Debugging();
-
+        string name = tileMap.GetSprite(Vector3Int.zero).name;
+        Debug.Log(name);
     }
 
     LevelNode CreateNode(int depth,int horizontalDepth)
@@ -219,46 +220,6 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    int CalculateHorizontalDistanceFromRoot(LevelNode node)
-    {
-        if (node.HorizontalDepth == 0)
-        {
-            return 0;
-        }
-
-        int distFromPrev = 0;
-
-        foreach (LevelNode prevNode in node.ConnectedNodesPrevDepth)
-        {
-            if (prevNode.Depth == node.Depth && prevNode.DistanceFromSpine < node.DistanceFromSpine)
-            {
-                if (node.DistanceFromSpine == 1 && prevNode.HorizontalDepth == 0)
-                {
-                    if (node.HorizontalDepth < 0)
-                    {
-                        distFromPrev -= prevNode.RoomData.Center.x - 7;
-                    }
-                    else
-                    {
-                        distFromPrev += prevNode.RoomData.Center.x - 9;
-                    }
-                    continue;
-                }
-
-                distFromPrev += CalculateHorizontalDistanceFromRoot(prevNode);
-            }
-        }
-
-        if (node.HorizontalDepth < 0)
-        {
-            return distFromPrev - node.RoomData.Width + 1;
-        }
-        else
-        {
-            return distFromPrev + node.RoomData.Width - 1;
-        }
-
-    }
 
     int CalculateVerticalDistanceFromRoot(LevelNode node)
     {
@@ -290,6 +251,8 @@ public class LevelGenerator : MonoBehaviour
             RoomGenerator.GenerateRoom(tileMap,node.RoomData,node.Position);
         }
     }
+
+
 
     #region DEBUGGING
     void Debugging()
@@ -351,11 +314,5 @@ public class LevelGenerator : MonoBehaviour
         line.SetPosition(0, node.Position + Vector3.back);
         line.SetPosition(1, target.Position + Vector3.back);
     }
-
-    void RecursionDebug()
-    {
-        
-    }
-
     #endregion
 }
