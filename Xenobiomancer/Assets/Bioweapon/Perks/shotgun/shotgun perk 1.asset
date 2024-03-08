@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f672388f5d518f4ca2c2b18c4f695ca, type: 3}
+  m_Name: shotgun perk 1
+  m_EditorClassIdentifier: 
+  nameOfPerk: Multiplier
+  description: Increase the amount of bullets shot
+  cost: 0
+  logo: {fileID: -4872516676497805973, guid: ffc4bc20e53a4fb4b928f37f43aa6b96, type: 3}
+  reductionOfSpread: 0
+  pelletIncrease: 10
+  accuracyIncrease: 0
+  bulletSpeedIncrease: 0
+  bulletLifeTimeIncrease: 0
+  increaseCurrentMag: 0
+  increaseMaxAmmoOfTheMag: 0

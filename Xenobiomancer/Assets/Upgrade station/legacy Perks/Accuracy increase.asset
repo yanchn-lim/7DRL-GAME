@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1642b5125fd13a54b84da6ebdc25c8c5, type: 3}
+  m_Name: Accuracy increase
+  m_EditorClassIdentifier: 
+  nameOfThePerk: Accuracy increase
+  shortDescription: increase your bullet accuracy
+  bulletIncrease: 0
+  bulletSpeedIncrease: 0
+  increaseAccuracy: 0.151
+  angleOfOffsetReduction: 20
+  increaseKillTimer: 0
