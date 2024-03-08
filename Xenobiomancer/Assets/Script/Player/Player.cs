@@ -132,25 +132,25 @@ public class Player : Stats, IDamageable
 
     #endregion
 
-    public override void IncreaseHealth(float amount)
+    public override void IncreaseHealth(int amount)
     {
         base.IncreaseHealth(amount);
         displayStats.UpdateHealthUI(Health, MaxHealth);
     }
 
-    public override void DecreaseHealth(float amount)
+    public override void DecreaseHealth(int amount)
     {
         base.DecreaseHealth(amount);
         displayStats.UpdateHealthUI(Health, MaxHealth);
     }
 
-    public override void IncreaseCurrency(float amount)
+    public override void IncreaseCurrency(int amount)
     {
         base.IncreaseCurrency(amount);
         displayStats.UpdateCurrencyUI(amount);
     }
 
-    public override void DecreaseCurrency(float amount)
+    public override void DecreaseCurrency(int amount)
     {
         base.DecreaseCurrency(amount);
         displayStats.UpdateCurrencyUI(amount);
@@ -166,12 +166,12 @@ public class Player : Stats, IDamageable
         base.DecreaseTravelDistance(amount);
     }
 
-    public override void InitializeStats(float initialHealth, float maxHealth, float initialCurrency, float intialTravelDistance)
+    public override void InitializeStats(int initialHealth, int maxHealth, int initialCurrency, float intialTravelDistance)
     {
         base.InitializeStats(initialHealth, maxHealth, initialCurrency, intialTravelDistance);
     }
 
-    public void Damage(float damage)
+    public void TakeDamage(int damage)
     {
         DecreaseHealth(damage);
         Debug.Log(Health);

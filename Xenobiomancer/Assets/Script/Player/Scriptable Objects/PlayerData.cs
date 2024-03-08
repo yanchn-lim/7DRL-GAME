@@ -6,9 +6,9 @@ using UnityEngine;
 [CreateAssetMenu]
 public class PlayerData : ScriptableObject
 {
-    public float health;
-    public float currency;
-    public float armour;
+    public int health;
+    public int currency;
+    public int armour;
     public float travelDistance;
 
     

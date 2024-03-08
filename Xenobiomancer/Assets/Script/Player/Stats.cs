@@ -1,43 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Hierarchy;
+using Unity.Mathematics;
 using UnityEngine;
 
 public abstract class Stats: MonoBehaviour
 {
-    protected float health;
-    protected float maxHealth;
-    protected float currency;
+    private int health;
+    private int maxHealth;
+    private int currency;
     protected float travelDistance;
 
     #region Getters and Setters
-    public float Health
-    {
-        get { return health; }
-        set { health = value; }
-    }
-
-    public float MaxHealth
-    {
-        get { return maxHealth; }
-        set { maxHealth = value; }
-    }
-
-    public float Currency
-    {
-        get { return currency; }
-        set { currency = value; }
-    }
-
+  
     public float TravelDistance
     {
         get { return travelDistance; }
         set { travelDistance = value;  }
 
     }
+    protected int Health { get => health; set => health = value; }
+    protected int MaxHealth { get => maxHealth; set => maxHealth = value; }
+    protected int Currency { get => currency; set => currency = value; }
     #endregion
 
-    public virtual void InitializeStats(float initialHealth, float maxHealth, float initialCurrency, float intialTravelDistance)
+    public virtual void InitializeStats(int initialHealth, int maxHealth, int initialCurrency, float intialTravelDistance)
     {
         Health = initialHealth;
         MaxHealth = maxHealth;
@@ -45,27 +32,27 @@ public abstract class Stats: MonoBehaviour
         TravelDistance = intialTravelDistance;
     }
 
-    public virtual void IncreaseHealth(float amount)
+    public virtual void IncreaseHealth(int amount)
     {
         Health += amount;
-        Health = Mathf.Clamp(Health, 0f, MaxHealth);
+        Health = math.clamp(Health, 0,maxHealth );
     }
 
-    public virtual void DecreaseHealth(float amount)
+    public virtual void DecreaseHealth(int amount)
     {
         Health -= amount;
-        Health = Mathf.Clamp(Health, 0f, MaxHealth);
+        Health = math.clamp(Health, 0, MaxHealth);
     }
 
-    public virtual void IncreaseCurrency(float amount)
+    public virtual void IncreaseCurrency(int amount)
     {
         Currency += amount;
     }
 
-    public virtual void DecreaseCurrency(float amount)
+    public virtual void DecreaseCurrency(int amount)
     {
         Currency -= amount;
-        Currency = Mathf.Max(0f, Currency);
+        Currency = math.max(0, Currency);
     }
 
     public virtual void IncreaseTravelDistance(float amount)

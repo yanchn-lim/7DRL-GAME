@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Patterns
+namespace enemySS
 {
     public class Enemy : MonoBehaviour
     {

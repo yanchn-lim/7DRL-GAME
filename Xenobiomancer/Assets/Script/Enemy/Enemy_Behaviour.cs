@@ -1,8 +1,10 @@
+using enemySS;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Patterns;
 
-namespace Patterns
+namespace enemySS
 {
     public class Enemy_Behaviour : Enemy
     {
@@ -111,8 +113,8 @@ namespace Patterns
                 mFsm.SetCurrentState((int)EnemyStates.ATTACKING);
                 Debug.Log("Starting Chase");
             }
-            
         }
+
         public override void Exit()
         {
             base.Exit();

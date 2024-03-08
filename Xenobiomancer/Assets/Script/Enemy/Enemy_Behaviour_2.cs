@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Patterns;
 
-namespace Patterns
+namespace enemySS
 {
     public class Enemy_Behaviour_2 : Enemy
     {

@@ -9,10 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d42f169cd869e9f4788823e9712bec6e, type: 3}
-  m_Name: PlayerData
+  m_Script: {fileID: 11500000, guid: 6a5eb0d8af2e9104d805f08a7102fb26, type: 3}
+  m_Name: Enemy_2
   m_EditorClassIdentifier: 
-  health: 100
-  currency: 100
-  armour: 100
-  travelDistance: 1.5
+  Type: Mid-Range
+  max_Health: 110
+  min_Health: 0
+  current_Health: 110
+  spawnPoints: []
+  damageToPlayer: 15
+  protectionLevel: 100
+  RangeofSight: 10
+  MovementSpeed: 4
+  max_Protection: 100
