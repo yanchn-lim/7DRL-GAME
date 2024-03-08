@@ -303,7 +303,7 @@ public class LevelGenerator : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.RightBracket))
         {
             Initialize();
         }
