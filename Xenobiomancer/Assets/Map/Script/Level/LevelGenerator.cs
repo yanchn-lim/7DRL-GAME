@@ -26,8 +26,13 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        Initialize();
+        EventManager.Instance.AddListener(EventName.MAP_NODE_CLICKED, Initialize);
         
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.RemoveListener(EventName.MAP_NODE_CLICKED, Initialize);
     }
 
     void Initialize()

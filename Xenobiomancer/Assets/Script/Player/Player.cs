@@ -7,6 +7,7 @@ using Unity.Hierarchy;
 using Unity.VisualScripting;
 using UnityEditor.Tilemaps;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
@@ -54,7 +55,8 @@ public class Player : Stats, IDamageable
         fsm.Add(new PlayerState_ATTACK(this));
         fsm.Add(new PlayerState_RELOAD(this));
         fsm.Add(new PlayerState_INTERACTing(this));
-        fsm.SetCurrentState((int)PlayerStateType.IDLE);
+        fsm.Add(new PlayerState_MAP(this));
+        fsm.SetCurrentState((int)PlayerStateType.MAP);
 
 
         InitializeStats(playerData.health, playerData.health, playerData.currency, playerData.travelDistance);
@@ -64,6 +66,8 @@ public class Player : Stats, IDamageable
     void Update()
     {
         fsm.Update();
+
+        TestSwitchScene();
     }
 
     #region Movement
@@ -212,6 +216,15 @@ public class Player : Stats, IDamageable
         currentWeapon = weapon;
         currentGunType = weapon.GunType;
         weapon.gameObject.SetActive(true);
+    }
+
+
+    public void TestSwitchScene()
+    {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            EventManager.Instance.TriggerEvent(EventName.LEVEL_COMPLETED);
+        }
     }
 
 }

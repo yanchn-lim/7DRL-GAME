@@ -235,9 +235,11 @@ namespace Patterns
         TURN_START, //allow all the other things to interact with player
         TURN_COMPLETE, //when every thing is done it will call this event to have a mini time pause for the player.
         TURN_END,//When player ends their turn
+        LEVEL_COMPLETED, //when player completes the level
 
         UseUpgradeStation,
         LeaveUpgradeStation,
+
     }
 
     //how the turn trigger

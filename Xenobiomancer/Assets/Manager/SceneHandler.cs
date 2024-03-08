@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Patterns;
 using UnityEngine;
 
-public class SceneManager : SingletonDontDestroy<SceneManager>
+public class SceneHandler : SingletonDontDestroy<SceneHandler>
 {
     private void Start()
     {
