@@ -36,6 +36,7 @@ namespace DataStructure
                 AdjacencyList[sourceId].Add(target);
                 AdjacencyList[target.Id].Add(GetNode(sourceId));
                 GetNode(sourceId).AdjacencyList.Add(target);
+                target.ConnectedNodesPrevDepth.Add(GetNode(sourceId));
             }
         }
 
@@ -46,6 +47,8 @@ namespace DataStructure
                 AdjacencyList[source.Id].Add(target);
                 AdjacencyList[target.Id].Add(GetNode(source.Id));
                 source.AdjacencyList.Add(target);
+                target.ConnectedNodesPrevDepth.Add(source);
+
             }
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using DataStructure;
 using Patterns;
 using UnityEngine.Tilemaps;
+using System.Linq;
 public class LevelGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -43,7 +44,7 @@ public class LevelGenerator : MonoBehaviour
         CreateSpine();
         CreateBranch();
         AssignRoom();
-        AssignPos();
+        AssignPosition();
         GenerateRoom();
         //Debugging();
 
@@ -181,19 +182,54 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
-    void AssignPos()
+    void AssignPosition()
     {
-        int offsetY = 12;
-        int offsetX = 15;
-        foreach (LevelNode node in graph.NodeList)
+        List<LevelNode> spineNodes = graph.GetSpine();
+
+        foreach (LevelNode node in spineNodes)
         {
-            int y = node.Depth * offsetY;
-            //int x = node.HorizontalDepth * offsetX;
-            //int y = CalculateVerticalDistanceFromRoot(node);
-            int x = CalculateHorizontalDistanceFromRoot(node);
-            Vector3Int pos = new(x, y, 0);
+            int y = CalculateVerticalDistanceFromRoot(node);
+            Vector3Int pos = new(0, y, 0);
             node.Position = pos;
+
+            foreach (LevelNode curr in graph.GetLeftBranch(node))
+            {
+                int x = 0;
+                foreach (LevelNode dist in graph.GetLeftBranch(node))
+                {
+                    if (curr.DistanceFromSpine > dist.DistanceFromSpine)
+                        continue;
+                    x += dist.RoomData.Width;
+                }
+                x += node.RoomData.Center.x;
+                curr.Position = new(-x, pos.y, 0);
+            }
+
+            foreach (LevelNode curr in graph.GetRightBranch(node))
+            {
+                int x = 0;
+                foreach (LevelNode dist in graph.GetRightBranch(node))
+                {
+                    if (curr.DistanceFromSpine > dist.DistanceFromSpine)
+                        continue;
+                    x += dist.RoomData.Width;
+                }
+                x -= node.RoomData.Center.x;
+                curr.Position = new(x, pos.y, 0);
+            }
         }
+
+        //foreach (LevelNode node in graph.NodeList)
+        //{
+        //    if (node.HorizontalDepth == 0)
+        //        continue;
+        //    LevelNode root = spineNodes.First(item => item.Depth == node.Depth);
+        //    int y = root.Position.y;
+        //    int x = CalculateHorizontalDistanceFromRoot(node);
+        //    //int x = 0;
+        //    Vector3Int pos = new(x,y, 0);
+        //    node.Position = pos;
+        //}
     }
 
     int CalculateHorizontalDistanceFromRoot(LevelNode node)
@@ -205,13 +241,21 @@ public class LevelGenerator : MonoBehaviour
 
         int distFromPrev = 0;
 
-        foreach (LevelNode prevNode in node.AdjacencyList)
+        foreach (LevelNode prevNode in node.ConnectedNodesPrevDepth)
         {
-            if (prevNode.Depth == node.Depth || prevNode.DistanceFromSpine < node.DistanceFromSpine)
+            if (prevNode.Depth == node.Depth && prevNode.DistanceFromSpine < node.DistanceFromSpine)
             {
-                if (node.HorizontalDepth == 1 && prevNode.HorizontalDepth == 0)
+                if (node.DistanceFromSpine == 1 && prevNode.HorizontalDepth == 0)
                 {
-                    distFromPrev += prevNode.RoomData.Width;
+                    if (node.HorizontalDepth < 0)
+                    {
+                        distFromPrev -= prevNode.RoomData.Center.x - 7;
+                    }
+                    else
+                    {
+                        distFromPrev += prevNode.RoomData.Center.x - 9;
+                    }
+                    continue;
                 }
 
                 distFromPrev += CalculateHorizontalDistanceFromRoot(prevNode);
@@ -231,18 +275,25 @@ public class LevelGenerator : MonoBehaviour
 
     int CalculateVerticalDistanceFromRoot(LevelNode node)
     {
+        if (node.Depth == -1)
+        {
+            return 0;
+        }
+
         int distFromPrev = 0;
 
-        foreach (LevelNode prevNode in node.AdjacencyList)
+        foreach (LevelNode prevNode in node.ConnectedNodesPrevDepth)
         {
-            if (prevNode.Depth < node.Depth)
+            if(prevNode.Depth == -1)
             {
-                distFromPrev += CalculateVerticalDistanceFromRoot(prevNode);
+                distFromPrev -= prevNode.RoomData.Center.y - 1;
             }
+            distFromPrev += CalculateVerticalDistanceFromRoot(prevNode);
+            
         }
 
 
-        return distFromPrev + node.RoomData.Width - 1;       
+        return distFromPrev + node.RoomData.Height;       
     }
 
     void GenerateRoom()
@@ -257,7 +308,7 @@ public class LevelGenerator : MonoBehaviour
     void Debugging()
     {
         //for visualization
-        AssignPos();
+        AssignPosition();
         DisplayMap();
     }
     void DisplayMap()
@@ -290,7 +341,6 @@ public class LevelGenerator : MonoBehaviour
         }
   
     }
-
     void DisplayNode(LevelNode node,GameObject prefab)
     {
         var go = Instantiate(prefab).transform;
@@ -307,13 +357,17 @@ public class LevelGenerator : MonoBehaviour
 
         go.position = node.Position;
     }
-
     void DisplayPath(LevelNode node, LevelNode target)
     {
         //spawn a line
         var line = Instantiate(linePrefab).GetComponent<LineRenderer>();
         line.SetPosition(0, node.Position + Vector3.back);
         line.SetPosition(1, target.Position + Vector3.back);
+    }
+
+    void RecursionDebug()
+    {
+        
     }
 
     #endregion
