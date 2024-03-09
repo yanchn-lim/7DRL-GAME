@@ -1116,6 +1116,9 @@ MonoBehaviour:
   per: 0.713
   per2: 0.12
   per3: 0.125
+  doorMinReach: 3
+  doorMaxReach: 5
+  doorDistCheck: 5
 --- !u!4 &558312614
 Transform:
   m_ObjectHideFlags: 0
@@ -1927,6 +1930,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   fogMap: {fileID: 1620341891}
+  obstacleMap: {fileID: 1831755591}
+  tileMap: {fileID: 373802915}
   visionRange: 5
 --- !u!114 &1014386593
 MonoBehaviour:

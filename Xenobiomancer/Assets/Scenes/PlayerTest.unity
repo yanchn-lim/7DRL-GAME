@@ -1719,6 +1719,10 @@ MonoBehaviour:
   wallLayer:
     serializedVersion: 2
     m_Bits: 8
+  fogMap: {fileID: 0}
+  obstacleMap: {fileID: 0}
+  tileMap: {fileID: 0}
+  visionRange: 0
 --- !u!114 &1081375716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2758,6 +2762,62 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 395270597}
+    - target: {fileID: 2897890229773221484, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897890229773221484, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897890229773221484, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897890229773221484, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2897890229773221484, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623140707250641441, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623140707250641441, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623140707250641441, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623140707250641441, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623140707250641441, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880254471930016448, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880254471930016448, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880254471930016448, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4880254471930016448, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6288590529390512731, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.24
@@ -2801,6 +2861,26 @@ PrefabInstance:
     - target: {fileID: 7021397511058570173, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
       propertyPath: m_Name
       value: Upgrade station
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848237391931417555, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848237391931417555, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848237391931417555, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848237391931417555, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848237391931417555, guid: 4fcd78f490640114d9bd163e870f402b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

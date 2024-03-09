@@ -121,7 +121,7 @@ namespace UpgradeStation
         public void SubmitWeapon()
         {
             player.SwitchWeapon(weaponSelected);
-            EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
+            //EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
         }
         #endregion
 

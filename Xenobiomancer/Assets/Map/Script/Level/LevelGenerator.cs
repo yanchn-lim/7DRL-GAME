@@ -79,8 +79,10 @@ public class LevelGenerator : MonoBehaviour
         AssignPosition();
         GenerateRoom();
 
+        GetAvailableObstacleSpawnPosition();
         RandomInsertObject();
         SpawnEnemies();
+        InsertDoor();
         SpawnFog();
         //Debugging();
     }
@@ -361,21 +363,12 @@ public class LevelGenerator : MonoBehaviour
                 
                 if(tileMap.GetTile(pos) != null)
                 {
-                    LevelData.TileData tileData = new();
-                    tileData.Position = pos;
-                    tileData.Sprite = tileMap.GetSprite(pos);
-                    tileData.Tile = tileMap.GetTile(pos);                 
+              
                     string name = tileMap.GetSprite(pos).name;
 
                     if (name.Contains("Floor"))
                     {
-                        Debug.Log("FLOOR FOUND");
-                        tileData.Type = LevelData.TileType.FLOOR;
                         positionList.Add(pos);
-                    }else if (name.Contains("Wall"))
-                    {
-                        tileData.Type = LevelData.TileType.WALL;
-
                     }
                 }
             }
@@ -393,7 +386,7 @@ public class LevelGenerator : MonoBehaviour
     {
         float randVal = Random.Range(0,10);
 
-        foreach (var pos in GetAvailableObstacleSpawnPosition())
+        foreach (var pos in availableSpawnPosition)
         {
             float val = Mathf.PerlinNoise(pos.x * (scale +randVal),pos.y* (scale + randVal));
             if (val > per)
@@ -409,8 +402,143 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    int doorMinReach;
+    [SerializeField]
+    int doorMaxReach;
+    [SerializeField]
+    int doorDistCheck;
+    int doorDistHori = 0;
+    int doorDistVert = 0;
     void InsertDoor()
     {
+        foreach (var pos in availableSpawnPosition)
+        {
+            bool doorPlacementCheckHori = CheckDoorHorizontal(pos);
+            bool doorPlacementCheckVert = CheckDoorVertical(pos);
+
+            if (doorPlacementCheckHori)
+            {
+                Debug.Log("PLACING DOORS");
+                for (int i = 0; i < doorDistHori; i++)
+                {
+                    obstacleMap.SetTile(pos + Vector3Int.right * i,doorTile);
+                }
+            }
+
+
+            if (doorPlacementCheckVert)
+            {
+                Debug.Log("PLACING DOORS");
+                for (int i = 0; i < doorDistVert; i++)
+                {
+                    obstacleMap.SetTile(pos + Vector3Int.up * i, doorTile);
+                }
+            }
+        }
+
+    }
+
+    bool CheckDoorHorizontal(Vector3Int pos)
+    {
+        if (tileMap.GetSprite(pos + Vector3Int.left).name.Contains("Floor"))
+        {
+            Debug.Log("NO WALL BEHIND");
+            return false;
+        }
+
+        for (int x = 1; x < doorMaxReach + 1; x++)
+        {
+            Vector3Int surroundingPos = new(pos.x + x, pos.y, 0);
+            if (tileMap.GetTile(surroundingPos) == null)
+                continue;
+
+            string tile = tileMap.GetSprite(surroundingPos).name;
+
+            for (int i = 0; i < doorDistCheck; i++)
+            {
+                Vector3Int checkPosUp = surroundingPos + Vector3Int.up * i;
+                Vector3Int checkPosDown = surroundingPos + Vector3Int.down * i;
+
+                if (obstacleMap.GetTile(checkPosUp) != null)
+                {
+                    if (obstacleMap.GetSprite(checkPosUp).name.Contains("Door"))
+                    {
+                        return false;
+                    }
+                }
+
+                if (obstacleMap.GetTile(checkPosDown) != null)
+                {
+                    if (obstacleMap.GetSprite(checkPosDown).name.Contains("Door"))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (tile.Contains("Wall") && x >= doorMinReach)
+            {
+                doorDistHori = x;
+                Debug.Log("found wall");
+                return true;
+            }
+
+            Debug.Log($"TOO FAR : {x}");
+        }
+        Debug.Log("TOO SHORT");
+        return false;
+    }
+
+    bool CheckDoorVertical(Vector3Int pos)
+    {
+        if (tileMap.GetSprite(pos + Vector3Int.down).name.Contains("Floor"))
+        {
+            Debug.Log("NO WALL BEHIND");
+            return false;
+        }
+
+        for (int x = 1; x < doorMaxReach + 1; x++)
+        {
+            Vector3Int surroundingPos = new(pos.x , pos.y + x, 0);
+            if (tileMap.GetTile(surroundingPos) == null)
+                continue;
+
+            string tile = tileMap.GetSprite(surroundingPos).name;
+
+            for (int i = 0; i < doorDistCheck; i++)
+            {
+                Vector3Int checkPosUp = surroundingPos + Vector3Int.left * i;
+                Vector3Int checkPosDown = surroundingPos + Vector3Int.right * i;
+
+                if (obstacleMap.GetTile(checkPosUp) != null)
+                {
+                    if (obstacleMap.GetSprite(checkPosUp).name.Contains("Door"))
+                    {
+                        return false;
+                    }
+                }
+
+                if (obstacleMap.GetTile(checkPosDown) != null)
+                {
+                    if (obstacleMap.GetSprite(checkPosDown).name.Contains("Door"))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (tile.Contains("Wall") && x >= doorMinReach)
+            {
+                doorDistVert = x;
+                Debug.Log("found wall");
+                return true;
+            }
+
+            Debug.Log($"TOO FAR : {x}");
+        }
+        Debug.Log("TOO SHORT");
+        return false;
     }
 
     #region DEBUGGING
