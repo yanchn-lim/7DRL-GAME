@@ -142,7 +142,7 @@ public class Player : Stats, IDamageable
 
     void UpdateFogMap()
     {
-        if (fogMap != null)
+        if (fogMap == null)
             return;
 
         Vector3Int posInt = Vector3Int.RoundToInt(transform.position);
