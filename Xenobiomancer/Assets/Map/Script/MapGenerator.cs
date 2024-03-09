@@ -71,6 +71,8 @@ public class MapGenerator : MonoBehaviour
                 node.IndexInDepth = i;
                 node.Position = new(x, y);
                 node.EncounterType = GetRandomEncounter();
+                if (depth == 0)
+                    node.EncounterType = NodeEncounter.INFESTED;
                 graph.AddNode(node);
                 
                 //loading flag

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 5d05d530f2b6c1c41a6b4fe168b0b10c
+guid: bb5d0ed5385951e49b7b0f277e17d632
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5515439225188256779
-    second: WallTile_0
+      213: 5213229242370633579
+    second: Door_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,10 +100,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WallTile_0
+      name: Door_1
       rect:
         serializedVersion: 2
-        x: 0
+        x: 128
         y: 0
         width: 128
         height: 128
@@ -112,10 +112,10 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b0c0a95d0c6ca8c40800000000000000
-      internalID: 5515439225188256779
+      spriteID: 1d90e49b81f12ec4597473aec14f9dd3
+      internalID: -457738152
       vertices: []
       indices: 
       edges: []
@@ -123,7 +123,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: e30054b6eb00b7a4eb813197cd97a67e
     internalID: 0
     vertices: []
     indices: 
@@ -131,7 +131,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WallTile_0: 5515439225188256779
+      Door_0: 5213229242370633579
+      Door_1: -457738152
+      Door_2: -140549537
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
