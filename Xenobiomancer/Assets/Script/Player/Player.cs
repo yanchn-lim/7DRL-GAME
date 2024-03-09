@@ -133,6 +133,9 @@ public class Player : Stats, IDamageable
 
     void UpdateFogMap()
     {
+        if (fogMap != null)
+            return;
+
         Vector3Int posInt = Vector3Int.RoundToInt(transform.position);
 
         for (int x = -visionRange; x < visionRange + 1; x++)

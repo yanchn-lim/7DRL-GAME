@@ -21,11 +21,12 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     RoomData[] bossRoomData;
 
+    [Header("TileMap + TileBase")]
     [SerializeField]
     Tilemap tileMap,obstacleMap,fogMap;
 
     [SerializeField]
-    TileBase testTile, upgradeTile, fogTile;
+    TileBase testTile, upgradeTile, fogTile,doorTile;
 
     int currMaxDepth;
 
@@ -319,6 +320,7 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    List<Vector3Int> availableSpawnPosition;
     List<Vector3Int> GetAvailableObstacleSpawnPosition()
     {
         List<Vector3Int> positionList = new();
@@ -352,14 +354,15 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
-
-        return positionList;
+        availableSpawnPosition = positionList;
+        return availableSpawnPosition;
     }
 
     [Range(0, 5)]
     public float scale;
     [Range(0, 1)]
     public float per,per2,per3;
+
     void RandomInsertObject()
     {
         float randVal = Random.Range(0,10);
@@ -371,19 +374,17 @@ public class LevelGenerator : MonoBehaviour
             {
                 obstacleMap.SetTile(pos,testTile);
                 continue;
-            }else if(val > per2 && val < per3)
+            }
+            else if(val > per2 && val < per3)
             {
                 obstacleMap.SetTile(pos, upgradeTile);
                 continue;
             }
         }
     }
-    private void Update()
+
+    void InsertDoor()
     {
-        if (Input.GetKeyDown(KeyCode.RightBracket))
-        {
-            InitializeNormalMap();
-        }
     }
 
     #region DEBUGGING
