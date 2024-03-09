@@ -14,10 +14,14 @@ namespace enemyT
         [SerializeField] protected int health;
         [SerializeField] protected float speed;
         [SerializeField] protected float rotationSpeed;
-        [Tooltip("how many times the enemy can attack in one turn")]
-        [SerializeField] protected int damage;
-        [Tooltip("how many times the enemy can attack in one turn")]
-        [SerializeField] protected int damagePerRound;
+
+        [Header("Pathfinding and Chasing")]
+        [Tooltip("how close the enemy must be from the point of the path inorder to be assign a new one")]
+        [SerializeField] protected float pointSensingRadius;
+        [Tooltip("The distance in which allow the enemy to fully know where the player is for chasing")]
+        [SerializeField] protected float playerSensingRadius;
+
+       
 
         [Header("vision")]
         [Tooltip("Vision range")]
@@ -32,13 +36,14 @@ namespace enemyT
         #region getter
         public int Health { get => health; }
         public float Speed { get => speed; }
-        public int Damage { get => damage; }
-        public int DamagePerRound { get => damagePerRound; }
+        //public int DamagePerRound { get => damagePerRound; }
         public float DegreeOfVision { get => degreeOfVision; }
         public float LengthOfVision { get => lengthOfVision; }
         public Player Player { get => player; }
         public float RotationSpeed { get => rotationSpeed;  }
         public Stack<Vector2> Path { get => path; set => path = value; }
+        public float PointSensingRadius { get => pointSensingRadius; }
+        public float PlayerSensingRadius { get => playerSensingRadius; }
         #endregion
 
         protected virtual void Start() //for starting the enemy

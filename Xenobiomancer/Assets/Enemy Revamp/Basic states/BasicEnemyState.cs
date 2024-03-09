@@ -44,6 +44,10 @@ namespace enemyT
                     Vector2 directionOfTheRay = playerPosition - (Vector2)transform.position;
                     var hit = Physics2D.Raycast(transform.position, directionOfTheRay, enemyReference.LengthOfVision);
 
+                    if(hit.collider == null) 
+                    {
+                        return false;
+                    }
                     if (hit.collider.gameObject.transform == playerReference.transform)
                     {
                         //if same collider than it means it is in range
@@ -57,13 +61,27 @@ namespace enemyT
 
         }
 
+        public bool PlayerWithinSenseRange()
+        {
+            Vector2 playerPosition = playerReference.transform.position;
+            float distance = Vector2.Distance(playerPosition, transform.position);
+            if(distance <= enemyReference.PlayerSensingRadius)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public override void Enter()
         {
             EventManager.Instance.AddListener(EventName.TURN_START, ReturnToIdleState);
+            EventManager.Instance.AddListener(EventName.TURN_COMPLETE, ReturnToIdleState);
+
         }
 
         public override void Exit()
         {
+            EventManager.Instance.RemoveListener(EventName.TURN_START, ReturnToIdleState);
             EventManager.Instance.RemoveListener(EventName.TURN_COMPLETE, ReturnToIdleState);
         }
 

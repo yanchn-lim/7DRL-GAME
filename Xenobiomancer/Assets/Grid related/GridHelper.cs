@@ -10,20 +10,10 @@ using UnityEngine.UIElements;
 
 public class GridHelper : Patterns.Singleton<GridHelper>
 {
-    [SerializeField] Tilemap grid;
-    [SerializeField] Transform dummyTest;
-    [SerializeField] LineRenderer lineRenderer;
-    private int cellSpacingX ;
-    private int cellSpacingY ;
+    [SerializeField] Tilemap grid; //the obstacle that exist in the game
+    [SerializeField] Tilemap offsetGird; //
 
-    private void Start()
-    {
-
-    }
-    private void Update()
-    {
-        GetCellsAroundNeighbour((Vector2Int)grid.WorldToCell(dummyTest.position));
-    }
+    
 
     //https://www.redblobgames.com/pathfinding/a-star/introduction.html
     /// <summary>
@@ -52,7 +42,7 @@ public class GridHelper : Patterns.Singleton<GridHelper>
 
             foreach(var cell in GetCellsAroundNeighbour(current))
             {
-                float newCost = costSoFar[current] + 1;//1 is a constant
+                float newCost = costSoFar[current] + CostToTravelGrid(cell);//1 is a constant
 
                 if (!costSoFar.ContainsKey(cell) )
                 {
@@ -88,20 +78,34 @@ public class GridHelper : Patterns.Singleton<GridHelper>
             currentPoint = cameFrom[currentPoint];
         }
 
-        return path;
-
-        //Vector2 previous = starting;
-        //while (path.Count > 0)
+        //Stack< Vector2 > debugDummy = new Stack<Vector2 >(path);
+        //Vector2 previous = debugDummy.Pop();
+        //while (debugDummy.Count > 0)
         //{
-        //    Vector2 position= grid.GetCellCenterWorld((Vector3Int)path.Pop());
+        //    Vector2 position = debugDummy.Pop();
+        //    Debug.DrawLine(previous, position , UnityEngine.Color.yellow);
         //    previous = position;
         //}
 
+        return path;
     }
 
     private float Heuristic(Vector2Int a, Vector2Int b)
     {
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
+    }
+
+    private float CostToTravelGrid(Vector2Int Destination)
+    {
+        if(offsetGird.GetTile((Vector3Int) Destination) == null)
+        {
+            return 1f;
+        }
+        else
+        {
+            //the weight to travel to the offset grid
+            return 3f;
+        }
     }
 
     private Vector2Int[] GetCellsAroundNeighbour(Vector2Int cell)
