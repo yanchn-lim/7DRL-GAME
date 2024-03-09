@@ -355,6 +355,7 @@ public class LevelGenerator : MonoBehaviour
 
         return positionList;
     }
+
     [Range(0, 5)]
     public float scale;
     [Range(0, 1)]
