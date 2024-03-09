@@ -40,7 +40,7 @@ public class Player : Stats, IDamageable
     private LayerMask wallLayer;
 
     [SerializeField]
-    Tilemap fogMap;
+    Tilemap fogMap,obstacleMap,tileMap;
     [SerializeField]
     int visionRange;
 
@@ -133,7 +133,7 @@ public class Player : Stats, IDamageable
 
     void UpdateFogMap()
     {
-        if (fogMap != null)
+        if (fogMap == null || obstacleMap == null || tileMap == null)
             return;
 
         Vector3Int posInt = Vector3Int.RoundToInt(transform.position);

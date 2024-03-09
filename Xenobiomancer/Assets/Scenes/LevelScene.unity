@@ -1087,12 +1087,15 @@ MonoBehaviour:
   testTile: {fileID: 11400000, guid: e66280807ee669d46b1674b40e9718d9, type: 2}
   upgradeTile: {fileID: 11400000, guid: 6bd61762159e5b445ab424a9544e1d38, type: 2}
   fogTile: {fileID: 11400000, guid: 12f237f692f740b419615f8b2c9e777b, type: 2}
-  doorTile: {fileID: 0}
+  doorTile: {fileID: 11400000, guid: c1c275fd4f6a7f24b95d1223c131f6a1, type: 2}
   k: 0.2
   scale: 4.14
   per: 0.713
   per2: 0.12
   per3: 0.125
+  doorMinReach: 3
+  doorMaxReach: 5
+  doorDistCheck: 5
 --- !u!4 &558312614
 Transform:
   m_ObjectHideFlags: 0
@@ -1886,6 +1889,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   fogMap: {fileID: 1620341891}
+  obstacleMap: {fileID: 1831755591}
+  tileMap: {fileID: 373802915}
   visionRange: 5
 --- !u!114 &1014386593
 MonoBehaviour:
