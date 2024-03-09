@@ -72,7 +72,7 @@ public class Player : Stats, IDamageable
         fsm.Update();
 
         UpdateFogMap();
-        TestSwitchScene();
+        
 
     }
 

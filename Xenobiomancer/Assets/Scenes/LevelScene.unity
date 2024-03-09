@@ -317,7 +317,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2119,6 +2119,10 @@ PrefabInstance:
     - target: {fileID: 6329003452329792973, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
+      propertyPath: ammoCost
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: upgradeData
