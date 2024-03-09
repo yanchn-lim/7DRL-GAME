@@ -114,13 +114,15 @@ public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
         //animator.Play("NoAnim");
         activated = true;
         Node.IsAccesible = false;
-        
+        image.color = Color.yellow;
+
         yield return StartCoroutine(AnimateSelect()); //waits for the circling to be finished
 
         // this event starts the encounter and
         // makes the other nodes in the same depth to be inaccessible
         // and also make the next depth's node that is connected to this node be accessible
-        EventManager.Instance.TriggerEvent<Node>(EventName.MAP_NODE_CLICKED, Node);
+        EventManager.Instance.TriggerEvent<Node>(EventName.MAP_NODE_CLICKED, Node); //makes other nodes in same depth inaccessible
+        EventManager.Instance.TriggerEvent(EventName.MAP_NODE_CLICKED, Node.EncounterType);
         EventManager.Instance.TriggerEvent(EventName.MAP_NODE_CLICKED);
     }
 

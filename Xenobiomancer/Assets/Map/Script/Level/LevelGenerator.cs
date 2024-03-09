@@ -15,6 +15,12 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     RoomData[] spawnRoomData, rootRoomData, spineRoomData,normalRoomData;
 
+    [Header("OtherMap")]
+    [SerializeField]
+    RoomData abadonedRoomData;
+    [SerializeField]
+    RoomData[] bossRoomData;
+
     [SerializeField]
     Tilemap tileMap,obstacleMap;
 
@@ -26,16 +32,35 @@ public class LevelGenerator : MonoBehaviour
 
     private void Start()
     {
-        EventManager.Instance.AddListener(EventName.MAP_NODE_CLICKED, Initialize);
+        EventManager.Instance.AddListener<NodeEncounter>(EventName.MAP_NODE_CLICKED, InitializeBasedOffType);
         
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.RemoveListener(EventName.MAP_NODE_CLICKED, Initialize);
+        EventManager.Instance.RemoveListener<NodeEncounter>(EventName.MAP_NODE_CLICKED, InitializeBasedOffType);
     }
 
-    void Initialize()
+    void InitializeBasedOffType(NodeEncounter type)
+    {
+        switch (type)
+        {
+            case NodeEncounter.INFESTED:
+                InitializeNormalMap();
+                break;
+            case NodeEncounter.ABANDONED:
+                InitializeAbandonedMap();
+                break;
+            case NodeEncounter.BOSS:
+                InitializeBossMap();
+                break;
+            default:
+                InitializeNormalMap();
+                break;
+        }
+    }
+
+    void InitializeNormalMap()
     {
         obstacleMap.ClearAllTiles();
         tileMap.ClearAllTiles();
@@ -50,6 +75,22 @@ public class LevelGenerator : MonoBehaviour
 
         RandomInsertObject();
         //Debugging();
+    }
+
+    void InitializeAbandonedMap()
+    {
+        obstacleMap.ClearAllTiles();
+        tileMap.ClearAllTiles();
+        RoomGenerator.GenerateRoom(tileMap, abadonedRoomData, Vector3Int.zero);
+    }
+
+    void InitializeBossMap()
+    {
+        int index = Random.Range(0, bossRoomData.Length);
+        obstacleMap.ClearAllTiles();
+        tileMap.ClearAllTiles();
+        RoomData data = bossRoomData[index];
+        RoomGenerator.GenerateRoom(tileMap,data,Vector3Int.zero);
     }
 
     LevelNode CreateNode(int depth,int horizontalDepth)
@@ -263,6 +304,7 @@ public class LevelGenerator : MonoBehaviour
         List<Vector3Int> positionList = new();
         tileMap.CompressBounds();
         BoundsInt bound = tileMap.cellBounds;
+        
         for (int x = bound.xMin; x < bound.xMax; x++)
         {
             for (int y = bound.yMin; y < bound.yMax; y++)
@@ -271,12 +313,21 @@ public class LevelGenerator : MonoBehaviour
                 
                 if(tileMap.GetTile(pos) != null)
                 {
+                    LevelData.TileData tileData = new();
+                    tileData.Position = pos;
+                    tileData.Sprite = tileMap.GetSprite(pos);
+                    tileData.Tile = tileMap.GetTile(pos);                 
                     string name = tileMap.GetSprite(pos).name;
 
                     if (name.Contains("Floor"))
                     {
                         Debug.Log("FLOOR FOUND");
+                        tileData.Type = LevelData.TileType.FLOOR;
                         positionList.Add(pos);
+                    }else if (name.Contains("Wall"))
+                    {
+                        tileData.Type = LevelData.TileType.WALL;
+
                     }
                 }
             }
@@ -284,20 +335,28 @@ public class LevelGenerator : MonoBehaviour
 
         return positionList;
     }
+
     public TileBase testTile;
+    public TileBase upgradeTile;
     [Range(0, 5)]
     public float scale;
     [Range(0, 1)]
-    public float per;
+    public float per,per2,per3;
     void RandomInsertObject()
     {
         float randVal = Random.Range(0,10);
+
         foreach (var pos in GetAvailableObstacleSpawnPosition())
         {
             float val = Mathf.PerlinNoise(pos.x * (scale +randVal),pos.y* (scale + randVal));
             if (val > per)
             {
                 obstacleMap.SetTile(pos,testTile);
+                continue;
+            }else if(val > per2 && val < per3)
+            {
+                obstacleMap.SetTile(pos, upgradeTile);
+                continue;
             }
         }
     }
@@ -305,7 +364,7 @@ public class LevelGenerator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.RightBracket))
         {
-            Initialize();
+            InitializeNormalMap();
         }
     }
 
