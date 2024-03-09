@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Node
   - Wall
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - Wall
   - Water
   - UI
-  - 
+  - Enemy
   - 
   - 
   - 

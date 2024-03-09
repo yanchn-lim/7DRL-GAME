@@ -16,6 +16,8 @@ namespace Bioweapon
         [SerializeField] protected float bulletHitBoxRadius;
         [Tooltip("How many turns before the bullet delete itself automatically if it does not hitanything")]
         [SerializeField] protected int bulletKillTimer;
+        [Tooltip("Damage of the bullet")]
+        [SerializeField] protected int bulletDamage;
         [Range(0, 1)]
         [Tooltip("Accuracy of the bullet")]
         [SerializeField] protected float accuracy;
@@ -54,6 +56,10 @@ namespace Bioweapon
         /// how fast the bullet should move in one turn
         /// </summary>
         public float BulletSpeedPerTurn { get => bulletSpeedPerTurn; }
+        /// <summary>
+        /// Bullet damage
+        /// </summary>
+        public int BulletDamage { get => bulletDamage; }
         #endregion
 
         #region pool
@@ -75,6 +81,11 @@ namespace Bioweapon
         private void StopFiringBulletOnTurnComplete()
         {
             StopAllCoroutines();
+        }
+
+        public void RemoveListener()
+        {
+            EventManager.Instance.RemoveListener(EventName.TURN_COMPLETE, (Action)StopFiringBulletOnTurnComplete);
         }
 
         #region bullet related

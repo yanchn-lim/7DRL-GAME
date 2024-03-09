@@ -13,13 +13,16 @@ namespace Bioweapon
         [SerializeField] private ParticleSystem particleForHit;
 
         private GunWeapon data;
-
+        private bool hasHit;
         private int countDownBeforeDestory;
 
         private void Update()
         {
-            RaycastToHit();
-            MoveBullet();
+            if (!hasHit)
+            {
+                RaycastToHit();
+                MoveBullet();
+            }
         }
 
         public void Init(GunWeapon data)
@@ -34,6 +37,7 @@ namespace Bioweapon
             spriteRender.enabled = true;
             EventManager.Instance.AddListener(EventName.TURN_COMPLETE, (Action)AddCount);
             TryRandomiseBullet();
+            hasHit = false;
         }
 
         private void TryRandomiseBullet()
@@ -68,15 +72,22 @@ namespace Bioweapon
         }
         private void RaycastToHit()
         {
-            var hit = Physics2D.CircleCastAll(transform.position,
+            var hits = Physics2D.CircleCastAll(transform.position,
                 data.BulletHitBoxRadius,
                 Vector2.zero,
                 0f);
 
-            if(hit.Length > 0)
+            if(hits.Length > 0)
             {
-                //print("hit object");
-                //ReturnBullet();
+                foreach(var hit in hits)
+                {
+                    if (hit.collider.TryGetComponent<IDamageable>(out IDamageable component))
+                    {
+                        component.TakeDamage(data.BulletDamage);
+                        break;
+                    }
+                }
+                hasHit = true;
                 StartCoroutine(CollisionCoroutine());
             }
         }

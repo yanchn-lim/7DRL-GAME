@@ -93,14 +93,13 @@ namespace Bioweapon
 
         public override void Update()
         {
-            Debug.Log("start turn state");
             if(elapseTime < GameManager.Instance.SetUpData.TimePassPerTurn)
             {
                 elapseTime += Time.deltaTime;
             }
             else
             {
-                Debug.Log("turn complete! moving to end state");
+
                 EventManager.Instance.TriggerEvent(EventName.TURN_COMPLETE);
 
                 GameManager.Instance.SetBoolForStartState(false);

@@ -231,7 +231,9 @@ public class PlayerState_RELOAD : PlayerState
     {
         if (mPlayer.PlayerWeapon.CanReload && Input.GetKeyDown(KeyCode.R))
         {//show that it can reload
+
             mPlayer.ReloadWithCurrency();
+
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {

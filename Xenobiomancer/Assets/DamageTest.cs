@@ -20,7 +20,7 @@ public class DamageTest : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out IDamageable damageableObject))
         {
-            damageableObject.Damage(35);
+            damageableObject.TakeDamage(35);
         }
     }
 }
