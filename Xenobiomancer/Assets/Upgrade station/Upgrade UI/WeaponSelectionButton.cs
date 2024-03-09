@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UpgradeStation
 {
-    public class WeaponSelectionButton : DoubleClickButton
+    public class WeaponSelectionButton : DoubleClickButton 
     {
         private Weapon assignWeapon;
         private UpgradeUI ui;
