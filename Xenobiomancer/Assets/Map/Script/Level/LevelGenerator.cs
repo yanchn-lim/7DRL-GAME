@@ -33,6 +33,8 @@ public class LevelGenerator : MonoBehaviour
     LevelNode rootNode;
     LevelNode spawnNode;
 
+    [SerializeField]GameObject[] enemiesPrefab;
+
     private void Start()
     {
         EventManager.Instance.AddListener<NodeEncounter>(EventName.MAP_NODE_CLICKED, InitializeBasedOffType);
@@ -77,6 +79,7 @@ public class LevelGenerator : MonoBehaviour
         GenerateRoom();
 
         RandomInsertObject();
+        SpawnEnemies();
         SpawnFog();
         //Debugging();
     }
@@ -315,6 +318,26 @@ public class LevelGenerator : MonoBehaviour
             {
                 Vector3Int pos = new(x, y, 0);
                 fogMap.SetTile(pos,fogTile);               
+            }
+        }
+    }
+
+    void SpawnEnemies()
+    {
+        List<Vector3Int> positionList = GetAvailableObstacleSpawnPosition();
+        Dictionary<bool, float> weightChance = new() { {true, 1 }, { false, 49} }; 
+        foreach (var position in positionList)
+        {
+            if (obstacleMap.GetTile(position) == null)
+            {
+                bool spawnCheck = ProbabilityManager.SelectWeightedItem(weightChance);
+                if (spawnCheck)
+                {
+                    Vector3 pos = tileMap.CellToWorld(position);
+                    Debug.Log(pos);
+                    int randomIndex = Random.Range(0, enemiesPrefab.Length);
+                    GameObject enemy = Instantiate(enemiesPrefab[randomIndex],pos, Quaternion.identity);
+                }
             }
         }
     }
