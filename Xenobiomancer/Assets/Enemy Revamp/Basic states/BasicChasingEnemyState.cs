@@ -8,6 +8,7 @@ namespace enemyT
 {
     public class BasicChasingEnemyState : BasicEnemyState
     {
+        //path represented as a path
         private Stack<Vector2> path;
         public BasicChasingEnemyState(FSM fsm, EnemyBase enemy) : base(fsm, enemy)
         {
@@ -22,7 +23,6 @@ namespace enemyT
             { //will try to have one last attempt to find the player
                 RotateToFacePoint(playerReference.transform.position);
             }
-
             if (PlayerWithinVision())
             {
                 //get path
@@ -32,9 +32,6 @@ namespace enemyT
             {
                 path = enemyReference.Path;
             }
-            //path = GridHelper.Instance.GeneratePath(transform.position, playerReference.transform.position);
-            //enemyReference.Path = path;
-
 
             if (path.Count > 0)
             {
@@ -42,12 +39,9 @@ namespace enemyT
             }
             else
             {
-                Debug.Log("return back to idle");
                 //go back to idling
                 mFsm.SetCurrentState((int)EnemyState.IDLE);
             }
-            /*ShowDebugPath();*/
-
         }
 
         private void GenerateNewPath()
@@ -58,6 +52,7 @@ namespace enemyT
 
         public override void Update()
         {
+            //chasing logic
             if (PlayerWithinVision())
             {
                 GenerateNewPath();
@@ -67,15 +62,10 @@ namespace enemyT
                 RotateToFacePoint(playerReference.transform.position);
             }
             MoveEnemyToPoint();
-
-   
-
         }
 
         public override void Exit()
         {
-            Debug.Log($"Node need to travel for current path?: {path.Count}"); //why is it being exited ever single time
-            //path.Push(currentPointToFollow);
             enemyReference.Path = path; //record it back to the enemy reference
             base.Exit();
         }
@@ -90,7 +80,6 @@ namespace enemyT
                 if(path.Count > 0) //check if there is still a path
                 {
                     currentPointToFollow = path.Pop();
-                    Debug.Log($"pop from stack! Now left with: {path.Count}");
                 }
                 else
                 {//else return back to idling
@@ -106,41 +95,6 @@ namespace enemyT
             //move the 
         }
 
-        #region legacy 
-        //private void ShowDebugPath()
-        //{
-        //    if(path.Count == 0) 
-        //    {
-        //        Debug.Log("no path");
-        //        return; 
-        //    }
-        //    Debug.Log($"current there are {path.Count}");
-        //    Stack<Vector2> debugDummy = new Stack<Vector2>(path);
-        //    Vector2 previous = debugDummy.Pop();
-        //    while (debugDummy.Count > 0)
-        //    {
-        //        Vector2 position = debugDummy.Pop();
-        //        Debug.DrawLine(previous, position, UnityEngine.Color.yellow , 1f);
-        //        previous = position;
-        //    }
-        //}
-
-        //this section is working
-        //private void RunTowardPlayer()
-        //{
-        //    Vector2 direction = playerReference.transform.position - transform.position ;
-
-        //    if (direction != Vector2.zero)
-        //    {
-        //        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-        //        //* enemyReference.RotationSpeed * Time.de
-        //        var targetRotation = Quaternion.Euler(0f, 0f, angle);
-        //        transform.rotation = Quaternion.Slerp(transform.rotation , targetRotation , enemyReference.RotationSpeed * Time.deltaTime);
-        //    }
-        //    Debug.DrawLine(transform.position, transform.position + transform.up , Color.yellow);
-        //    transform.Translate(transform.up * enemyReference.Speed * Time.deltaTime);
-        //}
-        #endregion
         private void RotateToFacePoint(Vector2 targetPosition)
         {
             Vector2 direction = targetPosition - (Vector2) transform.position;
@@ -148,14 +102,10 @@ namespace enemyT
             if (direction != Vector2.zero)
             {
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-                //* enemyReference.RotationSpeed * Time.de
                 var targetRotation = Quaternion.Euler(0f, 0f, angle);
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, enemyReference.RotationSpeed * Time.deltaTime);
             }
         }
-
-
-
     }
 
 }

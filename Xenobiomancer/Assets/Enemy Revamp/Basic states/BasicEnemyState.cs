@@ -74,14 +74,14 @@ namespace enemyT
 
         public override void Enter()
         {
-            EventManager.Instance.AddListener(EventName.TURN_START, ReturnToIdleState);
+            //EventManager.Instance.AddListener(EventName.TURN_START, ReturnToIdleState);
             EventManager.Instance.AddListener(EventName.TURN_COMPLETE, ReturnToIdleState);
 
         }
 
         public override void Exit()
         {
-            EventManager.Instance.RemoveListener(EventName.TURN_START, ReturnToIdleState);
+            //EventManager.Instance.RemoveListener(EventName.TURN_START, ReturnToIdleState);
             EventManager.Instance.RemoveListener(EventName.TURN_COMPLETE, ReturnToIdleState);
         }
 

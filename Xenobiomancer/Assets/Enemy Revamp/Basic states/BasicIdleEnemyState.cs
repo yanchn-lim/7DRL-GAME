@@ -6,7 +6,6 @@ namespace enemyT
 {
     public abstract class BasicIdleEnemyState : BasicEnemyState
     {
-
         public BasicIdleEnemyState(FSM fsm, EnemyBase enemy) : base(fsm, enemy)
         {
             mId = (int)EnemyState.IDLE;

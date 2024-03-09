@@ -11,14 +11,15 @@ namespace enemyT
         [Header("Damage")]
         [Tooltip("how many hp the enemy dealt to the player")]
         [SerializeField] protected int damage;
-        //[Tooltip("how many times the enemy can attack in one turn")]
-        //[SerializeField] protected int damagePerRound;
+        [Tooltip("how many times the enemy can attack in one turn")]
+        [SerializeField] protected int damagePerRound;
         [Tooltip("how close the enemy must be to damage the player")]
         [SerializeField] protected float damageRadius;
 
         #region getter
         public int Damage { get => damage; }
         public float DamageRadius { get => damageRadius; }
+        public int DamagePerRound { get => damagePerRound; }
         #endregion
 
         protected override void DamagePlayer()
@@ -38,7 +39,7 @@ namespace enemyT
         protected override void SetupFSM()
         {
             fsm = new FSM();
-            fsm.Add((int)EnemyState.IDLE, new BasicIdleEnemyState(fsm, this));
+            fsm.Add((int)EnemyState.IDLE, new NormalEnemyIdleState(fsm, this));
             fsm.Add((int)EnemyState.CHASING, new BasicChasingEnemyState(fsm, this));
             fsm.SetCurrentState((int)EnemyState.IDLE);
             
