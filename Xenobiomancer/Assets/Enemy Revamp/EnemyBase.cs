@@ -59,7 +59,6 @@ namespace enemyT
         }
         protected abstract void SetupFSM();
 
-        protected abstract void DamagePlayer();
 
         protected abstract void StartDeath();
 

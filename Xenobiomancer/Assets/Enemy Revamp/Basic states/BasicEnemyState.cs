@@ -42,7 +42,12 @@ namespace enemyT
 
                     //do raycast and see if the player is not being block by any walls
                     Vector2 directionOfTheRay = playerPosition - (Vector2)transform.position;
-                    var hit = Physics2D.Raycast(transform.position, directionOfTheRay, enemyReference.LengthOfVision);
+                    var hit = Physics2D.Raycast(
+                        transform.position, 
+                        directionOfTheRay, 
+                        enemyReference.LengthOfVision,
+                        ~(1<<6) //the enemy laymask
+                        );
 
                     if(hit.collider == null) 
                     {
@@ -76,7 +81,6 @@ namespace enemyT
         {
             //EventManager.Instance.AddListener(EventName.TURN_START, ReturnToIdleState);
             EventManager.Instance.AddListener(EventName.TURN_COMPLETE, ReturnToIdleState);
-
         }
 
         public override void Exit()

@@ -16,6 +16,7 @@ namespace enemyT
 
         public override void Update()
         {
+            Debug.Log("Chasing state");
             base.Update();
             CheckIfPlayerIsNearForAttacking();
         }
@@ -23,9 +24,9 @@ namespace enemyT
         private void CheckIfPlayerIsNearForAttacking()
         {
             if (!PlayerWithinVision()) return;
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            float distance = Vector2.Distance(playerReference.transform.position, enemy.transform.position);
             if (distance < enemy.DamageRadius) 
-            { 
+            {
                 mFsm.SetCurrentState((int) EnemyState.ATTACKSTATE);
             }
         }

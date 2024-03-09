@@ -22,25 +22,18 @@ namespace enemyT
         public int DamagePerRound { get => damagePerRound; }
         #endregion
 
-        protected override void DamagePlayer()
-        {
-            throw new System.NotImplementedException();
-        }
 
         protected override void Update()
         {
             base.Update();
-            //if(path != null)
-            //{
-            //    print("path count: "path.count);
-            //}
         }
 
         protected override void SetupFSM()
         {
             fsm = new FSM();
             fsm.Add((int)EnemyState.IDLE, new NormalEnemyIdleState(fsm, this));
-            fsm.Add((int)EnemyState.CHASING, new BasicChasingEnemyState(fsm, this));
+            fsm.Add((int)EnemyState.CHASING, new NormalEnemyChasingState(fsm, this));
+            fsm.Add((int)EnemyState.ATTACKSTATE, new NormalEnemyAttackState(fsm, this));
             fsm.SetCurrentState((int)EnemyState.IDLE);
             
         }
@@ -48,11 +41,13 @@ namespace enemyT
         protected override void StartDeath()
         {
             //do show the death animation here
-            throw new System.NotImplementedException();
+            print("enemy died");
         }
 
         private void OnDrawGizmos()
         {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, damageRadius);
             if(path == null)
             {
                 print("path empty");
@@ -63,7 +58,6 @@ namespace enemyT
                 print("no path");
                 return;
             }
-            print($"current there are {path.Count}");
             Stack<Vector2> debugDummy = new Stack<Vector2>(path);
             Vector2 previous = debugDummy.Pop();
             while (debugDummy.Count > 0)

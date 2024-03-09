@@ -37,11 +37,12 @@ public class Player : Stats, IDamageable
     [SerializeField]
     private PlayerData playerData;
 
-
     public bool MoveCheck;
 
     [SerializeField]
     private LayerMask wallLayer;
+
+
 
     void Start()
     {

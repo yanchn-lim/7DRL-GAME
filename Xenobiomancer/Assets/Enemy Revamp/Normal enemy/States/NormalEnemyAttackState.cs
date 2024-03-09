@@ -12,14 +12,15 @@ namespace enemyT
         private float waitTimeForNextAttack;
         public NormalEnemyAttackState(FSM fsm, NormalEnemy enemy) : base(fsm, enemy)
         {
-            this.enemyReference = enemy; 
+            normalEnemyReference = enemy; 
             mId = (int)EnemyState.ATTACKSTATE;
         }
 
         public override void Enter()
         {
             base.Enter();
-            waitTimeForNextAttack = normalEnemyReference.DamagePerRound / GameManager.Instance.TurnTime;
+            waitTimeForNextAttack = GameManager.Instance.TurnTime / normalEnemyReference.DamagePerRound ;
+            elapseTime = 0f;
             AttackPlayer();
         }
 
@@ -31,6 +32,7 @@ namespace enemyT
                 if(elapseTime > waitTimeForNextAttack)
                 {
                     AttackPlayer();
+                    elapseTime = 0f;
                 }
                 else
                 {
@@ -46,9 +48,8 @@ namespace enemyT
 
         private void AttackPlayer()
         {
-            playerReference.TakeDamage(normalEnemyReference.Damage);
+            enemyReference.Player.TakeDamage(normalEnemyReference.Damage);
         }
-
     }
 
 }
