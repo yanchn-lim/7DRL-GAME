@@ -55,7 +55,7 @@ namespace enemyT
 
         protected virtual void Update()
         {
-            GridHelper.Instance.GeneratePath(transform.position, Player.transform.position);
+            //GridHelper.Instance.GeneratePath(transform.position, Player.transform.position);
             fsm.Update();
         }
         protected abstract void SetupFSM();
