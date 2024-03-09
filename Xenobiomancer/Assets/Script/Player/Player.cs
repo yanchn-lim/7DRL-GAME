@@ -24,9 +24,9 @@ public class Player : Stats, IDamageable
 
     //Display the stats of the player
     [SerializeField] private DisplayStats displayStats;
-    private float healAmount = 20f;
-    private float costToHeal = 100f;
-    private bool isDead;
+    [SerializeField]private int healAmount = 20;
+    [SerializeField]private int costToHeal = 100;
+    
 
     [HideInInspector]
     public FSM fsm = new FSM();
@@ -282,7 +282,7 @@ public class Player : Stats, IDamageable
         {
             
             DecreaseCurrency(PlayerWeapon.AmmoCost);
-            PlayerWeapon.Reload();
+            PlayerWeapon.PlayerReload();
 
         }
         else 
@@ -293,7 +293,7 @@ public class Player : Stats, IDamageable
         
     }
 
-    public void UpgradeWithCurrency(int i, float costOfUpgrade)
+    public void UpgradeWithCurrency(int i, int costOfUpgrade)
     {
         if (Currency >= costOfUpgrade)
         {
