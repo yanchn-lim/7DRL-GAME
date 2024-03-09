@@ -157,9 +157,9 @@ namespace Bioweapon
             MethodToFireBullet();
         }
 
-        public void RotateWeapon(float angle)
+        public void LocalRotateWeapon(float angle)
         {
-            
+            gun.localRotation= Quaternion.Euler(0,0,angle);
         }
 
         public abstract void ShowTrajectory();

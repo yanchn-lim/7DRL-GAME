@@ -1,5 +1,7 @@
 ﻿using Patterns;
+using System;
 using System.Collections;
+using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
@@ -17,8 +19,35 @@ namespace enemyT
         public override void Enter()
         {
             base.Enter();
-            //AttackWithLaser();
-            AttackWithShotgun();
+            int current = (int)previousState;
+            current++;
+            if(current >= Enum.GetNames(typeof(AttackingState)).Length)
+            {
+                current = 0;
+            }
+            AttackingState currentAttackingState = (AttackingState)current;
+
+            //decide on the next thing to do
+            switch(currentAttackingState)
+            {
+                case (AttackingState.LASER):
+                    AttackWithLaser();
+                    break;
+                case (AttackingState.RIFLE):
+                    AttackWithRifle();
+                    break;
+                case(AttackingState.SHOTGUN): 
+                    AttackWithShotgun();
+                    break;
+                case (AttackingState.ALL):
+                    AttackWithLaser();
+                    AttackWithRifle();
+                    AttackWithShotgun();
+                    break;
+                default:
+                    break;
+            }
+            previousState = currentAttackingState;
         }
 
 
@@ -27,13 +56,13 @@ namespace enemyT
         {
             Vector2 targetPosition;
             
-            if(Random.value < enemy.LaserPinPointAccuracy)
+            if(UnityEngine.Random.value < enemy.LaserPinPointAccuracy)
             {
                 targetPosition = playerReference.transform.position;
             }
             else
             {
-                float angleOfInaccuracy = Random.Range(-enemy.LaserAngleOfInaccuracy, enemy.LaserAngleOfInaccuracy);
+                float angleOfInaccuracy = UnityEngine.Random.Range(-enemy.LaserAngleOfInaccuracy, enemy.LaserAngleOfInaccuracy);
                 targetPosition = RotatePoint(playerReference.transform.position, transform.position, angleOfInaccuracy);
             }
             enemy.PrepareFireLaserCoroutine(targetPosition);
@@ -50,7 +79,14 @@ namespace enemyT
             Vector2 centrePoint = playerReference.transform.position;
             enemy.PrepareFireShotgunCoroutine(centrePoint);
         }
+        #endregion
 
+        #region rilfe related
+
+        private void AttackWithRifle()
+        {
+            enemy.PrepareFireRifleCoroutine(playerReference.transform.position);
+        }
 
         #endregion
         Vector2 RotatePoint(Vector2 point, Vector2 center, float angle)
@@ -74,24 +110,13 @@ namespace enemyT
             return new Vector2(xNew, yNew);
         }
 
-        //protected void RotateToFacePoint(Vector2 targetPosition)
-        //{
-        //    Vector2 direction = targetPosition - (Vector2)transform.position;
-
-        //    if (direction != Vector2.zero)
-        //    {
-        //        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
-        //        var targetRotation = Quaternion.Euler(0f, 0f, angle);
-        //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, enemyReference.RotationSpeed * Time.deltaTime);
-        //    }
-        //}
-
         private enum AttackingState
         {
             LASER = 0,
-            SHOTGUN,
             RIFLE,
-            ALL
+            SHOTGUN,
+            ALL,
+            RELOAD
         }
 
     }

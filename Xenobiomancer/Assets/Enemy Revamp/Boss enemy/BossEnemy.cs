@@ -31,6 +31,11 @@ public class BossEnemy : EnemyBase
     [Range(0,1)]
     [SerializeField] private float shotgunTimeToPoint;
 
+    [Header("Rifle firing detail")]
+    [Range(0, 1)]
+    [SerializeField] private float rifleTimeToSpread;
+    [Range(0, 90)]
+    [SerializeField] private float rifleAngleOfSpread;
 
     [Header("variables")]
     [SerializeField] private float attackableRange;
@@ -53,12 +58,14 @@ public class BossEnemy : EnemyBase
         fsm.Add((int)EnemyState.IDLE, new BossIdleState(fsm,this));
         fsm.Add((int)EnemyState.CHASING, new BossChasingState(fsm, this));
         fsm.Add((int)EnemyState.ATTACKSTATE, new BossAttackingState(fsm, this));
+        //fsm.Add((int)EnemyState.DEATHSTATE, new BasicDeathState(fsm, this));
+
         fsm.SetCurrentState((int)EnemyState.IDLE);
     }
 
     protected override void StartDeath()
     {
-        throw new System.NotImplementedException();
+        gameObject.SetActive(false);
     }
 
     #region laser
@@ -130,19 +137,50 @@ public class BossEnemy : EnemyBase
     private IEnumerator FireRifleCoroutine(Vector2 targetPosition)
     {
         float elapseTime = 0f;
-        float timeToMoveBetweenPoint = shotgunTimeToPoint * GameManager.Instance.TurnTime;
+        float timeToMoveBetweenPoint = rifleTimeToSpread * GameManager.Instance.TurnTime;
 
-        Vector2 originalPosition = transform.position + (transform.up * (transform.position - (Vector3)targetPosition).magnitude);
+        //Vector2 originalPosition = transform.position + (transform.up * (transform.position - (Vector3)targetPosition).magnitude);
+        //while (elapseTime < timeToMoveBetweenPoint)
+        //{
+        //    elapseTime += Time.deltaTime;
+        //    float progress = elapseTime / timeToMoveBetweenPoint;
+        //    RotateToFacePoint(Vector2.Lerp(originalPosition, targetPosition, progress));
+        //    yield return null;
+        //}
+
+        elapseTime = 0f;
+        leftRifle.FireBulletWithoutSpending();
+        rightRifle.FireBulletWithoutSpending();
         while (elapseTime < timeToMoveBetweenPoint)
         {
             elapseTime += Time.deltaTime;
             float progress = elapseTime / timeToMoveBetweenPoint;
-            RotateToFacePoint(Vector2.Lerp(originalPosition, targetPosition, progress));
+            RotateBothRifle(Mathf.Lerp(0, rifleAngleOfSpread, progress));
             yield return null;
         }
-
+        StartCoroutine(ReturnRifleCoroutine());
         
     }
+
+    private IEnumerator ReturnRifleCoroutine()
+    {
+        float elapseTime = 0f;
+        float timeToMoveBetweenPoint = GameManager.Instance.TurnTime;
+
+        while (elapseTime < timeToMoveBetweenPoint)
+        {
+            elapseTime += Time.deltaTime;
+            float progress = elapseTime / timeToMoveBetweenPoint;
+            RotateBothRifle(Mathf.Lerp(rifleAngleOfSpread, 0 , progress));
+            yield return null;
+        }
+    }
+
+    void RotateBothRifle(float angle)
+        {
+            leftRifle.LocalRotateWeapon(angle + 90f);
+            rightRifle.LocalRotateWeapon(-angle + 90f);
+        }
 
     #endregion
 
