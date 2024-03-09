@@ -30,8 +30,7 @@ public class PerkSelectionButton : DoubleClickButton
         {
             if (AssignPerk == perks[i])
             {
-
-                ui.Player.PlayerWeapon.Upgrade(i);
+                ui.Player.UpgradeWithCurrency(i, perks[i].Cost);
             }
         }
     }
