@@ -89,7 +89,7 @@ namespace enemyT
             EventManager.Instance.RemoveListener(EventName.TURN_COMPLETE, ReturnToIdleState);
         }
 
-        private void ReturnToIdleState()
+        protected void ReturnToIdleState()
         {
             mFsm.SetCurrentState((int)EnemyState.IDLE);
         }

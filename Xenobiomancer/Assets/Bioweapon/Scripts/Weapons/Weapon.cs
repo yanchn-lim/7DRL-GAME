@@ -47,6 +47,7 @@ namespace Bioweapon
         public GunType GunType { get => gunType; }
         protected List<PerkBase> perkGunGain = new List<PerkBase>();
         public List<PerkBase> PerkGunGain { get => perkGunGain; }
+        public Transform FiringPosition { get => firingPosition; }
 
         #endregion
 
@@ -149,6 +150,16 @@ namespace Bioweapon
                 MethodToFireBullet();
                 currentMagSize--;
             }
+        }
+
+        public void FireBulletWithoutSpending() 
+        {
+            MethodToFireBullet();
+        }
+
+        public void RotateWeapon(float angle)
+        {
+            
         }
 
         public abstract void ShowTrajectory();

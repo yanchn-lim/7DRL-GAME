@@ -9,12 +9,12 @@ namespace enemyT
     public class BasicChasingEnemyState : BasicEnemyState
     {
         //path represented as a path
-        private Stack<Vector2> path;
+        protected Stack<Vector2> path;
         public BasicChasingEnemyState(FSM fsm, EnemyBase enemy) : base(fsm, enemy)
         {
             mId = (int)EnemyState.CHASING;
         }
-        private Vector2 currentPointToFollow;
+        protected Vector2 currentPointToFollow;
         public override void Enter()
         {
             base.Enter();
@@ -42,9 +42,9 @@ namespace enemyT
                 //go back to idling
                 mFsm.SetCurrentState((int)EnemyState.IDLE);
             }
-        }
+        } 
 
-        private void GenerateNewPath()
+        protected void GenerateNewPath()
         {
             path = GridHelper.Instance.GeneratePath(transform.position, playerReference.transform.position);
             enemyReference.Path = path;
@@ -70,7 +70,7 @@ namespace enemyT
             base.Exit();
         }
 
-        private void MoveEnemyToPoint()
+        protected void MoveEnemyToPoint()
         {
             RotateToFacePoint(currentPointToFollow);
 
@@ -95,7 +95,7 @@ namespace enemyT
             //move the 
         }
 
-        private void RotateToFacePoint(Vector2 targetPosition)
+        protected void RotateToFacePoint(Vector2 targetPosition)
         {
             Vector2 direction = targetPosition - (Vector2) transform.position;
 
