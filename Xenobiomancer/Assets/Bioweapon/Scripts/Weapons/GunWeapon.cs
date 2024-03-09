@@ -83,6 +83,11 @@ namespace Bioweapon
             StopAllCoroutines();
         }
 
+        public void RemoveListener()
+        {
+            EventManager.Instance.RemoveListener(EventName.TURN_COMPLETE, (Action)StopFiringBulletOnTurnComplete);
+        }
+
         #region bullet related
         private void SetUpBullet()
         {

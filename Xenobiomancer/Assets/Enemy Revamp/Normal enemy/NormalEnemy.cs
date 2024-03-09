@@ -34,14 +34,13 @@ namespace enemyT
             fsm.Add((int)EnemyState.IDLE, new NormalEnemyIdleState(fsm, this));
             fsm.Add((int)EnemyState.CHASING, new NormalEnemyChasingState(fsm, this));
             fsm.Add((int)EnemyState.ATTACKSTATE, new NormalEnemyAttackState(fsm, this));
+            fsm.Add((int)EnemyState.DEATHSTATE, new BasicDeathState(fsm, this));
             fsm.SetCurrentState((int)EnemyState.IDLE);
-            
         }
 
         protected override void StartDeath()
         {
-            //do show the death animation here
-            print("enemy died");
+            fsm.SetCurrentState((int)EnemyState.DEATHSTATE);
         }
 
         private void OnDrawGizmos()

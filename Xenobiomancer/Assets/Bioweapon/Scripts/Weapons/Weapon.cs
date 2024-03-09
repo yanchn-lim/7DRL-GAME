@@ -64,6 +64,7 @@ namespace Bioweapon
             RotateGunBasedOnMousePosition();
             if (Input.GetKeyUp(KeyCode.Space))
             {
+                EventManager.Instance.TriggerEvent(EventName.TURN_END);
                 FireBullet();
             }
         }
@@ -74,8 +75,13 @@ namespace Bioweapon
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0f; // Make sure z position is zero for 2D
 
+            RotateGunBasedOnPosition(mousePos);
+        }
+
+        public void RotateGunBasedOnPosition(Vector3 TargetPosition)
+        {
             // Calculate direction from the object to the mouse cursor
-            Vector3 direction = mousePos - transform.position;
+            Vector3 direction = TargetPosition - transform.position;
 
             // Calculate the angle from the current forward direction to the direction to the cursor
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -104,13 +110,19 @@ namespace Bioweapon
         /// </summary>
         protected abstract void MethodToFireBullet();
 
-        public virtual void Reload()
+        public virtual void PlayerReload()
+        {
+            ReloadFunction();
+            EventManager.Instance.TriggerEvent(EventName.TURN_END);
+        }
+
+        public void ReloadFunction()
         {
             reloadCounter++;
-            if(reloadCounter >= reloadTurn)
+            if (reloadCounter >= reloadTurn)
             {
                 int amountToSubstract = maxMagSize - currentMagSize;
-                if(ammoSize >= amountToSubstract)
+                if (ammoSize >= amountToSubstract)
                 {
                     ammoSize -= amountToSubstract;
                     currentMagSize += amountToSubstract;
@@ -123,7 +135,6 @@ namespace Bioweapon
                 reloadCounter = 0;
                 HaveReloaded = true;
             }
-            EventManager.Instance.TriggerEvent(EventName.TURN_END);
         }
 
         public void ReloadCheckCompleted()
@@ -131,11 +142,10 @@ namespace Bioweapon
             HaveReloaded = false;
         }
 
-        protected virtual void FireBullet()
+        public virtual void FireBullet()
         {
             if (currentMagSize > 0)
             {
-                EventManager.Instance.TriggerEvent(EventName.TURN_END);
                 MethodToFireBullet();
                 currentMagSize--;
             }

@@ -204,7 +204,7 @@ public class PlayerState_RELOAD : PlayerState
     {
         if (mPlayer.PlayerWeapon.CanReload && Input.GetKeyDown(KeyCode.R))
         {//show that it can reload
-            mPlayer.PlayerWeapon.Reload();
+            mPlayer.PlayerWeapon.PlayerReload();
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {

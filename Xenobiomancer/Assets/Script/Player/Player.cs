@@ -175,7 +175,6 @@ public class Player : Stats, IDamageable
     public void TakeDamage(int damage)
     {
         DecreaseHealth(damage);
-        Debug.Log(Health);
     }
 
     public void ChangeToAttackInformation()

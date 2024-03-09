@@ -4,7 +4,9 @@
     {
         IDLE,
         CHASING,
-        ATTACKSTATE
+        ATTACKSTATE,
+        DEATHSTATE,
+        SHOOTINGSTATE
     }
 
 }

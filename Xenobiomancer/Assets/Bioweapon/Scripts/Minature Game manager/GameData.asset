@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4526cbec34ee140499f82d1fcb50f252, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  timePassPerTurn: 0.4
+  timePassPerTurn: 0.5

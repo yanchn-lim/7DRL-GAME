@@ -48,6 +48,7 @@ namespace enemyT
 
         protected virtual void Start() //for starting the enemy
         {
+            gameObject.layer = LayerMask.NameToLayer("Enemy"); //the layermask the player is in
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>(); //get the player component for finding
             SetupFSM();
         }
