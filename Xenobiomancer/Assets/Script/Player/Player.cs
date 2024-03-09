@@ -3,13 +3,8 @@ using Patterns;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Hierarchy;
-using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-
+using UnityEngine.Tilemaps;
 
 public class Player : Stats, IDamageable
 {
@@ -44,6 +39,11 @@ public class Player : Stats, IDamageable
     [SerializeField]
     private LayerMask wallLayer;
 
+    [SerializeField]
+    Tilemap fogMap;
+    [SerializeField]
+    int visionRange;
+
     void Start()
     {
         //change this as the starting gun is a pistol
@@ -66,7 +66,7 @@ public class Player : Stats, IDamageable
     void Update()
     {
         fsm.Update();
-
+        UpdateFogMap();
         TestSwitchScene();
     }
 
@@ -131,7 +131,24 @@ public class Player : Stats, IDamageable
         MoveCheck = false;
     }
 
+    void UpdateFogMap()
+    {
+        Vector3Int posInt = Vector3Int.RoundToInt(transform.position);
 
+        for (int x = -visionRange; x < visionRange + 1; x++)
+        {
+            for (int y = -visionRange; y <= visionRange + 1; y++)
+            {
+                Vector3Int surroundingPos = new(posInt.x + x, posInt.y + y,0);
+                TileBase tile = fogMap.GetTile(surroundingPos);
+
+                if(tile != null)
+                {
+                    fogMap.SetTile(surroundingPos,null);
+                }
+            }
+        }
+    }
 
 
     #endregion

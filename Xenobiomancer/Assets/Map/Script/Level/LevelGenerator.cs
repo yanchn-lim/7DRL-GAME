@@ -22,7 +22,10 @@ public class LevelGenerator : MonoBehaviour
     RoomData[] bossRoomData;
 
     [SerializeField]
-    Tilemap tileMap,obstacleMap;
+    Tilemap tileMap,obstacleMap,fogMap;
+
+    [SerializeField]
+    TileBase testTile, upgradeTile, fogTile;
 
     int currMaxDepth;
 
@@ -74,6 +77,7 @@ public class LevelGenerator : MonoBehaviour
         GenerateRoom();
 
         RandomInsertObject();
+        SpawnFog();
         //Debugging();
     }
 
@@ -194,6 +198,7 @@ public class LevelGenerator : MonoBehaviour
     }
     #endregion
 
+    #region Generating Rooms
     void AssignRoom()
     {
         foreach (var node in graph.NodeList)
@@ -298,6 +303,21 @@ public class LevelGenerator : MonoBehaviour
             RoomGenerator.GenerateRoom(tileMap,node.RoomData,node.Position);
         }
     }
+    #endregion
+
+    void SpawnFog()
+    {
+        tileMap.CompressBounds();
+        BoundsInt bound = tileMap.cellBounds;
+        for (int x = bound.xMin; x < bound.xMax; x++)
+        {
+            for (int y = bound.yMin; y < bound.yMax; y++)
+            {
+                Vector3Int pos = new(x, y, 0);
+                fogMap.SetTile(pos,fogTile);               
+            }
+        }
+    }
 
     List<Vector3Int> GetAvailableObstacleSpawnPosition()
     {
@@ -335,9 +355,6 @@ public class LevelGenerator : MonoBehaviour
 
         return positionList;
     }
-
-    public TileBase testTile;
-    public TileBase upgradeTile;
     [Range(0, 5)]
     public float scale;
     [Range(0, 1)]
