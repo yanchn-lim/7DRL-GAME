@@ -32,6 +32,8 @@ namespace Bioweapon
         [SerializeField] protected int ammoSize;
         [Tooltip("Ammo increase if they plan to buy more ammo")]
         [SerializeField] protected int ammoIncrease;
+        [Tooltip("Cost of reloading the weapon")]
+        [SerializeField] protected int ammoCost;
 
         [Tooltip("The counter to count how many turn it took to reload the gun")]
         [SerializeField] protected int reloadCounter;
@@ -44,6 +46,8 @@ namespace Bioweapon
         public int ReloadTurn { get => reloadTurn; }
         public string NameOfTheWeapon { get => nameOfTheWeapon; }
         public int Cost { get => cost; }
+
+        public int AmmoCost { get => ammoCost; }
         public GunType GunType { get => gunType; }
         protected List<PerkBase> perkGunGain = new List<PerkBase>();
         public List<PerkBase> PerkGunGain { get => perkGunGain; }

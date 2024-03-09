@@ -14,7 +14,8 @@ public enum PlayerStateType
     ATTACK,
     RELOAD,
     INTERACT,
-    MAP
+    MAP,
+    DEATH
 }
 
 public class PlayerState : FSMState
@@ -33,6 +34,7 @@ public class PlayerState : FSMState
         EventManager.Instance.AddListener(EventName.TURN_END, PlayerDecidedMovement);
         EventManager.Instance.AddListener(EventName.UseUpgradeStation, PlayerInteractWithUpgradeStation);
         EventManager.Instance.AddListener(EventName.LEVEL_COMPLETED, PlayerLookMap);
+        EventManager.Instance.AddListener(EventName.PLAYER_DEATH, PlayerDeath);
     }
 
     public override void Exit()
@@ -40,6 +42,7 @@ public class PlayerState : FSMState
         EventManager.Instance.RemoveListener(EventName.TURN_END, PlayerDecidedMovement);
         EventManager.Instance.RemoveListener(EventName.UseUpgradeStation, PlayerInteractWithUpgradeStation);
         EventManager.Instance.RemoveListener(EventName.LEVEL_COMPLETED, PlayerLookMap);
+        EventManager.Instance.RemoveListener(EventName.PLAYER_DEATH, PlayerDeath);
     }
 
     private void PlayerDecidedMovement()
@@ -56,6 +59,11 @@ public class PlayerState : FSMState
     private void PlayerLookMap()
     {
         mFsm.SetCurrentState((int)PlayerStateType.MAP);
+    }
+
+    private void PlayerDeath()
+    {
+        mFsm.SetCurrentState((int)PlayerStateType.DEATH);
     }
 
 }
@@ -115,10 +123,16 @@ public class PlayerState_MOVEMENT : PlayerState
         {
             mFsm.SetCurrentState((int)PlayerStateType.ATTACK);
         }
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            mPlayer.HealPlayer();
+        }
         else
         {
             mPlayer.Moving();
         }
+
+       
     }
 
     public override void Exit()
@@ -163,6 +177,10 @@ public class PlayerState_ATTACK : PlayerState
         else if (!mPlayer.PlayerWeapon.CanShoot)
         {//if cant shoot
             mFsm.SetCurrentState((int)PlayerStateType.RELOAD);
+        }
+        else if (Input.GetKeyDown(KeyCode.H))
+        {
+            mPlayer.HealPlayer();
         }
         else
         {
@@ -213,7 +231,7 @@ public class PlayerState_RELOAD : PlayerState
     {
         if (mPlayer.PlayerWeapon.CanReload && Input.GetKeyDown(KeyCode.R))
         {//show that it can reload
-            mPlayer.PlayerWeapon.Reload();
+            mPlayer.ReloadWithCurrency();
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {
@@ -273,4 +291,25 @@ public class PlayerState_MAP : PlayerState
     {
         mFsm.SetCurrentState((int)(PlayerStateType.MOVEMENT));
     }
+}
+
+public class PlayerState_DEATH : PlayerState
+{
+    public PlayerState_DEATH(Player player) : base(player)
+    {
+        mId = (int)(PlayerStateType.DEATH);
+    }
+
+    public override void Enter()
+    {
+        
+    }
+
+    public override void Exit()
+    {
+        
+
+    }
+
+    
 }

@@ -24,6 +24,9 @@ public class Player : Stats, IDamageable
 
     //Display the stats of the player
     [SerializeField] private DisplayStats displayStats;
+    private float healAmount = 20f;
+    private float costToHeal = 100f;
+    private bool isDead;
 
     [HideInInspector]
     public FSM fsm = new FSM();
@@ -56,6 +59,7 @@ public class Player : Stats, IDamageable
         fsm.Add(new PlayerState_RELOAD(this));
         fsm.Add(new PlayerState_INTERACTing(this));
         fsm.Add(new PlayerState_MAP(this));
+        fsm.Add(new PlayerState_DEATH(this));
         fsm.SetCurrentState((int)PlayerStateType.MAP);
 
 
@@ -66,8 +70,10 @@ public class Player : Stats, IDamageable
     void Update()
     {
         fsm.Update();
+
         UpdateFogMap();
         TestSwitchScene();
+
     }
 
     #region Movement
@@ -163,18 +169,19 @@ public class Player : Stats, IDamageable
     {
         base.DecreaseHealth(amount);
         displayStats.UpdateHealthUI(Health, MaxHealth);
+        CheckPlayerHealth();
     }
 
     public override void IncreaseCurrency(float amount)
     {
         base.IncreaseCurrency(amount);
-        displayStats.UpdateCurrencyUI(amount);
+        displayStats.UpdateCurrencyUI(Currency);
     }
 
     public override void DecreaseCurrency(float amount)
     {
         base.DecreaseCurrency(amount);
-        displayStats.UpdateCurrencyUI(amount);
+        displayStats.UpdateCurrencyUI(Currency);
     }
 
     public override void IncreaseTravelDistance(float amount)
@@ -196,6 +203,8 @@ public class Player : Stats, IDamageable
     {
         DecreaseHealth(damage);
         Debug.Log(Health);
+        CheckPlayerHealth();
+
     }
 
     public void ChangeToAttackInformation()
@@ -236,12 +245,62 @@ public class Player : Stats, IDamageable
     }
 
 
-    public void TestSwitchScene()
+    public void HealPlayer()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        if (Currency >= costToHeal)
         {
-            EventManager.Instance.TriggerEvent(EventName.LEVEL_COMPLETED);
+            IncreaseHealth(healAmount);
+            DecreaseCurrency(costToHeal);
+            
+            EventManager.Instance.TriggerEvent(EventName.TURN_END);
+        }
+        else
+        {
+            
+        }
+        
+
+    }
+
+   
+   void CheckPlayerHealth()
+    {
+        if (Health <= 0)
+        {
+            EventManager.Instance.TriggerEvent(EventName.PLAYER_DEATH);
         }
     }
+
+    public void ReloadWithCurrency()
+    {
+        if (Currency >= PlayerWeapon.AmmoCost)
+        {
+            
+            DecreaseCurrency(PlayerWeapon.AmmoCost);
+            PlayerWeapon.Reload();
+
+        }
+        else 
+        { 
+            Debug.Log("Not Enough Funds"); 
+        }
+
+        
+    }
+
+    public void UpgradeWithCurrency(int i, float costOfUpgrade)
+    {
+        if (Currency >= costOfUpgrade)
+        {
+            PlayerWeapon.Upgrade(i);
+            DecreaseCurrency(costOfUpgrade);
+        }
+        else
+        {
+            //cannot upgrade
+        }
+        
+    }
+    
 
 }
