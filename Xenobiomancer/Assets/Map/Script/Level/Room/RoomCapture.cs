@@ -20,6 +20,7 @@ public class RoomCapture : MonoBehaviour
             roomTileMap.ClearAllTiles();
             RoomGenerator.GenerateRoom(roomTileMap,roomData,new(0,0,0));
         }
+
     }
 
     public RoomData CaptureRoomData()
@@ -30,10 +31,12 @@ public class RoomCapture : MonoBehaviour
         roomData.Tiles = capturedTiles;
         roomData.Width = bounds.size.x;
         roomData.Height = bounds.size.y;
+    
         roomData.GetRoomCenter();
         EditorUtility.SetDirty(roomData);
         Debug.Log("created room");
         return roomData;
     }
+
 }
  

@@ -454,7 +454,6 @@ public class LevelGenerator : MonoBehaviour
                     obstacleMap.SetTile(placePos + Vector3Int.right, null);
                     obstacleMap.SetTile(placePos + Vector3Int.right * 2, null);
                 }
-
             }
         }
 

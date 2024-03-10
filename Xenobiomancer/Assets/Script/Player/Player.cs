@@ -75,8 +75,12 @@ public class Player : Stats, IDamageable
         fsm.Update();
 
         UpdateFogMap();
-        
 
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            //OPEN MAP
+            //EventManager.Instance.TriggerEvent();
+        }
     }
 
     #region Movement

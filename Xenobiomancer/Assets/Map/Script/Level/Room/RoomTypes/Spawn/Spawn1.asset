@@ -12,17 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e84206d15b5c5c34a87a2cf96af12497, type: 3}
   m_Name: Spawn1
   m_EditorClassIdentifier: 
-  Width: 15
+  Width: 13
   Height: 8
-  Center: {x: 8, y: 5}
+  Center: {x: 7, y: 5}
   Tiles:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
   - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
   - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
@@ -33,19 +30,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
-  - {fileID: 0}
   - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
   - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
   - {fileID: 11400000, guid: 961906cdad2649349ba1fb30432df110, type: 2}
