@@ -116,7 +116,7 @@ namespace Bioweapon
         protected abstract void MethodToFireBullet();
 
         public virtual void PlayerReload()
-        {
+        { 
             ReloadFunction();
             EventManager.Instance.TriggerEvent(EventName.TURN_END);
         }
@@ -140,6 +140,11 @@ namespace Bioweapon
                 reloadCounter = 0;
                 HaveReloaded = true;
             }
+        }
+
+        public void GetMoreAmmo()
+        {
+            ammoSize += ammoIncrease;
         }
 
         public void ReloadCheckCompleted()

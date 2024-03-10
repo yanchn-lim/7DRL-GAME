@@ -18,32 +18,24 @@ namespace enemyT
         public override void Enter()
         {
             base.Enter();
-
-            Debug.Log($"{enemyReference.name} can see player? {playerWithinVision}");
-            if (playerWithinVision)
-            {
+            //if (playerWithinVision)
+            //{
                 //get path
-                Debug.Log($"{enemyReference.name}: seen player! generating path");
-                GenerateNewPath();
-                Debug.Log($"{enemyReference.name}: generated path");
-
-            }
-            else
-            {
-                //refer to old path
-                Debug.Log($"{enemyReference.name}: did not see player! use old path");
-
-                if (enemyReference.Path?.Count > 0)
-                {
-                    currentPointToFollow = enemyReference.Path.Pop();
-                }
-            }
+            GenerateNewPath();
+            //}
+            //else
+            //{
+            //    //refer to old path
+            //    if (enemyReference.Path?.Count > 0)
+            //    {
+            //        currentPointToFollow = enemyReference.Path.Pop();
+            //    }
+            //}
         } 
 
         protected void GenerateNewPath()
         {
             enemyReference.Path = GridHelper.Instance.GeneratePath(transform.position, playerReference.transform.position);
-            Debug.Log($"Generated {enemyReference.name} path. Path contains {enemyReference.Path.Count} node");
             currentPointToFollow = enemyReference.Path.Pop();
             
         }
@@ -63,34 +55,27 @@ namespace enemyT
 
             if(enemyReference.Path != null)
             {
-                Debug.Log("Move enemy to point because path is not null");
                 MoveEnemyToPoint();
-                
             }
         }
 
         public override void Exit()
         {
-            Debug.Log("Exiting");
             base.Exit();
         }
 
         protected void MoveEnemyToPoint()
         {
             RotateToFacePoint(currentPointToFollow);
-            Debug.Log("Finish rotating the enemy to face player");
 
             float distanceBetweenPoint = Vector2.Distance(currentPointToFollow, transform.position);
             transform.position += transform.up * enemyReference.Speed * Time.deltaTime;
-            Debug.Log("Finish moving  the enemy to face player");
 
             //this line of code
             if (distanceBetweenPoint <= enemyReference.PointSensingRadius)
             {
-                Debug.Log("Distance between point is within enemy reach");
                 if (enemyReference.Path?.Count > 0) //check if there is still a path
                 {
-                    Debug.Log("There is still a path so continue to pop and move to player");
                     currentPointToFollow = enemyReference.Path.Pop();
                 }
                 else

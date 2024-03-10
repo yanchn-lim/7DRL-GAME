@@ -16,7 +16,6 @@ namespace enemyT
 
         public override void Update()
         {
-            Debug.Log($"{enemyReference.name} is in: chasing state");
             base.Update();
             CheckIfPlayerIsNearForAttacking();
         }

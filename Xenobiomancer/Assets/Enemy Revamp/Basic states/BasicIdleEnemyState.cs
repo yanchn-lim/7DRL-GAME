@@ -35,7 +35,6 @@ namespace enemyT
         //}
         public override void Update()
         {
-            Debug.Log($"{enemyReference.name} is in: idle state");
             base.Update();
         }
     }

@@ -231,9 +231,13 @@ public class PlayerState_RELOAD : PlayerState
     {
         if (mPlayer.PlayerWeapon.CanReload && Input.GetKeyDown(KeyCode.R))
         {//show that it can reload
-
-            mPlayer.ReloadWithCurrency();
-
+            //mPlayer.ReloadWithCurrency();
+            mPlayer.PlayerWeapon.PlayerReload();
+        }
+        if(!mPlayer.PlayerWeapon.CanReload && 
+            Input.GetKeyDown(KeyCode.Q) )
+        {
+            mPlayer.BuyAmmoWithCurrency();
         }
         else if (Input.GetKeyDown(KeyCode.W))
         {

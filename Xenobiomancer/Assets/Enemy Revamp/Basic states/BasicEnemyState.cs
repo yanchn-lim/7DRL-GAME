@@ -37,16 +37,11 @@ namespace enemyT
             //rules to see if the player fall within the enemy vision
             if (distanceBetweenEnemyAndPlayer <= enemyReference.LengthOfVision)
             {//falls within the vision
-                Debug.Log($"{enemyReference.name}: player within field of vision");
                 Vector2 normalizePlayerPosition = (playerReference.transform.position - transform.position).normalized;
                 float angleFromEnemyToPlayer = Vector2.Angle(transform.up, normalizePlayerPosition);
                 //divide by two because up can only cover half of the degress vision
                 if (angleFromEnemyToPlayer < enemyReference.DegreeOfVision / 2)
                 {
-                    Debug.Log($"{enemyReference.name}: player within the angle of vision");
-                    //do raycast and see if the player is not being block by any walls
-
-
                     return true;
                     //Vector2 directionOfTheRay = playerPosition - (Vector2)transform.position;
                     //var hit = Physics2D.Raycast(
