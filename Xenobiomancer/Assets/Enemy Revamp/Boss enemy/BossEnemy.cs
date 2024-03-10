@@ -66,6 +66,7 @@ public class BossEnemy : EnemyBase
     protected override void StartDeath()
     {
         gameObject.SetActive(false);
+        EventManager.Instance.TriggerEvent(EventName.WINLEVEL);
     }
 
     #region laser

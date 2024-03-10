@@ -130,7 +130,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      816-8161028_keyboard-key-e-comments-e-key-on-keyboard_0: -85990011868642066
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

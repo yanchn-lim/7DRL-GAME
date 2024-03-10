@@ -11,7 +11,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField]
     int minDepth,maxDepth,maxHorizontalDepth;
     [SerializeField]
-    GameObject spawnPrefab, rootPrefab, nodePrefab, linePrefab;
+    GameObject spawnPrefab, rootPrefab, nodePrefab, linePrefab, BossPrefab;
     [SerializeField]
     RoomData[] spawnRoomData, rootRoomData, spineRoomData,normalRoomData;
 
@@ -109,6 +109,12 @@ public class LevelGenerator : MonoBehaviour
         tileMap.ClearAllTiles();
         RoomData data = bossRoomData[index];
         RoomGenerator.GenerateRoom(tileMap,data,Vector3Int.zero);
+        SpawnBoss();
+    }
+
+    void SpawnBoss()
+    {
+        Instantiate(BossPrefab, new Vector3(0, 5,0), Quaternion.identity);
     }
 
     LevelNode CreateNode(int depth,int horizontalDepth)

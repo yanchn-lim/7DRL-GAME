@@ -44,6 +44,7 @@ public class Player : Stats, IDamageable
     [SerializeField]
     private LayerMask wallLayer;
 
+    [SerializeField] private float radiusToStartMap;
 
     [SerializeField]
     Tilemap fogMap,obstacleMap,tileMap;
@@ -76,9 +77,9 @@ public class Player : Stats, IDamageable
             fsm.SetCurrentState((int)PlayerStateType.MAP);
         }
 
-
         InitializeStats(playerData.health, playerData.health, playerData.currency, playerData.travelDistance);
         displayStats.SetUI(Health, MaxHealth, Currency);
+        displayStats.ChangeCostText(currentWeapon.AmmoCost);
     }
 
     void Update()
@@ -87,11 +88,21 @@ public class Player : Stats, IDamageable
         fsm.Update();
 
         UpdateFogMap();
-        
-        if (Input.GetKeyDown(KeyCode.Z))
+
+
+        float distanceFromArea = Vector2.Distance(transform.position, Vector2.zero);
+        if(distanceFromArea <= radiusToStartMap)
         {
-            //OPEN MAP
-            EventManager.Instance.TriggerEvent(EventName.LEVEL_COMPLETED);
+            displayStats.ShowTransferShipText();
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                //OPEN MAP
+                EventManager.Instance.TriggerEvent(EventName.LEVEL_COMPLETED);
+            }
+        }
+        else
+        {
+            displayStats.HideTransferShipText();
         }
     }
 
@@ -287,6 +298,7 @@ public class Player : Stats, IDamageable
         currentGunType = weapon.GunType;
         weapon.gameObject.SetActive(true);
         ChangeGunImage();
+        displayStats.ChangeCostText(currentWeapon.AmmoCost);
     }
 
 

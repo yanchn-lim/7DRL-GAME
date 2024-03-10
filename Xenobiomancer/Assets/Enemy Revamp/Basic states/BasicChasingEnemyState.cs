@@ -35,8 +35,16 @@ namespace enemyT
 
         protected void GenerateNewPath()
         {
-            enemyReference.Path = GridHelper.Instance.GeneratePath(transform.position, playerReference.transform.position);
-            currentPointToFollow = enemyReference.Path.Pop();
+            try
+            {
+                enemyReference.Path = GridHelper.Instance.GeneratePath(transform.position, playerReference.transform.position);
+                currentPointToFollow = enemyReference.Path.Pop();
+            }
+            catch
+            {
+                Debug.Log("Error with path finding to this instead");
+                currentPointToFollow = playerReference.transform.position;
+            }
             
         }
 

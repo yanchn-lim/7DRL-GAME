@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4509069969572576922}
   - component: {fileID: -661292680359476990}
   - component: {fileID: -4328672556973165138}
+  - component: {fileID: 6215303150099211565}
   m_Layer: 5
   m_Name: MapNode
   m_TagString: Untagged
@@ -51,14 +52,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: df29d5bc6eb239e4a8b6a2f01ee964a8, type: 2}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.6}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0f3486b97174d8a4688ff5dac6679282, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -80,7 +81,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c70a7f24d70dff341abf8d9e6cabe564, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteArray: []
+  spriteArray:
+  - {fileID: 21300000, guid: 98836ca802c2fb742b9dcd881567637a, type: 3}
+  - {fileID: 21300000, guid: 0f3486b97174d8a4688ff5dac6679282, type: 3}
+  cross: {fileID: 9070298800848424486, guid: 0dbe48796a65b7c4da730c75d84be63c, type: 3}
 --- !u!222 &-4328672556973165138
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -89,3 +93,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3566879293235807049}
   m_CullTransparentMesh: 1
+--- !u!95 &6215303150099211565
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566879293235807049}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6077889994145b640b90678c162e2336, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
