@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfPerk: Wider
   description: Increase the width of the laser
   cost: 50
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: 59f9095348eabed479e3928c96d5122d, type: 3}
   increaseBeamWidth: 10
   increaseBeamLength: 0
   reduceChargeUp: 0

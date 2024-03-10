@@ -827,6 +827,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: ammoCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
@@ -1306,6 +1310,7 @@ MonoBehaviour:
   per: 0.713
   per2: 0.12
   per3: 0.125
+  per4: 0.15
   doorMinReach: 3
   doorMaxReach: 5
   doorDistCheck: 5
@@ -2069,6 +2074,10 @@ PrefabInstance:
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
+      propertyPath: ammoCost
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
@@ -2467,6 +2476,7 @@ MonoBehaviour:
   LineRenderHandler: {fileID: 1014386589}
   Main: {fileID: 236000830}
   playerData: {fileID: 11400000, guid: 4d77836a42b9e86458dd3f63749748a5, type: 2}
+  invincibilityDuration: 1
   MoveCheck: 0
   wallLayer:
     serializedVersion: 2
@@ -2683,6 +2693,10 @@ PrefabInstance:
     - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: gunType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: ammoCost
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: upgradeData
@@ -3899,6 +3913,10 @@ PrefabInstance:
     - target: {fileID: 5117249204437129520, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: ammoCost
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: poolContainer

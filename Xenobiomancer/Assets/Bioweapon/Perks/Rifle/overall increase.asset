@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfPerk: Overall increase
   description: Improve the rifle power
   cost: 80
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: c11b3874dcb2a1c438bc0995ab7119f0, type: 3}
   shotsIncrease: 2
   accuracyIncrease: 0.139
   reduceBulletSpread: 4.9

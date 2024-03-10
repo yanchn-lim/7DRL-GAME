@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfPerk: Increase ammo
   description: More ammo for fighting
   cost: 60
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: 39d332b69e953074ba7caaf223d5a937, type: 3}
   shotsIncrease: 0
   accuracyIncrease: 0
   reduceBulletSpread: 0

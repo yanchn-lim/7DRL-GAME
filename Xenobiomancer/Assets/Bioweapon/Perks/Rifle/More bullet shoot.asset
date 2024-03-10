@@ -15,10 +15,11 @@ MonoBehaviour:
   nameOfPerk: Bullet hell
   description: More bullet fired per shot
   cost: 30
-  logo: {fileID: -4569141587512499896, guid: 3cbeb06aebe21f64b9c8055f83951ff6, type: 3}
+  logo: {fileID: 21300000, guid: 39d332b69e953074ba7caaf223d5a937, type: 3}
   shotsIncrease: 5
   accuracyIncrease: 0
   reduceBulletSpread: 0
   bulletSpeedIncrease: 0
   bulletLifeTimeIncrease: 0
   increaseMaxAmmo: 0
+  damage: 0
