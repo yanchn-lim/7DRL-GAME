@@ -88,7 +88,7 @@ public class Player : Stats, IDamageable
         if (Input.GetKeyDown(KeyCode.Z))
         {
             //OPEN MAP
-            //EventManager.Instance.TriggerEvent();
+            EventManager.Instance.TriggerEvent(EventName.LEVEL_COMPLETED);
         }
     }
 
