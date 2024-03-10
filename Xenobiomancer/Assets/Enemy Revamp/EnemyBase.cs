@@ -85,7 +85,10 @@ namespace enemyT
             }
         }
 
-       
+        private void OnDestroy()
+        {
+            StartDeath();
+        }
     }
 
     public enum EnemyStates

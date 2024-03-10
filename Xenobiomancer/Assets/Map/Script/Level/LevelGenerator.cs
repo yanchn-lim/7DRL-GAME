@@ -36,6 +36,9 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField]GameObject[] enemiesPrefab;
 
+
+    List<GameObject> enemies ;
+
     private void Start()
     {
         EventManager.Instance.AddListener<NodeEncounter>(EventName.MAP_NODE_CLICKED, InitializeBasedOffType);
@@ -89,6 +92,8 @@ public class LevelGenerator : MonoBehaviour
 
     void InitializeAbandonedMap()
     {
+        ClearEnemies();
+        fogMap.ClearAllTiles();
         obstacleMap.ClearAllTiles();
         tileMap.ClearAllTiles();
         RoomGenerator.GenerateRoom(tileMap, abadonedRoomData, Vector3Int.zero);
@@ -328,6 +333,8 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnEnemies()
     {
+        ClearEnemies();
+        enemies = new List<GameObject>();
         List<Vector3Int> positionList = GetAvailableObstacleSpawnPosition();
         Dictionary<bool, float> weightChance = new() { {true, 1 }, { false, 49} };
         int i = 0;
@@ -344,9 +351,24 @@ public class LevelGenerator : MonoBehaviour
                     GameObject enemy = Instantiate(enemiesPrefab[randomIndex],pos, Quaternion.identity);
                     enemy.name = $"enemy {i}";
                     i++;
+                    enemies.Add(enemy);
                 }
             }
         }
+    }
+
+    void ClearEnemies()
+    {
+        if (enemies == null) return;
+        foreach(var enemy in enemies)
+        {
+            if(enemy != null)
+            {
+                Destroy(enemy);
+            }
+        }
+        enemies.Clear();
+
     }
 
 
