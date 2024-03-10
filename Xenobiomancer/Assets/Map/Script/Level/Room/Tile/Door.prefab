@@ -194,14 +194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02f39693679b8d7498821d3ebe9d61c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  doorRadius: 1
+  doorRadius: 1.5
   information: {fileID: 2907911142014921071}
-  doorPos:
-  - {x: 73, y: 25, z: 0}
-  - {x: 73, y: 26, z: 0}
-  - {x: 73, y: 27, z: 0}
-  - {x: 73, y: 28, z: 0}
-  - {x: 73, y: 29, z: 0}
   map: {fileID: 0}
 --- !u!1 &6595363994844592684
 GameObject:

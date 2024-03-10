@@ -12,7 +12,6 @@ public class Door : MonoBehaviour
     [SerializeField] private TextMeshProUGUI information;
     private Player player;
     private bool playerIsNearby;
-    public List<Vector3Int> doorPos;
     public Tilemap map;
 
     Vector3Int[] surrounding =
@@ -36,13 +35,6 @@ public class Door : MonoBehaviour
             Debug.Log("destroy door");
 
             Cascade();
-
-            //destroy door
-            foreach (var item in doorPos)
-            {
-                //map.SetTile(item, null);
-                //map.SetColor(item, Color.red);
-            }
         }
     }
 

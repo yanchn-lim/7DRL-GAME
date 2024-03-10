@@ -419,54 +419,42 @@ public class LevelGenerator : MonoBehaviour
 
             if (doorPlacementCheckHori)
             {
-                List<Vector3Int> doorPosition = new();
-
                 for (int i = 0; i < doorDistHori; i++)
                 {
+
                     Vector3Int placePos = pos + Vector3Int.right * i;
                     obstacleMap.SetTile(placePos,doorTile);
-                    doorPosition.Add(placePos);
-                    
+
+                    TileData td = new();
+                    obstacleMap.GetTile(placePos).GetTileData(placePos, obstacleMap, ref td);
+                    td.gameObject.GetComponent<Door>().map = obstacleMap;
+
                     obstacleMap.SetTile(placePos + Vector3Int.up, null);
                     obstacleMap.SetTile(placePos + Vector3Int.up * 2, null);
                     obstacleMap.SetTile(placePos + Vector3Int.down, null);
                     obstacleMap.SetTile(placePos + Vector3Int.down * 2, null);
                 }
-
-                foreach (var item in doorPosition)
-                {
-                    TileData td = new();
-                    obstacleMap.GetTile(item).GetTileData(item, obstacleMap, ref td);
-                    td.gameObject.GetComponent<Door>().doorPos = doorPosition;
-                    td.gameObject.GetComponent<Door>().map = obstacleMap;
-                }
-
                 continue;
             }
 
 
             if (doorPlacementCheckVert)
             {
-                List<Vector3Int> doorPosition = new();
-
                 for (int i = 0; i < doorDistVert; i++)
                 {
                     Vector3Int placePos = pos + Vector3Int.up * i;
                     obstacleMap.SetTile(placePos, doorTile);
-                    doorPosition.Add(placePos);
+
+                    TileData td = new();
+                    obstacleMap.GetTile(placePos).GetTileData(placePos, obstacleMap, ref td);
+                    td.gameObject.GetComponent<Door>().map = obstacleMap;
+
                     obstacleMap.SetTile(placePos + Vector3Int.left, null);
                     obstacleMap.SetTile(placePos + Vector3Int.left * 2, null);
                     obstacleMap.SetTile(placePos + Vector3Int.right, null);
                     obstacleMap.SetTile(placePos + Vector3Int.right * 2, null);
                 }
 
-                foreach (var item in doorPosition)
-                {
-                    TileData td = new();
-                    obstacleMap.GetTile(item).GetTileData(item, obstacleMap, ref td);
-                    td.gameObject.GetComponent<Door>().doorPos = doorPosition;
-                    td.gameObject.GetComponent<Door>().map = obstacleMap;
-                }
             }
         }
 
