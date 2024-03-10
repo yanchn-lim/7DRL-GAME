@@ -16,6 +16,9 @@ public class DisplayStats : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bulletAmountText;
     [SerializeField] private TextMeshProUGUI ammoLeftText;
 
+    [Header("cost")]
+    [SerializeField] private TextMeshProUGUI costText;
+
     [Header("GunImage")]
     [SerializeField] private Image gunImage;
     [SerializeField] private Sprite pistolImage;
@@ -63,5 +66,11 @@ public class DisplayStats : MonoBehaviour
         }
         gunImage.sprite = spriteSelcted;
         gunImage.preserveAspect = true;
+    }
+
+    public void ChangeCostText(int costOfWeapon)
+    {
+        costText.text = $"Q - Buy more ammo <b>({costOfWeapon})</b>" +
+            $"\r\nH - Heal <b>(100)</b>";
     }
 }
