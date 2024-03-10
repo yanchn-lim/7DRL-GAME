@@ -27,6 +27,11 @@ public class DisplayStats : MonoBehaviour
     [SerializeField] private Sprite LasergunImage;
     [SerializeField] private Sprite sniperImage;
 
+    [Header("transfer area")]
+    [SerializeField] private RectTransform circleForTransferShip;
+    [SerializeField] private TextMeshProUGUI transferShipText;
+
+
     public void UpdateHealthUI(float health, float maxHealth)
     {
         healthText.text = $"{health}/{maxHealth}";
@@ -72,5 +77,18 @@ public class DisplayStats : MonoBehaviour
     {
         costText.text = $"Q - Buy more ammo <b>({costOfWeapon})</b>" +
             $"\r\nH - Heal <b>(100)</b>";
+    }
+
+
+   
+
+    public void ShowTransferShipText()
+    {
+        transferShipText.gameObject.SetActive(true);
+    }
+
+    public void HideTransferShipText()
+    {
+        transferShipText.gameObject.SetActive(false);
     }
 }

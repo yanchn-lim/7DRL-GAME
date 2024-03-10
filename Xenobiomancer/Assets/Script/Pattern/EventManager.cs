@@ -241,6 +241,8 @@ namespace Patterns
         UseUpgradeStation,
         LeaveUpgradeStation,
 
+        WINLEVEL,
+        LOSELEVEL
     }
 
     //how the turn trigger
