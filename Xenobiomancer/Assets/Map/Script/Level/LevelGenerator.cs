@@ -96,7 +96,10 @@ public class LevelGenerator : MonoBehaviour
         fogMap.ClearAllTiles();
         obstacleMap.ClearAllTiles();
         tileMap.ClearAllTiles();
+        
         RoomGenerator.GenerateRoom(tileMap, abadonedRoomData, Vector3Int.zero);
+        GetAvailableObstacleSpawnPosition();
+        RandomInsertUpgrade();
     }
 
     void InitializeBossMap()
@@ -425,6 +428,40 @@ public class LevelGenerator : MonoBehaviour
                 continue;
             }
         }
+    }
+
+    [SerializeField, Range(0, 1)] float per4;
+    private float i;
+    void RandomInsertUpgrade()
+    {
+        float randVal = Random.Range(0, 10);
+        float maxStationsToSpawn = 4;
+        i = 0;
+
+
+        
+        foreach (var pos in availableSpawnPosition)
+        {
+            float val = Mathf.PerlinNoise(pos.x * (scale + randVal), pos.y * (scale + randVal));
+            if (val < per4)
+            {
+                Debug.Log(pos);
+                obstacleMap.SetTile(pos, upgradeTile);
+                i += 1;
+                continue;
+                
+            }
+            if (i == maxStationsToSpawn)
+            {
+                break;
+            }
+               
+        }
+            Debug.Log("JELQ");
+        
+
+
+
     }
 
     [SerializeField]

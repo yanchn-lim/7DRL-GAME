@@ -1310,6 +1310,7 @@ MonoBehaviour:
   per: 0.713
   per2: 0.12
   per3: 0.125
+  per4: 0.15
   doorMinReach: 3
   doorMaxReach: 5
   doorDistCheck: 5
