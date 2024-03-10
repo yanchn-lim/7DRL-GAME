@@ -10,10 +10,10 @@ public class Door : MonoBehaviour
 
     [SerializeField] private float doorRadius;
     [SerializeField] private TextMeshProUGUI information;
-    [SerializeField] private Grid grid;
     private Player player;
     private bool playerIsNearby;
-
+    public List<Vector3Int> doorPos;
+    public Tilemap map;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +25,14 @@ public class Door : MonoBehaviour
     {
         SensePlayer();
 
-        if (playerIsNearby && Input.GetKeyUp(KeyCode.E))
+        if (playerIsNearby && Input.GetKeyDown(KeyCode.E))
         {
-            
+            Debug.Log("destroy door");
+            //destroy door
+            foreach (var item in doorPos)
+            {
+                map.SetTile(item, null);
+            }
         }
     }
 

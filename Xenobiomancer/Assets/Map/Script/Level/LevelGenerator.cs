@@ -417,22 +417,53 @@ public class LevelGenerator : MonoBehaviour
             bool doorPlacementCheckHori = CheckDoorHorizontal(pos);
             bool doorPlacementCheckVert = CheckDoorVertical(pos);
 
+            List<Vector3Int> doorPosition = new();
+
             if (doorPlacementCheckHori)
             {
-                Debug.Log("PLACING DOORS");
                 for (int i = 0; i < doorDistHori; i++)
                 {
-                    obstacleMap.SetTile(pos + Vector3Int.right * i,doorTile);
+                    Vector3Int placePos = pos + Vector3Int.right * i;
+                    obstacleMap.SetTile(placePos,doorTile);
+                    doorPosition.Add(placePos);
+                    
+                    obstacleMap.SetTile(placePos + Vector3Int.up, null);
+                    obstacleMap.SetTile(placePos + Vector3Int.up * 2, null);
+                    obstacleMap.SetTile(placePos + Vector3Int.down, null);
+                    obstacleMap.SetTile(placePos + Vector3Int.down * 2, null);
                 }
+
+                foreach (var item in doorPosition)
+                {
+                    TileData td = new();
+                    obstacleMap.GetTile(item).GetTileData(item, obstacleMap, ref td);
+                    td.gameObject.GetComponent<Door>().doorPos = doorPosition;
+                    td.gameObject.GetComponent<Door>().map = obstacleMap;
+                }
+
+                continue;
             }
 
 
             if (doorPlacementCheckVert)
             {
-                Debug.Log("PLACING DOORS");
                 for (int i = 0; i < doorDistVert; i++)
                 {
-                    obstacleMap.SetTile(pos + Vector3Int.up * i, doorTile);
+                    Vector3Int placePos = pos + Vector3Int.up * i;
+                    obstacleMap.SetTile(placePos, doorTile);
+                    doorPosition.Add(placePos);
+                    obstacleMap.SetTile(placePos + Vector3Int.left, null);
+                    obstacleMap.SetTile(placePos + Vector3Int.left * 2, null);
+                    obstacleMap.SetTile(placePos + Vector3Int.right, null);
+                    obstacleMap.SetTile(placePos + Vector3Int.right * 2, null);
+                }
+
+                foreach (var item in doorPosition)
+                {
+                    TileData td = new();
+                    obstacleMap.GetTile(item).GetTileData(item, obstacleMap, ref td);
+                    td.gameObject.GetComponent<Door>().doorPos = doorPosition;
+                    td.gameObject.GetComponent<Door>().map = obstacleMap;
                 }
             }
         }
@@ -443,7 +474,6 @@ public class LevelGenerator : MonoBehaviour
     {
         if (tileMap.GetSprite(pos + Vector3Int.left).name.Contains("Floor"))
         {
-            Debug.Log("NO WALL BEHIND");
             return false;
         }
 
@@ -480,13 +510,10 @@ public class LevelGenerator : MonoBehaviour
             if (tile.Contains("Wall") && x >= doorMinReach)
             {
                 doorDistHori = x;
-                Debug.Log("found wall");
                 return true;
             }
 
-            Debug.Log($"TOO FAR : {x}");
         }
-        Debug.Log("TOO SHORT");
         return false;
     }
 
@@ -494,7 +521,6 @@ public class LevelGenerator : MonoBehaviour
     {
         if (tileMap.GetSprite(pos + Vector3Int.down).name.Contains("Floor"))
         {
-            Debug.Log("NO WALL BEHIND");
             return false;
         }
 
@@ -531,13 +557,10 @@ public class LevelGenerator : MonoBehaviour
             if (tile.Contains("Wall") && x >= doorMinReach)
             {
                 doorDistVert = x;
-                Debug.Log("found wall");
                 return true;
             }
 
-            Debug.Log($"TOO FAR : {x}");
         }
-        Debug.Log("TOO SHORT");
         return false;
     }
 
