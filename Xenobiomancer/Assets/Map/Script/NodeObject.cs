@@ -29,10 +29,10 @@ public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 
     private void OnEnable()
     {
-        //if (Node.IsAccesible)
-        //{
-        //    //animator.Play("NodeAnimation");
-        //}
+        if (Node.IsAccesible)
+        {
+            animator.Play("MapNodeAnimation");
+        }
     }
 
     /* Triggered when node is clicked
@@ -72,15 +72,16 @@ public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
     public void MakeAccessible()
     {
         Node.IsAccesible = true;
-        //animator.Play("NodeAnimation");
-        image.color = Color.red;
+        animator.PlayInFixedTime("MapNodeAnimation");
+        
+        //image.color = Color.red;
     }
 
     // sets the status of the node to inaccessible and display it accordingly
     public void MakeInAccessible()
     {
         Node.IsAccesible = false;
-        //animator.Play("NoAnim");
+        animator.PlayInFixedTime("NoAnim");
         image.color = disableColor;
     }
 
@@ -90,10 +91,10 @@ public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
         switch (Node.EncounterType)
         {
             case NodeEncounter.INFESTED:
-                image.color = new(0,1,0);
+                image.sprite = spriteArray[1];
                 break;
             case NodeEncounter.ABANDONED:
-                image.color = new(0, 0, 1);
+                image.sprite = spriteArray[0];
                 break;
             case NodeEncounter.BOSS:
                 break;
