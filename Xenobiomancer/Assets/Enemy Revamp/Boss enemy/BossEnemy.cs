@@ -6,6 +6,7 @@ using UnityEngine;
 using Patterns;
 using System.Runtime.CompilerServices;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class BossEnemy : EnemyBase
 {
@@ -66,7 +67,7 @@ public class BossEnemy : EnemyBase
     protected override void StartDeath()
     {
         gameObject.SetActive(false);
-        EventManager.Instance.TriggerEvent(EventName.WINLEVEL);
+        SceneManager.LoadScene(4);
     }
 
     #region laser

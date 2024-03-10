@@ -33,8 +33,8 @@ public class RoomCapture : MonoBehaviour
         roomData.Height = bounds.size.y;
     
         roomData.GetRoomCenter();
-        EditorUtility.SetDirty(roomData);
-        Debug.Log("created room");
+        roomData.SetDirty();
+        
         return roomData;
     }
 

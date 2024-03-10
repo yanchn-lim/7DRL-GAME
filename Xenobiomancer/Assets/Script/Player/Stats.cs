@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Hierarchy;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public abstract class Stats: MonoBehaviour
 {
@@ -42,6 +43,10 @@ public abstract class Stats: MonoBehaviour
     {
         Health -= amount;
         Health = math.clamp(Health, 0, MaxHealth);
+        if(health == 0)
+        {
+            SceneManager.LoadScene(3);
+        }
     }
 
     public virtual void IncreaseCurrency(int amount)

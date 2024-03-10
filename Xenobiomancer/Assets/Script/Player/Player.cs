@@ -51,9 +51,6 @@ public class Player : Stats, IDamageable
     [SerializeField]
     int visionRange;
 
-
-
-
     void Start()
     {
         //change this as the starting gun is a pistol
