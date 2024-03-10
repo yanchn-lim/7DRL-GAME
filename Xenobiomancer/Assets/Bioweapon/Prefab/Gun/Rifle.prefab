@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4115820460973997563}
   - component: {fileID: 234269323232413898}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.62, y: 0, z: 0}
-  m_LocalScale: {x: 0.87, y: 0.16, z: 0.058714}
+  m_LocalScale: {x: 1, y: 1, z: 0.058714}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1236810812549959254}
@@ -76,9 +76,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 54c06a960391c5b45b9f299d41bfd305, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 595ccf5a1219a9e4cabdb34fb1507108, type: 3}
   m_Color: {r: 0.7992885, g: 0.5110359, b: 0.98490566, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 22.83, y: 7.881103}
@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1236810812549959254}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shoot target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 1907511251928280497}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.615, y: -0.05, z: 0}
+  m_LocalPosition: {x: 0.962, y: 0.085, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -129,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7665231288946522522}
   - component: {fileID: 5651523078607716656}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: trajectory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,13 +215,13 @@ GameObject:
   m_Component:
   - component: {fileID: 5117249204437129520}
   - component: {fileID: 5201182666052431170}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5117249204437129520
 Transform:
   m_ObjectHideFlags: 0
@@ -252,19 +252,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gun: {fileID: 5117249204437129520}
   firingPosition: {fileID: 1236810812549959254}
+  upgradeData: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
   gunType: 2
   nameOfTheWeapon: rifle
-  cost: 10
+  cost: 50
+  shortDescription: Pew pew pew
   maxMagSize: 10
   currentMagSize: 10
   ammoSize: 30
+  ammoIncrease: 0
+  ammoCost: 0
   reloadCounter: 0
   reloadTurn: 1
   bullet: {fileID: 8002424722926495361, guid: 18f6b7eecb3829c4084d69e5bdcad1fe, type: 3}
   bulletHitBoxRadius: 0.3
   bulletKillTimer: 7
+  bulletDamage: 10
   accuracy: 0.432
-  angleOfOffset: 38
+  angleOfOffset: 29.8
   bulletFiredPerTurn: 4
   bulletShowInterval: 0
   bulletSpeedPerTurn: 5

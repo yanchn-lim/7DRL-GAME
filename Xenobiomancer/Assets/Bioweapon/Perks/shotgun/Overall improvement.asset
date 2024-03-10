@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfPerk: Overall Improvement
   description: Every stats is improved
   cost: 80
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: 6cbd98105e96a77479f19c0474eb5a2b, type: 3}
   reductionOfSpread: 10
   pelletIncrease: 3
   accuracyIncrease: 0.2

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f672388f5d518f4ca2c2b18c4f695ca, type: 3}
-  m_Name: shotgun perk
+  m_Name: Increase ammo
   m_EditorClassIdentifier: 
   nameOfPerk: Increase max ammo
   description: Increase the ammo of ammo to carry
   cost: 50
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: 63a92f8bb4d45d1498407790952bafa1, type: 3}
   reductionOfSpread: 0
   pelletIncrease: 0
   accuracyIncrease: 0

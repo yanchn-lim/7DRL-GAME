@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfPerk: Accuracy increase
   description: accuracy of bullet increase
   cost: 80
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: 6cbd98105e96a77479f19c0474eb5a2b, type: 3}
   shotsIncrease: 0
   accuracyIncrease: 1
   reduceBulletSpread: 0
