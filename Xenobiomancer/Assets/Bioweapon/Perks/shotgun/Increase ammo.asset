@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfPerk: Increase max ammo
   description: Increase the ammo of ammo to carry
   cost: 50
-  logo: {fileID: 21300000, guid: 63a92f8bb4d45d1498407790952bafa1, type: 3}
+  logo: {fileID: 21300000, guid: 39d332b69e953074ba7caaf223d5a937, type: 3}
   reductionOfSpread: 0
   pelletIncrease: 0
   accuracyIncrease: 0

@@ -15,7 +15,7 @@ MonoBehaviour:
   nameOfPerk: speed increase
   description: Faster bullet
   cost: 60
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: e9c59afcfd66eae40b62f3e3c74d8e46, type: 3}
   shotsIncrease: 50
   accuracyIncrease: 0
   reduceBulletSpread: 0

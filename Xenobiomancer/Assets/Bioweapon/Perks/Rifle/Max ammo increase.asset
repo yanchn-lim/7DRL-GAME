@@ -15,10 +15,11 @@ MonoBehaviour:
   nameOfPerk: Max ammo
   description: More ammo to use
   cost: 40
-  logo: {fileID: 0}
+  logo: {fileID: 21300000, guid: 77b8f74a58d02304eb1bc288e13fe77b, type: 3}
   shotsIncrease: 0
   accuracyIncrease: 0
   reduceBulletSpread: 0
   bulletSpeedIncrease: 0
   bulletLifeTimeIncrease: 0
   increaseMaxAmmo: 20
+  damage: 0

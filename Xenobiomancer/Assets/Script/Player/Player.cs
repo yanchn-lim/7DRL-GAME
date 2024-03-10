@@ -36,6 +36,8 @@ public class Player : Stats, IDamageable
     public Camera Main;
     [SerializeField]
     private PlayerData playerData;
+    [SerializeField] private float invincibilityDuration;
+    private bool isInvincible;
 
     public bool MoveCheck;
 
@@ -220,8 +222,14 @@ public class Player : Stats, IDamageable
 
     public void TakeDamage(int damage)
     {
-        DecreaseHealth(damage);
-        CheckPlayerHealth();
+        if (!isInvincible)
+        {
+            StartInvincibilityFrames();
+            DecreaseHealth(damage);
+            CheckPlayerHealth();
+
+        }
+        
     }
 
     public void ChangeToAttackInformation()
@@ -320,6 +328,17 @@ public class Player : Stats, IDamageable
             //cannot upgrade
         }
         
+    }
+
+    private void StartInvincibilityFrames()
+    {
+        isInvincible = true;
+        Invoke("EndInvincibilityFrames", invincibilityDuration);
+    }
+
+    private void EndInvincibilityFrames()
+    {
+        isInvincible = false;
     }
     
 
