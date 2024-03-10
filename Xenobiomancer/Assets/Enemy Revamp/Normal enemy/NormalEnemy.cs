@@ -15,11 +15,14 @@ namespace enemyT
         [SerializeField] protected int damagePerRound;
         [Tooltip("how close the enemy must be to damage the player")]
         [SerializeField] protected float damageRadius;
+        [SerializeField] protected Animator animator;
 
         #region getter
         public int Damage { get => damage; }
         public float DamageRadius { get => damageRadius; }
         public int DamagePerRound { get => damagePerRound; }
+
+        public Animator Animator { get => animator; }
         #endregion
 
 
@@ -40,7 +43,10 @@ namespace enemyT
 
         protected override void StartDeath()
         {
+
             fsm.SetCurrentState((int)EnemyState.DEATHSTATE);
+/*            animator.SetFloat("Pos X", 9);
+            animator.SetFloat("Pos Y", 9);*/
         }
 
         private void OnDrawGizmos()

@@ -10,6 +10,7 @@ namespace enemyT
         private NormalEnemy normalEnemyReference;
         private float elapseTime;
         private float waitTimeForNextAttack;
+        private Animator animator { get {  return NormalEnemy.FindAnyObjectByType<Animator>(); } }
         public NormalEnemyAttackState(FSM fsm, NormalEnemy enemy) : base(fsm, enemy)
         {
             normalEnemyReference = enemy; 
@@ -32,6 +33,8 @@ namespace enemyT
                 if(elapseTime > waitTimeForNextAttack)
                 {
                     AttackPlayer();
+                    animator.SetFloat("PosX", 2);
+                    animator.SetFloat("PosY", 2);
                     elapseTime = 0f;
                 }
                 else
