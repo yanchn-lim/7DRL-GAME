@@ -26,7 +26,8 @@ namespace enemyT
 
         public override void Update()
         {
-            if (PlayerWithinVision())
+            base.Update();
+            if (playerWithinVision)
             {
                 //if player within sight
                 if(elapseTime > waitTimeForNextAttack)

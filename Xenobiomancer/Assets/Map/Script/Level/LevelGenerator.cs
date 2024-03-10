@@ -329,7 +329,8 @@ public class LevelGenerator : MonoBehaviour
     void SpawnEnemies()
     {
         List<Vector3Int> positionList = GetAvailableObstacleSpawnPosition();
-        Dictionary<bool, float> weightChance = new() { {true, 1 }, { false, 49} }; 
+        Dictionary<bool, float> weightChance = new() { {true, 1 }, { false, 49} };
+        int i = 0;
         foreach (var position in positionList)
         {
             if (obstacleMap.GetTile(position) == null)
@@ -341,6 +342,8 @@ public class LevelGenerator : MonoBehaviour
                     Debug.Log(pos);
                     int randomIndex = Random.Range(0, enemiesPrefab.Length);
                     GameObject enemy = Instantiate(enemiesPrefab[randomIndex],pos, Quaternion.identity);
+                    enemy.name = $"enemy {i}";
+                    i++;
                 }
             }
         }

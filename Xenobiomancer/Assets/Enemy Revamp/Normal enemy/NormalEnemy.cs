@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace enemyT
 {
@@ -38,16 +39,27 @@ namespace enemyT
             fsm.SetCurrentState((int)EnemyState.IDLE);
         }
 
+        public override void TakeDamage(int damage)
+        {
+            base.TakeDamage(damage);
+
+        }
+
         protected override void StartDeath()
         {
             fsm.SetCurrentState((int)EnemyState.DEATHSTATE);
         }
 
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, damageRadius);
-            if(path == null)
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, playerSensingRadius);
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(transform.position, activatedRange);
+
+            if (path == null)
             {
                 print("path empty");
                 return;

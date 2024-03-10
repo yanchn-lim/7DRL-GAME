@@ -410,8 +410,9 @@ MonoBehaviour:
   health: 20
   speed: 2
   rotationSpeed: 40
+  activatedRange: 10
   pointSensingRadius: 0.44
-  playerSensingRadius: 1.72
+  playerSensingRadius: 5
   degreeOfVision: 80
   lengthOfVision: 10
   damage: 10

@@ -36,9 +36,13 @@ namespace enemyT
 
         public override void Update()
         {
-            if (PlayerWithinVision())
+            Debug.Log("shooting state");
+            base.Update();
+            if (playerWithinVision)
             {
-                if(canShoot)
+                Debug.Log("Player within range");
+
+                if (canShoot)
                 {
                     if (elapseTime > timeDecidedToShoot)
                     {
@@ -51,7 +55,7 @@ namespace enemyT
                     }
                 }
             }
-            else if (PlayerWithinSenseRange())
+            else if (playerWithinSenseRange)
             {
                 RotateToFacePoint(playerReference.transform.position);
             }

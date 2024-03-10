@@ -14,6 +14,7 @@ namespace enemyT
         [SerializeField] protected int health;
         [SerializeField] protected float speed;
         [SerializeField] protected float rotationSpeed;
+        [SerializeField] protected float activatedRange;
 
         [Header("Pathfinding and Chasing")]
         [Tooltip("how close the enemy must be from the point of the path inorder to be assign a new one")]
@@ -33,6 +34,8 @@ namespace enemyT
         private Player player;
         protected FSM fsm;
 
+        protected bool tookDamage = false;
+
         #region getter
         public int Health { get => health; }
         public float Speed { get => speed; }
@@ -44,6 +47,7 @@ namespace enemyT
         public Stack<Vector2> Path { get => path; set => path = value; }
         public float PointSensingRadius { get => pointSensingRadius; }
         public float PlayerSensingRadius { get => playerSensingRadius; }
+        public bool TookDamage { get => tookDamage; set => tookDamage = value; }
         #endregion
 
         protected virtual void Start() //for starting the enemy
@@ -55,9 +59,15 @@ namespace enemyT
 
         protected virtual void Update()
         {
-            //GridHelper.Instance.GeneratePath(transform.position, Player.transform.position);
-            fsm.Update();
+            float distance = Vector2.Distance(gameObject.transform.position, player.transform.position);
+            if(distance < activatedRange)
+            {
+                fsm.Update();
+            }     
+
         }
+
+
         protected abstract void SetupFSM();
 
 
@@ -66,11 +76,14 @@ namespace enemyT
         public virtual void TakeDamage(int damage)
         {
             health -= damage;
-            if(health < 0)
+            tookDamage = true;
+            if (health <= 0)
             {
                 StartDeath();
             }
         }
+
+       
     }
 
     public enum EnemyStates

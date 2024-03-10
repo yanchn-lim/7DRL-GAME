@@ -1,4 +1,5 @@
-﻿using Patterns;
+﻿using enemySS;
+using Patterns;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
@@ -34,7 +35,8 @@ namespace enemyT
         //}
         public override void Update()
         {
-            Debug.Log("idle State");
+            Debug.Log($"{enemyReference.name} is in: idle state");
+            base.Update();
         }
     }
 

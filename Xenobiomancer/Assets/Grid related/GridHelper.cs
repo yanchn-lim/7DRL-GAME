@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 public class GridHelper : Patterns.Singleton<GridHelper>
 {
     [SerializeField] Tilemap grid; //the obstacle that exist in the game
-    [SerializeField] Tilemap offsetGird; //
+    [SerializeField] Tilemap obstacle; //
 
     
 
@@ -42,7 +42,7 @@ public class GridHelper : Patterns.Singleton<GridHelper>
 
             foreach(var cell in GetCellsAroundNeighbour(current))
             {
-                float newCost = costSoFar[current] + CostToTravelGrid(cell);//1 is a constant
+                float newCost = costSoFar[current] + 1;//1 is a constant
 
                 if (!costSoFar.ContainsKey(cell) )
                 {
@@ -95,18 +95,18 @@ public class GridHelper : Patterns.Singleton<GridHelper>
         return Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
     }
 
-    private float CostToTravelGrid(Vector2Int Destination)
-    {
-        if(offsetGird.GetTile((Vector3Int) Destination) == null)
-        {
-            return 1f;
-        }
-        else
-        {
-            //the weight to travel to the offset grid
-            return 3f;
-        }
-    }
+    //private float CostToTravelGrid(Vector2Int Destination)
+    //{
+    //    if(obstacle.GetTile((Vector3Int) Destination) == null)
+    //    {
+    //        return 1f;
+    //    }
+    //    else
+    //    {
+    //        //the weight to travel to the offset grid
+    //        return 3f;
+    //    }
+    //}
 
     private Vector2Int[] GetCellsAroundNeighbour(Vector2Int cell)
     {
@@ -124,8 +124,9 @@ public class GridHelper : Patterns.Singleton<GridHelper>
                 //verify whether the cell can be used
 
                 var tile= grid.GetTile((Vector3Int)point);
+                var obstacleTile = obstacle.GetTile((Vector3Int)point);
                 //print($"raycast hit at{worldPoint}");
-                if(tile == null)
+                if (tile == null && obstacleTile == null)
                 {
                     //if there is nothing
                     output.Add(point); 

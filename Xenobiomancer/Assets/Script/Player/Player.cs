@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 
 public class Player : Stats, IDamageable
 {
+    [SerializeField] private bool testing;
     [Header("Gun")]
     [SerializeField] private GunType currentGunType;
     [SerializeField] private Weapon[] avaliableWeapons;
@@ -63,7 +64,15 @@ public class Player : Stats, IDamageable
         fsm.Add(new PlayerState_INTERACTing(this));
         fsm.Add(new PlayerState_MAP(this));
         fsm.Add(new PlayerState_DEATH(this));
-        fsm.SetCurrentState((int)PlayerStateType.MAP);
+        if (testing)
+        {
+            fsm.SetCurrentState((int)PlayerStateType.IDLE);
+
+        }
+        else
+        {
+            fsm.SetCurrentState((int)PlayerStateType.MAP);
+        }
 
 
         InitializeStats(playerData.health, playerData.health, playerData.currency, playerData.travelDistance);

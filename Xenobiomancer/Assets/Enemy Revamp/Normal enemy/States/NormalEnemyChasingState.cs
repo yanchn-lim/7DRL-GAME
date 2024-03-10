@@ -16,14 +16,14 @@ namespace enemyT
 
         public override void Update()
         {
-            Debug.Log("Chasing state");
+            Debug.Log($"{enemyReference.name} is in: chasing state");
             base.Update();
             CheckIfPlayerIsNearForAttacking();
         }
 
         private void CheckIfPlayerIsNearForAttacking()
         {
-            if (!PlayerWithinVision()) return;
+            if (!playerWithinVision) return;
             float distance = Vector2.Distance(playerReference.transform.position, enemy.transform.position);
             if (distance < enemy.DamageRadius) 
             {
