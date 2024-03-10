@@ -820,23 +820,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2952492735123670011, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: bulletDamage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: poolContainer
       value: 
       objectReference: {fileID: 1764930159}
     - target: {fileID: 4656814225440002753, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7143943216106347781, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7143943216106347781, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_IsActive
@@ -848,7 +852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8312091224270079882, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Name
@@ -856,7 +860,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_IsActive
@@ -1110,7 +1114,6 @@ MonoBehaviour:
   doorTile: {fileID: 11400000, guid: c1c275fd4f6a7f24b95d1223c131f6a1, type: 2}
   enemiesPrefab:
   - {fileID: 9161725322006691732, guid: c09e04a58b0fff94880da015095cee30, type: 3}
-  - {fileID: 3732651697784227886, guid: f0aa639f5f111674d9032e011d22d20b, type: 3}
   k: 0.2
   scale: 4.14
   per: 0.713
@@ -1545,19 +1548,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4677536061285602428, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
     - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
+      propertyPath: bulletDamage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: poolContainer
       value: 
       objectReference: {fileID: 1764930159}
     - target: {fileID: 5985271768025571480, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7330530324978349418, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1601,7 +1608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7424469599609248426, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8497100430726906681, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_Name
@@ -1609,7 +1616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497100430726906681, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8497100430726906681, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_IsActive
@@ -1697,7 +1704,7 @@ GameObject:
   - component: {fileID: 1014386589}
   - component: {fileID: 1014386588}
   - component: {fileID: 1014386587}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1910,6 +1917,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4221f3f82d8b4ae428f7fa74ceb27ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testing: 0
   currentGunType: 0
   avaliableWeapons:
   - {fileID: 1727327811}
@@ -2112,7 +2120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3924463814240557055, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 3924463814240557055, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_IsActive
@@ -2120,7 +2128,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4335514521017951034, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: damage
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: gunType
@@ -2136,7 +2148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4921120966758346513, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5376924639565733490, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_Positions.Array.data[1].x
@@ -2144,7 +2156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7912400353906098331, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2177,7 +2189,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3228866089777677071, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6329003452329792973, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_Name
@@ -2185,7 +2197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6329003452329792973, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6329003452329792973, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_IsActive
@@ -2200,16 +2212,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
     - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
+      propertyPath: bulletDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: poolContainer
       value: 
       objectReference: {fileID: 1764930159}
     - target: {fileID: 7336233060069809154, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9032378925449835951, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9124193131405274610, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2585,7 +2601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 373802915}
-  offsetGird: {fileID: 1831755591}
+  obstacle: {fileID: 1831755591}
 --- !u!1 &1487905307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3100,11 +3116,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 207942628401623629, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1907511251928280497, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5117249204437129520, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3151,6 +3167,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
     - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: bulletDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: angleOfOffset
       value: 29.8
       objectReference: {fileID: 0}
@@ -3160,7 +3180,7 @@ PrefabInstance:
       objectReference: {fileID: 1764930159}
     - target: {fileID: 5546192757989320614, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Name
@@ -3168,7 +3188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_IsActive
@@ -3427,7 +3447,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1936404187}
   - component: {fileID: 1936404188}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: CameraManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}

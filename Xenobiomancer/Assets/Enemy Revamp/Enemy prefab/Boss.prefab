@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6631741648781570591}
   - component: {fileID: 3228914478787351207}
   - component: {fileID: 9206118539339364580}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,6 +90,7 @@ MonoBehaviour:
   health: 100
   speed: 1
   rotationSpeed: 50
+  activatedRange: 0
   pointSensingRadius: 0.44
   playerSensingRadius: 10
   degreeOfVision: 80
@@ -448,8 +449,16 @@ PrefabInstance:
       value: Head laser
       objectReference: {fileID: 0}
     - target: {fileID: 3924463814240557055, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3924463814240557055, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4335514521017951034, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: gunType
@@ -483,9 +492,17 @@ PrefabInstance:
       propertyPath: recoverytimeForBeam
       value: 0.135
       objectReference: {fileID: 0}
+    - target: {fileID: 4921120966758346513, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5376924639565733490, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_Positions.Array.data[1].x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7912400353906098331, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -516,6 +533,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6631741648781570591}
     m_Modifications:
+    - target: {fileID: 207942628401623629, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907511251928280497, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5117249204437129520, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -576,9 +601,17 @@ PrefabInstance:
       propertyPath: angleOfOffset
       value: 29.8
       objectReference: {fileID: 0}
+    - target: {fileID: 5546192757989320614, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Name
       value: right rifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_IsActive
@@ -673,6 +706,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 2952492735123670011, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: bullet
       value: 
@@ -705,6 +742,10 @@ PrefabInstance:
       propertyPath: bulletFiredPerTurn
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4656814225440002753, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5025857770023079009, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.64
@@ -730,6 +771,10 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7143943216106347781, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143943216106347781, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -737,9 +782,17 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 8312091224270079882, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Name
       value: Left ShotGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_IsActive
@@ -774,6 +827,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6631741648781570591}
     m_Modifications:
+    - target: {fileID: 207942628401623629, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1907511251928280497, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5117249204437129520, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -834,9 +895,17 @@ PrefabInstance:
       propertyPath: angleOfOffset
       value: 29.8
       objectReference: {fileID: 0}
+    - target: {fileID: 5546192757989320614, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Name
       value: left rifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6049256351619259930, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_IsActive
@@ -931,6 +1000,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 2952492735123670011, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: bullet
       value: 
@@ -963,6 +1036,10 @@ PrefabInstance:
       propertyPath: bulletFiredPerTurn
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4656814225440002753, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5025857770023079009, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.64
@@ -988,6 +1065,10 @@ PrefabInstance:
       value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7143943216106347781, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143943216106347781, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -995,9 +1076,17 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 8312091224270079882, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Name
       value: 'right ShotGun '
+      objectReference: {fileID: 0}
+    - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9131901660204698251, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_IsActive

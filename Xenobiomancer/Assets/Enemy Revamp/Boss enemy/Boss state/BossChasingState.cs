@@ -19,9 +19,9 @@ namespace enemyT
                 RotateToFacePoint(playerReference.transform.position);
             }
             GenerateNewPath();
-            if (path.Count > 0)
+            if (enemyReference.Path.Count > 0)
             {
-                currentPointToFollow = path.Pop();
+                currentPointToFollow = enemyReference.Path.Pop();
             }
         }
 
