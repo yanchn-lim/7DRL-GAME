@@ -823,13 +823,25 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: cost
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: bulletDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: poolContainer
       value: 
       objectReference: {fileID: 1764930159}
+    - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: shortDescription
+      value: Pellet gooo brbrbr
+      objectReference: {fileID: 0}
     - target: {fileID: 4656814225440002753, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1548,13 +1560,25 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
+      propertyPath: cost
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
     - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
+      propertyPath: bulletDamage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: poolContainer
       value: 
       objectReference: {fileID: 1764930159}
+    - target: {fileID: 5246288505050030002, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
+      propertyPath: shortDescription
+      value: Boom baby a Head shot
+      objectReference: {fileID: 0}
     - target: {fileID: 5985271768025571480, guid: e70375dd484a7d047aaf80a383d8709d, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -1910,6 +1934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4221f3f82d8b4ae428f7fa74ceb27ab1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testing: 0
   currentGunType: 0
   avaliableWeapons:
   - {fileID: 1727327811}
@@ -2123,6 +2148,14 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: cost
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: gunType
       value: 4
       objectReference: {fileID: 0}
@@ -2133,6 +2166,10 @@ PrefabInstance:
     - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: nameOfTheWeapon
       value: laser gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 4429016940837416463, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
+      propertyPath: shortDescription
+      value: Lassserrrr
       objectReference: {fileID: 0}
     - target: {fileID: 4921120966758346513, guid: bc6389e28b7ad0a4ba4efcdb8139b360, type: 3}
       propertyPath: m_Layer
@@ -2193,12 +2230,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: ammoCost
-      value: 25
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
+      propertyPath: ammoSize
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
+    - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
+      propertyPath: ammoIncrease
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
+      propertyPath: bulletDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7335036120615965172, guid: 68d117dfbce6e2540a06bb10a6d6c29d, type: 3}
       propertyPath: poolContainer
       value: 
@@ -2585,7 +2634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 373802915}
-  offsetGird: {fileID: 0}
+  obstacle: {fileID: 1831755591}
 --- !u!1 &1487905307
 GameObject:
   m_ObjectHideFlags: 0
@@ -3147,9 +3196,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: cost
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
+    - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: bulletDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: angleOfOffset
       value: 29.8
@@ -3158,6 +3215,10 @@ PrefabInstance:
       propertyPath: poolContainer
       value: 
       objectReference: {fileID: 1764930159}
+    - target: {fileID: 5201182666052431170, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
+      propertyPath: shortDescription
+      value: Pew pew pew
+      objectReference: {fileID: 0}
     - target: {fileID: 5546192757989320614, guid: 23ae326d5751b6b45b3b672738573252, type: 3}
       propertyPath: m_Layer
       value: 6

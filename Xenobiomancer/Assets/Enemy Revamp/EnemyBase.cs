@@ -15,7 +15,7 @@ namespace enemyT
         [SerializeField] protected float speed;
         [SerializeField] protected float rotationSpeed;
         [SerializeField] protected float activatedRange;
-        [SerializeField] protected int currency;
+        [SerializeField] protected int currencyEarnAfterDeath;
 
         [Header("Pathfinding and Chasing")]
         [Tooltip("how close the enemy must be from the point of the path inorder to be assign a new one")]
@@ -80,7 +80,7 @@ namespace enemyT
             tookDamage = true;
             if (health <= 0)
             {
-                player.IncreaseCurrency(currency);
+                player.IncreaseCurrency(currencyEarnAfterDeath);
                 StartDeath();
             }
         }

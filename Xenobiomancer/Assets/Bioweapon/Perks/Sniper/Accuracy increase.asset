@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e98c9424efda1945a6a64c79a962e30, type: 3}
-  m_Name: Sniper perk
+  m_Name: Accuracy increase
   m_EditorClassIdentifier: 
-  nameOfPerk: 5sn
-  description: 
-  cost: 0
+  nameOfPerk: Accuracy increase
+  description: accuracy of bullet increase
+  cost: 80
   logo: {fileID: 0}
   shotsIncrease: 0
-  accuracyIncrease: 0
+  accuracyIncrease: 1
   reduceBulletSpread: 0
   bulletSpeedIncrease: 0
   bulletLifeTimeIncrease: 0
   increaseMaxAmmo: 0
+  damage: 0

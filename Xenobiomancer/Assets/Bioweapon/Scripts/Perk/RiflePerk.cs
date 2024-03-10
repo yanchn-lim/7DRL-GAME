@@ -20,7 +20,8 @@ namespace Bioweapon
         [SerializeField] private int bulletLifeTimeIncrease;
         [Tooltip("Increase max ammo")]
         [SerializeField] private int increaseMaxAmmo;
-
+        [SerializeField] private int damage;
+        public int Damage { get => damage; }
         public int ShotsIncrease { get => shotsIncrease; }
         public float AccuracyIncrease { get => accuracyIncrease; }
         public float ReduceBulletSpread { get => reduceBulletSpread; }

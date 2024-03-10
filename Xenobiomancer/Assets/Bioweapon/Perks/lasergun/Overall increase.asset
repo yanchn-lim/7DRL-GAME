@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf86b6a5b41c11b47846c78eb408c08d, type: 3}
-  m_Name: lasergun perk 3
+  m_Name: Overall increase
   m_EditorClassIdentifier: 
-  nameOfPerk: 3l
-  description: 
-  cost: 0
+  nameOfPerk: Overall increase
+  description: Overall improvement
+  cost: 80
   logo: {fileID: 0}
-  increaseBeamWidth: 0
-  increaseBeamLength: 0
-  reduceChargeUp: 0.2
+  increaseBeamWidth: 2
+  increaseBeamLength: 2
+  reduceChargeUp: 0.02
+  increaseMaxAmmo: 2
+  damage: 3

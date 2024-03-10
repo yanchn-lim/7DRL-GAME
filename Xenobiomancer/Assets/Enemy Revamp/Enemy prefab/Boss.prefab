@@ -87,10 +87,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41fbb04edeffae2438e76731337a6fd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 600
   speed: 1
   rotationSpeed: 50
   activatedRange: 0
+  currencyEarnAfterDeath: 0
   pointSensingRadius: 0.44
   playerSensingRadius: 10
   degreeOfVision: 80

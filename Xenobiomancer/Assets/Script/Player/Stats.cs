@@ -55,6 +55,19 @@ public abstract class Stats: MonoBehaviour
         Currency = math.max(0, Currency);
     }
 
+    public bool CanSpendAmount(int amount)
+    {
+        if( currency >= amount )
+        {
+            DecreaseCurrency(amount);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public virtual void IncreaseTravelDistance(float amount)
     {
         TravelDistance += amount;

@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83f74a6a83390b94ca43ec59e715db61, type: 3}
-  m_Name: overall increase
+  m_Name: Damage increase
   m_EditorClassIdentifier: 
-  nameOfPerk: Overall increase
+  nameOfPerk: Improve firepower
   description: Improve the rifle power
-  cost: 80
+  cost: 40
   logo: {fileID: 0}
-  shotsIncrease: 2
-  accuracyIncrease: 0.139
-  reduceBulletSpread: 4.9
-  bulletSpeedIncrease: 0.5
-  bulletLifeTimeIncrease: 2
-  increaseMaxAmmo: 5
-  damage: 4
+  shotsIncrease: 0
+  accuracyIncrease: 0
+  reduceBulletSpread: 0
+  bulletSpeedIncrease: 0
+  bulletLifeTimeIncrease: 0
+  increaseMaxAmmo: 0
+  damage: 10

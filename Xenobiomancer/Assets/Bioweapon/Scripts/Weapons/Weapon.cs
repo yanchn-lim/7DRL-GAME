@@ -52,6 +52,7 @@ namespace Bioweapon
         protected List<PerkBase> perkGunGain = new List<PerkBase>();
         public List<PerkBase> PerkGunGain { get => perkGunGain; }
         public Transform FiringPosition { get => firingPosition; }
+        public string ShortDescription { get => shortDescription; set => shortDescription = value; }
 
         #endregion
 
@@ -142,9 +143,11 @@ namespace Bioweapon
             }
         }
 
-        public void GetMoreAmmo()
+        public void BuyAmmo()
         {
             ammoSize += ammoIncrease;
+            EventManager.Instance.TriggerEvent(EventName.TURN_END);
+
         }
 
         public void ReloadCheckCompleted()

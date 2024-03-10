@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f672388f5d518f4ca2c2b18c4f695ca, type: 3}
-  m_Name: shotgun perk
+  m_Name: ShotgunSpeed increase
   m_EditorClassIdentifier: 
-  nameOfPerk: Increase max ammo
-  description: Increase the ammo of ammo to carry
+  nameOfPerk: Bullet speed increase
+  description: 
   cost: 50
   logo: {fileID: 0}
-  reductionOfSpread: 0
+  reductionOfSpread: 60
   pelletIncrease: 0
   accuracyIncrease: 0
-  bulletSpeedIncrease: 0
+  bulletSpeedIncrease: 2
   bulletLifeTimeIncrease: 0
   increaseCurrentMag: 0
-  increaseMaxAmmoOfTheMag: 3
+  increaseMaxAmmoOfTheMag: 0
   damage: 0

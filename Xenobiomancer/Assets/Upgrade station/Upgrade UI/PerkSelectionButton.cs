@@ -10,6 +10,7 @@ using UpgradeStation;
 public class PerkSelectionButton : DoubleClickButton 
 {
     [SerializeField] private TextMeshProUGUI perkText;
+    [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private Image perkImage;
     private PerkBase assignPerk;
     private UpgradeUI ui;
@@ -25,14 +26,22 @@ public class PerkSelectionButton : DoubleClickButton
 
     public override void ClickSecondTime()
     {
-        PerkBase[] perks = SelectPerkBasedOnWeapon();
-        for (int i = 0; i < perks.Length; i++)
+        if (ui.Player.CanSpendAmount(assignPerk.Cost))
         {
-            if (AssignPerk == perks[i])
+            PerkBase[] perks = SelectPerkBasedOnWeapon();
+            for (int i = 0; i < perks.Length; i++)
             {
-                ui.Player.UpgradeWithCurrency(i, perks[i].Cost);
+                if (AssignPerk == perks[i])
+                {
+                    ui.Player.UpgradeWithCurrency(i, perks[i].Cost);
+                }
             }
         }
+        else
+        {
+            ui.CantBuyPerkText();
+        }
+
     }
 
     public override void ExitToggleState()
@@ -45,6 +54,7 @@ public class PerkSelectionButton : DoubleClickButton
         assignPerk = perk;
         perkText.text = assignPerk.NameOfPerk;
         perkImage.sprite = assignPerk.Logo;
+        costText.text = $"Cost: {perk.Cost}";
         this.ui = ui;
     }
 

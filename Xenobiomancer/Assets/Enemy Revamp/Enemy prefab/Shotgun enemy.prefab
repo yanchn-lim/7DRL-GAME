@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9161725322006691732, guid: c09e04a58b0fff94880da015095cee30, type: 3}
       propertyPath: m_Name
-      value: shotting enemy Variant
+      value: Shotgun enemy
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4252200226958824668, guid: c09e04a58b0fff94880da015095cee30, type: 3}
@@ -83,10 +83,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260417f67cae92644a5e89f90bafe876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 40
   speed: 0
   rotationSpeed: 30
   activatedRange: 20
+  currencyEarnAfterDeath: 20
   pointSensingRadius: 0
   playerSensingRadius: 5
   degreeOfVision: 10
@@ -164,12 +165,20 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: accuracy
+      value: 0.239
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: upgradeData
       value: 
       objectReference: {fileID: 11400000, guid: 72c31d8e8830efc4f90c48d598630e68, type: 2}
     - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: bulletDamage
-      value: 21
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4523886186035236484, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
+      propertyPath: bulletFiredPerTurn
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5025857770023079009, guid: 1eb9972f1de65984bacc237151ebe593, type: 3}
       propertyPath: m_LocalPosition.x

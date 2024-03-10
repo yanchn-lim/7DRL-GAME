@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameOfPerk: Distance increase
   description: bullet move more further than usual
-  cost: 10
+  cost: 40
   logo: {fileID: 0}
   shotsIncrease: 0
   accuracyIncrease: 0.568
@@ -22,3 +22,4 @@ MonoBehaviour:
   bulletSpeedIncrease: 0
   bulletLifeTimeIncrease: 10
   increaseMaxAmmo: 0
+  damage: 0

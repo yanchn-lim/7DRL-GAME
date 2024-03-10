@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f672388f5d518f4ca2c2b18c4f695ca, type: 3}
-  m_Name: shotgun perk 1
+  m_Name: Multiplier
   m_EditorClassIdentifier: 
   nameOfPerk: Multiplier
   description: Increase the amount of bullets shot
-  cost: 0
+  cost: 80
   logo: {fileID: -4872516676497805973, guid: ffc4bc20e53a4fb4b928f37f43aa6b96, type: 3}
   reductionOfSpread: 0
   pelletIncrease: 10
@@ -23,3 +23,4 @@ MonoBehaviour:
   bulletLifeTimeIncrease: 0
   increaseCurrentMag: 0
   increaseMaxAmmoOfTheMag: 0
+  damage: 0

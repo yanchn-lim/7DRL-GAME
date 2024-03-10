@@ -18,7 +18,7 @@ namespace UpgradeStation
             //have nothing to select
             ui.PrepareWeaponSelection();    
         }
-
+         
 
         public override void Update()
         {

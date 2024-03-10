@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f672388f5d518f4ca2c2b18c4f695ca, type: 3}
-  m_Name: shotgun perk 4
+  m_Name: spread reduction
   m_EditorClassIdentifier: 
-  nameOfPerk: 4s
-  description: 
-  cost: 0
+  nameOfPerk: spread reduction
+  description: lower spread to deal more damage
+  cost: 50
   logo: {fileID: 0}
   reductionOfSpread: 60
   pelletIncrease: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   bulletLifeTimeIncrease: 0
   increaseCurrentMag: 0
   increaseMaxAmmoOfTheMag: 0
+  damage: 0

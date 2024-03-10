@@ -116,11 +116,19 @@ namespace UpgradeStation
         public void SelectWeapon(Weapon weapon)
         {
             weaponSelected = weapon;
+            descriptionText.text = weapon.ShortDescription;
         }
         //when player click the submit button
         public void SubmitWeapon()
         {
-            player.SwitchWeapon(weaponSelected);
+            if (player.CanSpendAmount(weaponSelected.Cost))
+            {
+                player.SwitchWeapon(weaponSelected);
+            }
+            else
+            {
+                CantBuyPerkText();
+            }
             //EventManager.Instance.TriggerEvent(EventName.LeaveUpgradeStation);
         }
         #endregion
@@ -162,6 +170,11 @@ namespace UpgradeStation
         public void ShowDescriptionOfPerk(PerkBase perk)
         {
             descriptionText.text = perk.Description;
+        }
+
+        public void CantBuyPerkText()
+        {
+            descriptionText.text = "Cant buy perk!!";
         }
 
         #endregion

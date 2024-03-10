@@ -39,6 +39,8 @@ namespace Bioweapon
             endingBeamWidth += perk.IncreaseBeamWidth;
             lengthOfBeam += perk.IncreaseBeamLength;
             chargeUpBeam -= perk.ReduceChargeUp;
+            damage += perk.Damage;
+            maxMagSize += perk.IncreaseMaxAmmo;
         }
 
         public override void Upgrade(int i)

@@ -247,9 +247,16 @@ public class Player : Stats, IDamageable
             $"Press W to swap to Move";
     }
 
+    public void ChangeToCantBuyAmmoInformation()
+    {
+        informationText.text = $"Cant buy ammo \n" +
+            $"Press W to swap to Move";
+    }
+
     public void ChangeToCantReload()
     {
-        informationText.text = $"No more ammo. \n" +
+        informationText.text = $"No more ammo! Ammo cost: {currentWeapon.AmmoCost} \n" +
+            $"Press Q to buy Ammo \n" +
             $"Press W to swap to Move";
     }
     
@@ -293,11 +300,11 @@ public class Player : Stats, IDamageable
         if (Currency >= PlayerWeapon.AmmoCost)
         {
             DecreaseCurrency(PlayerWeapon.AmmoCost);
-            PlayerWeapon.PlayerReload();
+            PlayerWeapon.BuyAmmo();
         }
         else 
-        { 
-            Debug.Log("Not Enough Funds"); 
+        {
+            ChangeToCantBuyAmmoInformation();
         }
     }
 

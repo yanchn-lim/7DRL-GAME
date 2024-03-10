@@ -58,7 +58,7 @@ namespace Bioweapon
             bulletKillTimer += perk.BulletLifeTimeIncrease;
             maxMagSize += perk.IncreaseMaxAmmoOfTheMag;
             ammoIncrease += perk.IncreaseMaxAmmoOfTheMag;
-
+            bulletDamage += perk.Damage;
         }
 
         public override void Upgrade(int i)
