@@ -417,10 +417,10 @@ public class LevelGenerator : MonoBehaviour
             bool doorPlacementCheckHori = CheckDoorHorizontal(pos);
             bool doorPlacementCheckVert = CheckDoorVertical(pos);
 
-            List<Vector3Int> doorPosition = new();
-
             if (doorPlacementCheckHori)
             {
+                List<Vector3Int> doorPosition = new();
+
                 for (int i = 0; i < doorDistHori; i++)
                 {
                     Vector3Int placePos = pos + Vector3Int.right * i;
@@ -447,6 +447,8 @@ public class LevelGenerator : MonoBehaviour
 
             if (doorPlacementCheckVert)
             {
+                List<Vector3Int> doorPosition = new();
+
                 for (int i = 0; i < doorDistVert; i++)
                 {
                     Vector3Int placePos = pos + Vector3Int.up * i;
