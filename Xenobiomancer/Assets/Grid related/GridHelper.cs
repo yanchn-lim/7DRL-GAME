@@ -59,12 +59,11 @@ public class GridHelper : Patterns.Singleton<GridHelper>
                     frontier.Enqueue(cell, priority);
                     if (cameFrom.ContainsKey(cell))
                     {
-                        print($"from {current} to {cell}");
                         cameFrom[cell] = current; //replace with the new one
                     }
                     else
                     {
-                        print($"from {current} to {cell}");
+
                         cameFrom.Add(cell, current); //error here
                     }
                 }

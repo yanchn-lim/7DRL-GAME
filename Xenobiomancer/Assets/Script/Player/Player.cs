@@ -76,9 +76,9 @@ public class Player : Stats, IDamageable
             fsm.SetCurrentState((int)PlayerStateType.MAP);
         }
 
-
         InitializeStats(playerData.health, playerData.health, playerData.currency, playerData.travelDistance);
         displayStats.SetUI(Health, MaxHealth, Currency);
+        displayStats.ChangeCostText(currentWeapon.AmmoCost);
     }
 
     void Update()
@@ -287,6 +287,7 @@ public class Player : Stats, IDamageable
         currentGunType = weapon.GunType;
         weapon.gameObject.SetActive(true);
         ChangeGunImage();
+        displayStats.ChangeCostText(currentWeapon.AmmoCost);
     }
 
 
