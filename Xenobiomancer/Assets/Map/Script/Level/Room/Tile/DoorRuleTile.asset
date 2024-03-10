@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: DoorRuleTile
   m_EditorClassIdentifier: 
   m_DefaultSprite: {fileID: -457738152, guid: bb5d0ed5385951e49b7b0f277e17d632, type: 3}
-  m_DefaultGameObject: {fileID: 0}
+  m_DefaultGameObject: {fileID: 6209039731190003816, guid: c01ebbf0367fa574dbbb4160fd9a4b1c, type: 3}
   m_DefaultColliderType: 1
   m_TilingRules:
   - m_Id: 0
     m_Sprites:
     - {fileID: -457738152, guid: bb5d0ed5385951e49b7b0f277e17d632, type: 3}
-    m_GameObject: {fileID: 0}
+    m_GameObject: {fileID: 6209039731190003816, guid: c01ebbf0367fa574dbbb4160fd9a4b1c, type: 3}
     m_MinAnimationSpeed: 1
     m_MaxAnimationSpeed: 1
     m_PerlinScale: 0.5
