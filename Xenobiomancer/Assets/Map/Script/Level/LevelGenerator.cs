@@ -104,6 +104,8 @@ public class LevelGenerator : MonoBehaviour
 
     void InitializeBossMap()
     {
+        fogMap.ClearAllTiles();
+        ClearEnemies();
         int index = Random.Range(0, bossRoomData.Length);
         obstacleMap.ClearAllTiles();
         tileMap.ClearAllTiles();
