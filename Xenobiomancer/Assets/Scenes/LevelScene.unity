@@ -1247,7 +1247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &558312613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1267,6 +1267,7 @@ MonoBehaviour:
   rootPrefab: {fileID: 2538131209329690139, guid: 39b55f20fce895844913af2fa2e5cbb4, type: 3}
   nodePrefab: {fileID: 7452883735577756736, guid: d8be590a297aee441ae3183e84311728, type: 3}
   linePrefab: {fileID: 6026538896086070210, guid: 8baa9624ce327ca4ca8cd56816acd545, type: 3}
+  BossPrefab: {fileID: 2225478878356092596, guid: 145028254a6c7214688cca55de4bd8c4, type: 3}
   spawnRoomData:
   - {fileID: 11400000, guid: 7429526b67f394f4e8beb30fdb39a786, type: 2}
   - {fileID: 11400000, guid: b1f362e87c90ac746945ddc809d07146, type: 2}
@@ -1293,7 +1294,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 873285152d159cf4192c2b45b884f57b, type: 2}
   abadonedRoomData: {fileID: 11400000, guid: 097a550dfb4b83b4cbe81a5503ce8c96, type: 2}
   bossRoomData:
-  - {fileID: 11400000, guid: fa5e85310da1f154a9693856d058d5c1, type: 2}
   - {fileID: 11400000, guid: d297217ce1d22c2448355e3a0ed927b4, type: 2}
   tileMap: {fileID: 373802915}
   obstacleMap: {fileID: 1831755591}
@@ -3007,7 +3007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1373258863
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3183,7 +3183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!156049354 &1384447556
 Grid:
   m_ObjectHideFlags: 0
@@ -3987,7 +3987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1815602809
 MonoBehaviour:
   m_ObjectHideFlags: 0

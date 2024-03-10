@@ -9,6 +9,7 @@ public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
 {
     public MapNode Node { get; set; }
     public Sprite[] spriteArray;
+    
     Image image;
     Animator animator;
 
@@ -107,6 +108,7 @@ public class NodeObject : MonoBehaviour, IPointerDownHandler, IPointerEnterHandl
     private IEnumerator AnimateSelect()
     {
         yield return null;
+        
     }
 
     // starts the encounter event after finish setting up the node
