@@ -221,11 +221,7 @@ public class Player : Stats, IDamageable
     public void TakeDamage(int damage)
     {
         DecreaseHealth(damage);
-
-        Debug.Log(Health);
         CheckPlayerHealth();
-
-
     }
 
     public void ChangeToAttackInformation()
@@ -292,21 +288,17 @@ public class Player : Stats, IDamageable
         }
     }
 
-    public void ReloadWithCurrency()
+    public void BuyAmmoWithCurrency()
     {
         if (Currency >= PlayerWeapon.AmmoCost)
         {
-            
             DecreaseCurrency(PlayerWeapon.AmmoCost);
             PlayerWeapon.PlayerReload();
-
         }
         else 
         { 
             Debug.Log("Not Enough Funds"); 
         }
-
-        
     }
 
     public void UpgradeWithCurrency(int i, int costOfUpgrade)

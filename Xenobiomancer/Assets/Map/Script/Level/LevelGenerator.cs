@@ -339,7 +339,7 @@ public class LevelGenerator : MonoBehaviour
                 if (spawnCheck)
                 {
                     Vector3 pos = tileMap.CellToWorld(position);
-                    Debug.Log(pos);
+                    
                     int randomIndex = Random.Range(0, enemiesPrefab.Length);
                     GameObject enemy = Instantiate(enemiesPrefab[randomIndex],pos, Quaternion.identity);
                     enemy.name = $"enemy {i}";

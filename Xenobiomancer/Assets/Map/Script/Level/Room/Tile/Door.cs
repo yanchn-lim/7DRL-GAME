@@ -32,8 +32,6 @@ public class Door : MonoBehaviour
 
         if (playerIsNearby && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("destroy door");
-
             Cascade();
         }
     }

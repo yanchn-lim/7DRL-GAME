@@ -59,10 +59,12 @@ public class GridHelper : Patterns.Singleton<GridHelper>
                     frontier.Enqueue(cell, priority);
                     if (cameFrom.ContainsKey(cell))
                     {
+                        print($"from {current} to {cell}");
                         cameFrom[cell] = current; //replace with the new one
                     }
                     else
                     {
+                        print($"from {current} to {cell}");
                         cameFrom.Add(cell, current); //error here
                     }
                 }
@@ -123,10 +125,13 @@ public class GridHelper : Patterns.Singleton<GridHelper>
                 }
                 //verify whether the cell can be used
 
-                var tile= grid.GetTile((Vector3Int)point);
+                var tile= grid.GetSprite((Vector3Int)point);
                 var obstacleTile = obstacle.GetTile((Vector3Int)point);
                 //print($"raycast hit at{worldPoint}");
-                if (tile == null && obstacleTile == null)
+
+
+
+                if (tile.name.Contains("Floor") && obstacleTile == null)
                 {
                     //if there is nothing
                     output.Add(point); 
