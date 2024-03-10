@@ -6,7 +6,7 @@ using UpgradeStation;
 
 namespace Bioweapon
 {
-    public abstract class Weapon : MonoBehaviour  
+    public abstract class Weapon : MonoBehaviour   
     {
         //bullet related
 
