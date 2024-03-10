@@ -1,3 +1,4 @@
+using Bioweapon;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -10,6 +11,18 @@ public class DisplayStats : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI currencyText;
     [SerializeField] private Image healthBar;
+
+    [Header("bullet")]
+    [SerializeField] private TextMeshProUGUI bulletAmountText;
+    [SerializeField] private TextMeshProUGUI ammoLeftText;
+
+    [Header("GunImage")]
+    [SerializeField] private Image gunImage;
+    [SerializeField] private Sprite pistolImage;
+    [SerializeField] private Sprite rifleImage;
+    [SerializeField] private Sprite shotgunImage;
+    [SerializeField] private Sprite LasergunImage;
+    [SerializeField] private Sprite sniperImage;
 
     public void UpdateHealthUI(float health, float maxHealth)
     {
@@ -28,5 +41,27 @@ public class DisplayStats : MonoBehaviour
         healthText.text = $"{health}/{maxHealth}";
         healthBar.fillAmount = health / maxHealth;
         currencyText.text = $"{currency}";
+    }
+
+    public void SetWeaponUI(int currentAmmo, int maxAmmo, int ammoLeft)
+    {
+        bulletAmountText.text = $"{currentAmmo}/{maxAmmo}";
+        ammoLeftText.text = $"{ammoLeft}";
+    }
+
+    public void ChangeWeaponImageBasedOnWeaponType(GunType type)
+    {
+        Sprite spriteSelcted;
+        switch(type)
+        {
+            case (GunType.Pistol): spriteSelcted = pistolImage;break;
+            case(GunType.Sniper): spriteSelcted = sniperImage; break;
+            case (GunType.Rifle): spriteSelcted = rifleImage; break;
+            case (GunType.Laser): spriteSelcted = LasergunImage; break;
+            case (GunType.ShotGun): spriteSelcted = shotgunImage; break;
+            default: spriteSelcted = null; break;
+        }
+        gunImage.sprite = spriteSelcted;
+        gunImage.preserveAspect = true;
     }
 }

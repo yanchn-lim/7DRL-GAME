@@ -53,6 +53,9 @@ namespace Bioweapon
         public List<PerkBase> PerkGunGain { get => perkGunGain; }
         public Transform FiringPosition { get => firingPosition; }
         public string ShortDescription { get => shortDescription; set => shortDescription = value; }
+        public int MaxMagSize { get => maxMagSize; set => maxMagSize = value; }
+        public int CurrentMagSize { get => currentMagSize; set => currentMagSize = value; }
+        public int AmmoSize { get => ammoSize; set => ammoSize = value; }
 
         #endregion
 

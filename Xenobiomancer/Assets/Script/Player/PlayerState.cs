@@ -127,12 +127,14 @@ public class PlayerState_MOVEMENT : PlayerState
         {
             mPlayer.HealPlayer();
         }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            mPlayer.BuyAmmoWithCurrency();
+        }
         else
         {
             mPlayer.Moving();
         }
-
-       
     }
 
     public override void Exit()
@@ -177,6 +179,10 @@ public class PlayerState_ATTACK : PlayerState
         else if (!mPlayer.PlayerWeapon.CanShoot)
         {//if cant shoot
             mFsm.SetCurrentState((int)PlayerStateType.RELOAD);
+        }
+        else if (Input.GetKeyDown(KeyCode.Q))
+        {
+            mPlayer.BuyAmmoWithCurrency();
         }
         else if (Input.GetKeyDown(KeyCode.H))
         {
@@ -234,8 +240,7 @@ public class PlayerState_RELOAD : PlayerState
             //mPlayer.ReloadWithCurrency();
             mPlayer.PlayerWeapon.PlayerReload();
         }
-        if(!mPlayer.PlayerWeapon.CanReload && 
-            Input.GetKeyDown(KeyCode.Q) )
+        if(Input.GetKeyDown(KeyCode.Q) )
         {
             mPlayer.BuyAmmoWithCurrency();
         }

@@ -81,10 +81,11 @@ public class Player : Stats, IDamageable
 
     void Update()
     {
+        displayStats.SetWeaponUI(currentWeapon.CurrentMagSize, currentWeapon.MaxMagSize, currentWeapon.AmmoSize);
         fsm.Update();
 
         UpdateFogMap();
-
+        
         if (Input.GetKeyDown(KeyCode.Z))
         {
             //OPEN MAP
@@ -178,6 +179,11 @@ public class Player : Stats, IDamageable
 
     #endregion
 
+    private void ChangeGunImage()
+    {
+        displayStats.ChangeWeaponImageBasedOnWeaponType(currentGunType);
+    }
+
     public override void IncreaseHealth(int amount)
     {
         base.IncreaseHealth(amount);
@@ -259,6 +265,12 @@ public class Player : Stats, IDamageable
             $"Press Q to buy Ammo \n" +
             $"Press W to swap to Move";
     }
+
+    public void ChangeToCannotHeal()
+    {
+        informationText.text = $"Cant heal! Heal cost: {healAmount} \n" +
+           $"Press Q to buy Ammo \n" ;
+    }
     
     public void SwitchWeapon(Weapon weapon)
     {
@@ -266,6 +278,7 @@ public class Player : Stats, IDamageable
         currentWeapon = weapon;
         currentGunType = weapon.GunType;
         weapon.gameObject.SetActive(true);
+        ChangeGunImage();
     }
 
 
@@ -280,14 +293,17 @@ public class Player : Stats, IDamageable
         }
         else
         {
-            
+            ChangeToCannotHeal();
         }
-        
+    }
 
+    public void BuyAmmo()
+    {
+        
     }
 
    
-   void CheckPlayerHealth()
+    void CheckPlayerHealth()
     {
         if (Health <= 0)
         {
